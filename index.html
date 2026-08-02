@@ -3,17 +3,6 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    
-    
-    <meta property="og:image" content="https://www.cromx.shop/logo.jpg" />
-    <meta property="og:image:type" content="image/jpeg" />
-
-    
-    <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="https://pokiigames.online/adminimage.png" />
-
-
-    
     <title>CroomX Admin</title>
     <link rel="dns-prefetch" href="https://www.gstatic.com" />
     <link rel="dns-prefetch" href="https://croomx-34cb0.firebaseapp.com" />
@@ -151,6 +140,15 @@ textarea {
 .btn-sm {
   padding: 0.4rem 0.85rem;
   font-size: 0.85rem;
+}
+
+.btn-email {
+  background: #10b981;
+  color: #fff;
+}
+
+.btn-email:hover {
+  background: #059669;
 }
 
 .alert {
@@ -650,6 +648,32 @@ tr.clickable {
   margin-bottom: 1.5rem;
 }
 
+/* Email button in tasks */
+.email-task-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.35rem 0.75rem;
+  background: #10b981;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.8rem;
+  font-weight: 600;
+  transition: background 0.15s;
+  white-space: nowrap;
+}
+
+.email-task-btn:hover {
+  background: #059669;
+}
+
+.email-task-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
 @media (max-width: 768px) {
   .sidebar {
     transform: translateX(-100%);
@@ -1121,6 +1145,73 @@ function isAiGuest(guest) {
 
 function isAiRoom(data) {
   return data.isAiOpponent === true || isAiGuest(data.guest);
+}
+
+// ── Email templates ──
+function getTaskReminderEmailBody(userName, tasks) {
+  const taskList = tasks.map(t => `• ${t.taskName} ${t.completed ? '✅' : '⬜'}`).join('\n');
+  const completedCount = tasks.filter(t => t.completed).length;
+  const totalCount = tasks.length;
+  
+  return `Dear ${userName || 'Player'},
+
+🌟 Rise & Shine! Your Daily Tasks Are Waiting! 🌟
+
+We noticed you haven't completed all your daily tasks yet. Don't miss out on amazing rewards and bonuses waiting just for you!
+
+📊 Your Task Progress: ${completedCount}/${totalCount} Completed
+
+${taskList}
+
+🔥 Why Complete All Tasks?
+✨ Earn exclusive daily rewards
+🏆 Boost your leaderboard ranking
+💎 Unlock special bonuses
+⚡ Stay ahead of the competition
+
+🎯 Every completed task brings you closer to victory! Your dedication today shapes your success tomorrow.
+
+⏰ Hurry! Tasks reset at midnight. Make every moment count!
+
+Log in now and claim your rewards:
+👉 CroomX App
+
+Stay awesome,
+The CroomX Team 💪
+
+"Small daily improvements lead to stunning long-term results."`;
+}
+
+function getTaskIncompleteEmailBody(userName, tasks, completedCount, totalCount) {
+  const incompleteTasks = tasks.filter(t => !t.completed);
+  const taskNames = incompleteTasks.map(t => `• ${t.taskName}`).join('\n');
+  
+  return `Hello ${userName || 'Player'},
+
+🚀 Your Daily Tasks Are Calling! 🚀
+
+You've completed ${completedCount} out of ${totalCount} tasks today — great start! But the finish line is just ahead!
+
+📋 Tasks Still Waiting:
+${taskNames}
+
+✨ Complete All Tasks To Unlock:
+🎁 Daily Bonus Rewards
+⭐ Score Multipliers
+🏅 Special Achievement Badges
+📈 Higher Leaderboard Position
+
+Don't leave rewards on the table! Every task you complete brings exciting prizes and boosts your gaming journey.
+
+⚡ Quick login, quick rewards — your next achievement awaits!
+
+Jump back into action:
+👉 CroomX App
+
+Keep pushing forward,
+The CroomX Team 🌟
+
+"Champions are made by doing what others won't."`;
 }
 
 // ── API helpers (Firestore/RTDB loaded after login) ──
@@ -1731,6 +1822,51 @@ async function deleteAllAiRooms() {
   const records = await getAiRecords();
   await Promise.all(records.map((r) => deleteRtdbRoom(r.gamePath, r.roomCode)));
   return records.length;
+}
+
+// ── Email sending function ──
+function sendTaskEmail(userEmail, userName, tasks) {
+  const completedCount = tasks.filter(t => t.completed).length;
+  const totalCount = tasks.length;
+  
+  let subject, body;
+  
+  if (completedCount === 0) {
+    subject = `🌟 ${userName}, Your Daily Tasks Are Waiting! Don't Miss Out!`;
+    body = getTaskReminderEmailBody(userName, tasks);
+  } else if (completedCount < totalCount) {
+    subject = `🚀 Great Start ${userName}! Only ${totalCount - completedCount} Tasks Left!`;
+    body = getTaskIncompleteEmailBody(userName, tasks, completedCount, totalCount);
+  } else {
+    subject = `🎉 Amazing ${userName}! All Tasks Completed Today!`;
+    body = `Dear ${userName || 'Player'},
+
+🌟 CONGRATULATIONS! You're a Daily Task Champion! 🌟
+
+You've successfully completed ALL ${totalCount} tasks today! Your dedication and consistency are truly remarkable.
+
+🏆 What You've Earned Today:
+✨ Full daily bonus rewards
+⭐ Maximum score multiplier
+💎 Special completion badge
+🔥 Streak bonus (keep it going!)
+
+Your commitment to excellence sets you apart from the crowd. Keep this momentum going!
+
+💪 Ready for tomorrow's challenges?
+New tasks await at midnight — be the first to complete them!
+
+Stay legendary,
+The CroomX Team 👑
+
+"Success is the sum of small efforts repeated day in and day out."`;
+  }
+  
+  // Create mailto link with encoded parameters
+  const mailtoLink = `mailto:${encodeURIComponent(userEmail)}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+  
+  // Open email client
+  window.open(mailtoLink, '_blank');
 }
 
 const CHART_COLORS = ['#22c55e', '#3b82f6', '#eab308', '#ec4899', '#a855f7', '#f97316', '#06b6d4', '#ef4444'];
@@ -2488,7 +2624,7 @@ async function renderTasks(_param, options = {}) {
 
     $('#tasks-body').innerHTML =
       rows.length === 0
-        ? '<tr><td colspan="5" class="empty">No rows match filter</td></tr>'
+        ? '<tr><td colspan="7" class="empty">No rows match filter</td></tr>'
         : rows
             .map((r) => {
               const chips = r.tasks
@@ -2504,13 +2640,32 @@ async function renderTasks(_param, options = {}) {
                   : '<span class="badge badge-muted">None</span>';
               return `<tr>
           <td><a href="#/user-detail/${r.user.id}">${esc(r.user.name || 'Unnamed')}</a><div class="meta">${esc(playerId(r.user))}</div></td>
+          <td>${esc(r.user.email)}</td>
           <td>${r.completedCount}/${ALL_TASK_IDS.length} ${badge}</td>
           <td>${esc(r.taskDate || '—')}</td>
           <td>${fmtDate(r.updatedAt)}</td>
           <td><div class="task-chips">${chips}</div></td>
+          <td><button type="button" class="email-task-btn btn-email-task-single" data-email="${esc(r.user.email)}" data-name="${esc(r.user.name || 'Unnamed')}" data-tasks='${esc(JSON.stringify(r.tasks))}'>📧 Send Email</button></td>
         </tr>`;
             })
             .join('');
+
+    // Bind email buttons
+    document.querySelectorAll('.btn-email-task-single').forEach((btn) => {
+      btn.onclick = (e) => {
+        e.stopPropagation();
+        const email = btn.dataset.email;
+        const name = btn.dataset.name;
+        const tasks = JSON.parse(btn.dataset.tasks || '[]');
+        
+        if (!email) {
+          alert('No email found for this user');
+          return;
+        }
+        
+        sendTaskEmail(email, name, tasks);
+      };
+    });
   }
 
   if (soft && $('#tasks-body')) {
@@ -2522,13 +2677,14 @@ async function renderTasks(_param, options = {}) {
 
   pageContent.innerHTML = `
     <div class="page-header">
-      <div><h2>Daily tasks</h2><p class="subtitle">Today's completion report • resets at 12:00 AM</p></div>
+      <div><h2>Daily tasks</h2><p class="subtitle">Today's completion report • resets at 12:00 AM • Click 📧 to email players</p></div>
       <div class="page-actions">
         <div class="toggle-group" id="tasks-filter">
           <button data-f="all" class="${tasksPageState.filter === 'all' ? 'active' : ''}">All</button>
           <button data-f="done" class="${tasksPageState.filter === 'done' ? 'active' : ''}">Done (4+)</button>
           <button data-f="not" class="${tasksPageState.filter === 'not' ? 'active' : ''}">Not Done (&lt;5)</button>
         </div>
+        <button class="btn btn-email btn-sm" id="tasks-email-all">📧 Email All Incomplete</button>
         <button class="btn btn-outline btn-sm" id="tasks-reset">Reset daily tasks</button>
         <button class="btn btn-outline btn-sm" id="tasks-refresh">↻ Refresh</button>
       </div>
@@ -2536,7 +2692,7 @@ async function renderTasks(_param, options = {}) {
     <p id="tasks-msg" class="subtitle" style="margin-bottom:1rem">${esc(tasksNotice)}</p>
     <div class="table-wrap">
       <table>
-        <thead><tr><th>Player</th><th>Progress</th><th>Task date</th><th>Updated</th><th>Tasks</th></tr></thead>
+        <thead><tr><th>Player</th><th>Email</th><th>Progress</th><th>Task date</th><th>Updated</th><th>Tasks</th><th>Action</th></tr></thead>
         <tbody id="tasks-body"></tbody>
       </table>
     </div>`;
@@ -2569,6 +2725,38 @@ async function renderTasks(_param, options = {}) {
       btn.disabled = false;
     }
   };
+  
+  // Email all incomplete button
+  $('#tasks-email-all').onclick = async () => {
+    const rows = await getDailyTasks();
+    const incompleteUsers = rows.filter(r => !r.allFiveComplete && r.user.email);
+    
+    if (incompleteUsers.length === 0) {
+      alert('All users have completed their tasks today! 🎉');
+      return;
+    }
+    
+    if (!confirm(`Send task reminder emails to ${incompleteUsers.length} user(s) with incomplete tasks?`)) return;
+    
+    const btn = $('#tasks-email-all');
+    btn.disabled = true;
+    btn.textContent = 'Sending...';
+    
+    try {
+      for (const row of incompleteUsers) {
+        sendTaskEmail(row.user.email, row.user.name || 'Player', row.tasks);
+        // Small delay between emails to prevent browser blocking
+        await new Promise(resolve => setTimeout(resolve, 300));
+      }
+      $('#tasks-msg').textContent = `📧 Task reminder emails sent to ${incompleteUsers.length} user(s)!`;
+    } catch (e) {
+      $('#tasks-msg').textContent = `Error: ${e.message || 'Failed to send some emails'}`;
+    } finally {
+      btn.disabled = false;
+      btn.textContent = '📧 Email All Incomplete';
+    }
+  };
+  
   await load();
 }
 
