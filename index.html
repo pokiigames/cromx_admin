@@ -929,128 +929,55 @@ tr.clickable {
   opacity: 0.6;
   cursor: not-allowed;
 }
-
-/* combined login extras */
-.login-options {
-  display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
-  margin-bottom: 0.5rem;
-}
-
-.btn-google {
-  background: #ffffff;
-  color: #1e293b;
-  border: 1px solid var(--border);
-  font-weight: 600;
-}
-
-.btn-google:hover {
-  background: #f1f5f9;
-}
-
-.btn-google svg {
-  display: inline-block;
-}
-
-.email-login-section {
-  margin-top: 1.25rem;
-  padding-top: 1.25rem;
-  border-top: 1px solid var(--border);
-  text-align: left;
-}
-
-.email-login-section .form-group {
-  margin-bottom: 0.75rem;
-}
-
-.back-to-options {
-  margin-top: 1rem;
-  font-size: 0.85rem;
-  color: var(--text-muted);
-  cursor: pointer;
-  display: inline-block;
-}
-
-.back-to-options:hover {
-  color: var(--accent);
-}
-
-.hidden {
-  display: none !important;
-}
     </style>
   </head>
   <body>
-    <!-- Login screen with two-step options -->
+    <!-- Login -->
     <div id="login-screen" class="screen-center">
       <div class="auth-card">
         <div class="logo">⚙️</div>
         <h1>Admin Panel</h1>
         <p></p>
-
+        
         <div id="login-error" class="alert alert-error hidden"></div>
-
-        <!-- Step 1: two main options (Google OR email) -->
-        <div id="login-options" class="login-options">
-          <button id="btn-google-signin" class="btn btn-google">
-            <svg width="18" height="18" viewBox="0 0 24 24">
-              <path
-                fill="#4285F4"
-                d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 0 1-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z"
-              />
-              <path
-                fill="#34A853"
-                d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"
-              />
-              <path
-                fill="#FBBC05"
-                d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"
-              />
-              <path
-                fill="#EA4335"
-                d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"
-              />
-            </svg>
-            Sign in with Google
+        
+        <button id="btn-google-signin" class="btn btn-primary">
+          <svg width="18" height="18" viewBox="0 0 24 24">
+            <path
+              fill="#fff"
+              d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 0 1-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z"
+            />
+            <path
+              fill="#fff"
+              d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"
+            />
+            <path
+              fill="#fff"
+              d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"
+            />
+            <path
+              fill="#fff"
+              d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"
+            />
+          </svg>
+          Sign in with Google
+        </button>
+        
+        <div class="auth-divider">or</div>
+        
+        <form id="email-login-form" style="text-align: left;">
+          <div class="form-group">
+            <label for="login-email">Email</label>
+            <input class="form-input" type="email" id="login-email" placeholder="admin@example.com" required />
+          </div>
+          <div class="form-group">
+            <label for="login-password">Password</label>
+            <input class="form-input" type="password" id="login-password" placeholder="Your password" required />
+          </div>
+          <button type="submit" class="btn btn-email" id="btn-email-signin">
+            📧LOGIN ID
           </button>
-
-          <div class="auth-divider">or</div>
-
-          <button id="btn-show-email-form" class="btn btn-email">
-            📧 Log in with Email & Password
-          </button>
-        </div>
-
-        <!-- Step 2: email & password form (hidden by default) -->
-        <div id="email-login-form-wrapper" class="email-login-section hidden">
-          <form id="email-login-form">
-            <div class="form-group">
-              <label for="login-email">Email</label>
-              <input
-                class="form-input"
-                type="email"
-                id="login-email"
-                placeholder="admin@example.com"
-                required
-              />
-            </div>
-            <div class="form-group">
-              <label for="login-password">Password</label>
-              <input
-                class="form-input"
-                type="password"
-                id="login-password"
-                placeholder="Your password"
-                required
-              />
-            </div>
-            <button type="submit" class="btn btn-email" id="btn-email-signin" style="width:100%">
-              🔐 Sign in with Email
-            </button>
-          </form>
-          <div class="back-to-options" id="back-to-login-options">← Back to login options</div>
-        </div>
+        </form>
       </div>
     </div>
 
@@ -1101,175 +1028,176 @@ tr.clickable {
     </div>
 
     <script type="module">
-      import { initializeApp } from 'https://www.gstatic.com/firebasejs/12.15.0/firebase-app.js';
-      import {
-        getAuth,
-        GoogleAuthProvider,
-        onAuthStateChanged,
-        signInWithPopup,
-        signInWithEmailAndPassword,
-        signOut,
-      } from 'https://www.gstatic.com/firebasejs/12.15.0/firebase-auth.js';
+import { initializeApp } from 'https://www.gstatic.com/firebasejs/12.15.0/firebase-app.js';
+import {
+  getAuth,
+  GoogleAuthProvider,
+  EmailAuthProvider,
+  onAuthStateChanged,
+  signInWithPopup,
+  signInWithEmailAndPassword,
+  signOut,
+} from 'https://www.gstatic.com/firebasejs/12.15.0/firebase-auth.js';
 
-      const firebaseConfig = {
-        apiKey: 'AIzaSyDHzblZuhac_ui920koRywonV7KOuOS9P4',
-        authDomain: 'croomx-34cb0.firebaseapp.com',
-        databaseURL: 'https://croomx-34cb0-default-rtdb.asia-southeast1.firebasedatabase.app',
-        projectId: 'croomx-34cb0',
-        storageBucket: 'croomx-34cb0.firebasestorage.app',
-        messagingSenderId: '759188857295',
-        appId: '1:759188857295:web:cf740da532581b088072ba',
-      };
+const firebaseConfig = {
+  apiKey: 'AIzaSyDHzblZuhac_ui920koRywonV7KOuOS9P4',
+  authDomain: 'croomx-34cb0.firebaseapp.com',
+  databaseURL: 'https://croomx-34cb0-default-rtdb.asia-southeast1.firebasedatabase.app',
+  projectId: 'croomx-34cb0',
+  storageBucket: 'croomx-34cb0.firebasestorage.app',
+  messagingSenderId: '759188857295',
+  appId: '1:759188857295:web:cf740da532581b088072ba',
+};
 
-      const app = initializeApp(firebaseConfig);
-      const auth = getAuth(app);
-      const googleProvider = new GoogleAuthProvider();
-      googleProvider.setCustomParameters({ prompt: 'select_account' });
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const googleProvider = new GoogleAuthProvider();
+googleProvider.setCustomParameters({ prompt: 'select_account' });
 
-      let dbReady = null;
-      let firestore;
-      let rtdb;
-      let usersCol;
-      let adminsDoc;
-      let seasonConfigDoc;
-      let dailyTasksMetaDoc;
+let dbReady = null;
+let firestore;
+let rtdb;
+let usersCol;
+let adminsDoc;
+let seasonConfigDoc;
+let dailyTasksMetaDoc;
 
-      async function ensureDb() {
-        if (!dbReady) {
-          dbReady = (async () => {
-            const [{ getFirestore, collection, doc }, { getDatabase }] = await Promise.all([
-              import('https://www.gstatic.com/firebasejs/12.15.0/firebase-firestore.js'),
-              import('https://www.gstatic.com/firebasejs/12.15.0/firebase-database.js'),
-            ]);
-            firestore = getFirestore(app);
-            rtdb = getDatabase(app);
-            usersCol = collection(firestore, 'users');
-            adminsDoc = doc(firestore, 'admins', 'admin_emails');
-            seasonConfigDoc = doc(firestore, 'app_config', 'leaderboard');
-            dailyTasksMetaDoc = doc(firestore, 'app_config', 'daily_tasks');
-          })();
-        }
-        await dbReady;
-        return { firestore, rtdb, usersCol, adminsDoc, seasonConfigDoc, dailyTasksMetaDoc };
-      }
+async function ensureDb() {
+  if (!dbReady) {
+    dbReady = (async () => {
+      const [{ getFirestore, collection, doc }, { getDatabase }] = await Promise.all([
+        import('https://www.gstatic.com/firebasejs/12.15.0/firebase-firestore.js'),
+        import('https://www.gstatic.com/firebasejs/12.15.0/firebase-database.js'),
+      ]);
+      firestore = getFirestore(app);
+      rtdb = getDatabase(app);
+      usersCol = collection(firestore, 'users');
+      adminsDoc = doc(firestore, 'admins', 'admin_emails');
+      seasonConfigDoc = doc(firestore, 'app_config', 'leaderboard');
+      dailyTasksMetaDoc = doc(firestore, 'app_config', 'daily_tasks');
+    })();
+  }
+  await dbReady;
+  return { firestore, rtdb, usersCol, adminsDoc, seasonConfigDoc, dailyTasksMetaDoc };
+}
 
-      // ── Config ──
-      const DEFAULT_ADMIN_EMAIL = 'pal982565@gmail.com';
-      const ACTIVE_NOW_MS = 5 * 60 * 1000;
-      const AI_GUEST_PREFIX = 'ai_opponent_';
+// ── Config ──
+const DEFAULT_ADMIN_EMAIL = 'pal982565@gmail.com';
+const ACTIVE_NOW_MS = 5 * 60 * 1000;
+const AI_GUEST_PREFIX = 'ai_opponent_';
 
-      const TASK_CATALOG = [
-        { id: 5, title: 'Login 7 Day' },
-        { id: 1, title: 'Task of CroomX1' },
-        { id: 2, title: 'Task of CroomX2' },
-        { id: 3, title: 'Task of CroomX3' },
-        { id: 4, title: 'Task of CroomX4' },
-      ];
+const TASK_CATALOG = [
+  { id: 5, title: 'Login 7 Day' },
+  { id: 1, title: 'Task of CroomX1' },
+  { id: 2, title: 'Task of CroomX2' },
+  { id: 3, title: 'Task of CroomX3' },
+  { id: 4, title: 'Task of CroomX4' },
+];
 
-      const ALL_TASK_IDS = TASK_CATALOG.map((t) => t.id);
+const ALL_TASK_IDS = TASK_CATALOG.map((t) => t.id);
 
-      const GAME_PATHS = [
-        { path: 'tic_tac_toe_games', label: 'Tic Tac Toe' },
-        { path: 'game_2048_games', label: '2048' },
-        { path: 'chess_games', label: 'Chess' },
-      ];
+const GAME_PATHS = [
+  { path: 'tic_tac_toe_games', label: 'Tic Tac Toe' },
+  { path: 'game_2048_games', label: '2048' },
+  { path: 'chess_games', label: 'Chess' },
+];
 
-      function taskTitle(id) {
-        return TASK_CATALOG.find((t) => t.id === id)?.title || `Task ${id}`;
-      }
+function taskTitle(id) {
+  return TASK_CATALOG.find((t) => t.id === id)?.title || `Task ${id}`;
+}
 
-      // ── Utils ──
-      function todayKey() {
-        const d = new Date();
-        const y = d.getFullYear();
-        const m = String(d.getMonth() + 1).padStart(2, '0');
-        const day = String(d.getDate()).padStart(2, '0');
-        return `${y}-${m}-${day}`;
-      }
+// ── Utils ──
+function todayKey() {
+  const d = new Date();
+  const y = d.getFullYear();
+  const m = String(d.getMonth() + 1).padStart(2, '0');
+  const day = String(d.getDate()).padStart(2, '0');
+  return `${y}-${m}-${day}`;
+}
 
-      function isLoggedInToday(loginRef) {
-        if (!loginRef) return false;
-        return loginRef >= startOfToday();
-      }
+function isLoggedInToday(loginRef) {
+  if (!loginRef) return false;
+  return loginRef >= startOfToday();
+}
 
-      function startOfToday() {
-        const d = new Date();
-        d.setHours(0, 0, 0, 0);
-        return d.getTime();
-      }
+function startOfToday() {
+  const d = new Date();
+  d.setHours(0, 0, 0, 0);
+  return d.getTime();
+}
 
-      function fmtDate(ms) {
-        if (!ms) return '—';
-        return new Intl.DateTimeFormat(undefined, {
-          dateStyle: 'medium',
-          timeStyle: 'short',
-        }).format(new Date(ms));
-      }
+function fmtDate(ms) {
+  if (!ms) return '—';
+  return new Intl.DateTimeFormat(undefined, {
+    dateStyle: 'medium',
+    timeStyle: 'short',
+  }).format(new Date(ms));
+}
 
-      function fmtRelative(ms) {
-        if (!ms) return 'Never';
-        const diff = Date.now() - ms;
-        const m = Math.floor(diff / 60000);
-        if (m < 1) return 'Just now';
-        if (m < 60) return `${m}m ago`;
-        const h = Math.floor(m / 60);
-        if (h < 24) return `${h}h ago`;
-        return `${Math.floor(h / 24)}d ago`;
-      }
+function fmtRelative(ms) {
+  if (!ms) return 'Never';
+  const diff = Date.now() - ms;
+  const m = Math.floor(diff / 60000);
+  if (m < 1) return 'Just now';
+  if (m < 60) return `${m}m ago`;
+  const h = Math.floor(m / 60);
+  if (h < 24) return `${h}h ago`;
+  return `${Math.floor(h / 24)}d ago`;
+}
 
-      function esc(s) {
-        const d = document.createElement('div');
-        d.textContent = s ?? '';
-        return d.innerHTML;
-      }
+function esc(s) {
+  const d = document.createElement('div');
+  d.textContent = s ?? '';
+  return d.innerHTML;
+}
 
-      function userFromMap(id, data) {
-        return {
-          id,
-          email: data.email || '',
-          name: data.name || '',
-          score: Number(data.score || 0),
-          profilePictureUrl: data.profilePictureUrl || '',
-          lastUpdated: Number(data.lastUpdated || Date.now()),
-          rank: Number(data.rank || 0),
-          gamesPlayed: Number(data.gamesPlayed || 0),
-          gamesWon: Number(data.gamesWon || 0),
-          playerCode: data.playerCode || '',
-          lastLogin: Number(data.lastLogin || 0),
-          isBanned: Boolean(data.isBanned),
-          bannedUntil: Number(data.bannedUntil || 0),
-        };
-      }
+function userFromMap(id, data) {
+  return {
+    id,
+    email: data.email || '',
+    name: data.name || '',
+    score: Number(data.score || 0),
+    profilePictureUrl: data.profilePictureUrl || '',
+    lastUpdated: Number(data.lastUpdated || Date.now()),
+    rank: Number(data.rank || 0),
+    gamesPlayed: Number(data.gamesPlayed || 0),
+    gamesWon: Number(data.gamesWon || 0),
+    playerCode: data.playerCode || '',
+    lastLogin: Number(data.lastLogin || 0),
+    isBanned: Boolean(data.isBanned),
+    bannedUntil: Number(data.bannedUntil || 0),
+  };
+}
 
-      function isBanned(user) {
-        if (!user.isBanned) return false;
-        return user.bannedUntil === 0 || user.bannedUntil > Date.now();
-      }
+function isBanned(user) {
+  if (!user.isBanned) return false;
+  return user.bannedUntil === 0 || user.bannedUntil > Date.now();
+}
 
-      function isAdminUser(user, emails) {
-        const e = (user.email || '').toLowerCase().trim();
-        return e && emails.has(e);
-      }
+function isAdminUser(user, emails) {
+  const e = (user.email || '').toLowerCase().trim();
+  return e && emails.has(e);
+}
 
-      function playerId(user) {
-        return user.playerCode || user.id.slice(0, 8);
-      }
+function playerId(user) {
+  return user.playerCode || user.id.slice(0, 8);
+}
 
-      function isAiGuest(guest) {
-        return typeof guest === 'string' && guest.startsWith(AI_GUEST_PREFIX);
-      }
+function isAiGuest(guest) {
+  return typeof guest === 'string' && guest.startsWith(AI_GUEST_PREFIX);
+}
 
-      function isAiRoom(data) {
-        return data.isAiOpponent === true || isAiGuest(data.guest);
-      }
+function isAiRoom(data) {
+  return data.isAiOpponent === true || isAiGuest(data.guest);
+}
 
-      // ── Email templates (unchanged) ──
-      function getTaskReminderEmailBody(userName, tasks) {
-        const taskList = tasks.map(t => `• ${t.taskName} ${t.completed ? '✅' : '⬜'}`).join('\n');
-        const completedCount = tasks.filter(t => t.completed).length;
-        const totalCount = tasks.length;
-        
-        return `Dear ${userName || 'Player'},
+// ── Email templates ──
+function getTaskReminderEmailBody(userName, tasks) {
+  const taskList = tasks.map(t => `• ${t.taskName} ${t.completed ? '✅' : '⬜'}`).join('\n');
+  const completedCount = tasks.filter(t => t.completed).length;
+  const totalCount = tasks.length;
+  
+  return `Dear ${userName || 'Player'},
 
 🌟 Rise & Shine! Your Daily Tasks Are Waiting! 🌟
 
@@ -1296,13 +1224,13 @@ Stay awesome,
 The CroomX Team 💪
 
 "Small daily improvements lead to stunning long-term results."`;
-      }
+}
 
-      function getTaskIncompleteEmailBody(userName, tasks, completedCount, totalCount) {
-        const incompleteTasks = tasks.filter(t => !t.completed);
-        const taskNames = incompleteTasks.map(t => `• ${t.taskName}`).join('\n');
-        
-        return `Hello ${userName || 'Player'},
+function getTaskIncompleteEmailBody(userName, tasks, completedCount, totalCount) {
+  const incompleteTasks = tasks.filter(t => !t.completed);
+  const taskNames = incompleteTasks.map(t => `• ${t.taskName}`).join('\n');
+  
+  return `Hello ${userName || 'Player'},
 
 🚀 Your Daily Tasks Are Calling! 🚀
 
@@ -1328,634 +1256,634 @@ Keep pushing forward,
 The CroomX Team 🌟
 
 "Champions are made by doing what others won't."`;
-      }
+}
 
-      // ── API helpers ──
-      let adminEmailsCache = null;
+// ── API helpers (Firestore/RTDB loaded after login) ──
+let adminEmailsCache = null;
 
-      async function fs() {
-        await ensureDb();
-        return import('https://www.gstatic.com/firebasejs/12.15.0/firebase-firestore.js');
-      }
+async function fs() {
+  await ensureDb();
+  return import('https://www.gstatic.com/firebasejs/12.15.0/firebase-firestore.js');
+}
 
-      async function rtdbApi() {
-        await ensureDb();
-        return import('https://www.gstatic.com/firebasejs/12.15.0/firebase-database.js');
-      }
+async function rtdbApi() {
+  await ensureDb();
+  return import('https://www.gstatic.com/firebasejs/12.15.0/firebase-database.js');
+}
 
-      async function isEmailAdmin(email) {
-        const normalized = (email || '').toLowerCase().trim();
-        if (!normalized) return false;
-        try {
-          await ensureDb();
-          const { getDoc } = await fs();
-          const snap = await getDoc(adminsDoc);
-          if (!snap.exists()) return normalized === DEFAULT_ADMIN_EMAIL.toLowerCase();
-          const emails = (snap.data().emails || []).map((e) => e.toLowerCase().trim());
-          return emails.includes(normalized) || normalized === DEFAULT_ADMIN_EMAIL.toLowerCase();
-        } catch {
-          return normalized === DEFAULT_ADMIN_EMAIL.toLowerCase();
-        }
-      }
+async function isEmailAdmin(email) {
+  const normalized = (email || '').toLowerCase().trim();
+  if (!normalized) return false;
+  try {
+    await ensureDb();
+    const { getDoc } = await fs();
+    const snap = await getDoc(adminsDoc);
+    if (!snap.exists()) return normalized === DEFAULT_ADMIN_EMAIL.toLowerCase();
+    const emails = (snap.data().emails || []).map((e) => e.toLowerCase().trim());
+    return emails.includes(normalized) || normalized === DEFAULT_ADMIN_EMAIL.toLowerCase();
+  } catch {
+    return normalized === DEFAULT_ADMIN_EMAIL.toLowerCase();
+  }
+}
 
-      async function resolveAdminEmails() {
-        if (adminEmailsCache) return adminEmailsCache;
-        try {
-          await ensureDb();
-          const { getDoc } = await fs();
-          const snap = await getDoc(adminsDoc);
-          if (!snap.exists()) {
-            adminEmailsCache = new Set([DEFAULT_ADMIN_EMAIL.toLowerCase()]);
-            return adminEmailsCache;
-          }
-          const emails = (snap.data().emails || [DEFAULT_ADMIN_EMAIL])
-            .map((e) => e.toLowerCase().trim())
-            .filter(Boolean);
-          adminEmailsCache = new Set(emails.length ? emails : [DEFAULT_ADMIN_EMAIL.toLowerCase()]);
-          return adminEmailsCache;
-        } catch {
-          adminEmailsCache = new Set([DEFAULT_ADMIN_EMAIL.toLowerCase()]);
-          return adminEmailsCache;
-        }
-      }
+async function resolveAdminEmails() {
+  if (adminEmailsCache) return adminEmailsCache;
+  try {
+    await ensureDb();
+    const { getDoc } = await fs();
+    const snap = await getDoc(adminsDoc);
+    if (!snap.exists()) {
+      adminEmailsCache = new Set([DEFAULT_ADMIN_EMAIL.toLowerCase()]);
+      return adminEmailsCache;
+    }
+    const emails = (snap.data().emails || [DEFAULT_ADMIN_EMAIL])
+      .map((e) => e.toLowerCase().trim())
+      .filter(Boolean);
+    adminEmailsCache = new Set(emails.length ? emails : [DEFAULT_ADMIN_EMAIL.toLowerCase()]);
+    return adminEmailsCache;
+  } catch {
+    adminEmailsCache = new Set([DEFAULT_ADMIN_EMAIL.toLowerCase()]);
+    return adminEmailsCache;
+  }
+}
 
-      const DEFAULT_SEASON_ID = 's1';
+const DEFAULT_SEASON_ID = 's1';
 
-      function seasonFromData(data) {
-        const seasonId = (data.currentSeasonId || DEFAULT_SEASON_ID).toLowerCase();
-        const seasonNumber =
-          Number(data.seasonNumber) ||
-          Number(seasonId.replace(/^s/i, '')) ||
-          1;
-        const seasonLabel = data.seasonLabel || `Season ${seasonNumber}`;
-        return { seasonId, seasonNumber, seasonLabel };
-      }
+function seasonFromData(data) {
+  const seasonId = (data.currentSeasonId || DEFAULT_SEASON_ID).toLowerCase();
+  const seasonNumber =
+    Number(data.seasonNumber) ||
+    Number(seasonId.replace(/^s/i, '')) ||
+    1;
+  const seasonLabel = data.seasonLabel || `Season ${seasonNumber}`;
+  return { seasonId, seasonNumber, seasonLabel };
+}
 
-      async function getSeasonConfig() {
-        await ensureDb();
-        const { getDoc } = await fs();
-        const snap = await getDoc(seasonConfigDoc);
-        if (!snap.exists()) {
-          return { seasonId: DEFAULT_SEASON_ID, seasonNumber: 1, seasonLabel: 'Season 1' };
-        }
-        return seasonFromData(snap.data());
-      }
+async function getSeasonConfig() {
+  await ensureDb();
+  const { getDoc } = await fs();
+  const snap = await getDoc(seasonConfigDoc);
+  if (!snap.exists()) {
+    return { seasonId: DEFAULT_SEASON_ID, seasonNumber: 1, seasonLabel: 'Season 1' };
+  }
+  return seasonFromData(snap.data());
+}
 
-      async function saveSeasonConfig(config) {
-        await ensureDb();
-        const { setDoc } = await fs();
-        await setDoc(
-          seasonConfigDoc,
-          {
-            currentSeasonId: config.seasonId.toLowerCase(),
-            seasonNumber: config.seasonNumber,
-            seasonLabel: config.seasonLabel,
-          },
-          { merge: true },
-        );
-      }
+async function saveSeasonConfig(config) {
+  await ensureDb();
+  const { setDoc } = await fs();
+  await setDoc(
+    seasonConfigDoc,
+    {
+      currentSeasonId: config.seasonId.toLowerCase(),
+      seasonNumber: config.seasonNumber,
+      seasonLabel: config.seasonLabel,
+    },
+    { merge: true },
+  );
+}
 
-      function userMatchesSeason(data, seasonId) {
-        return (data.currentSeasonId || DEFAULT_SEASON_ID).toLowerCase() === seasonId.toLowerCase();
-      }
+function userMatchesSeason(data, seasonId) {
+  return (data.currentSeasonId || DEFAULT_SEASON_ID).toLowerCase() === seasonId.toLowerCase();
+}
 
-      async function getSeasonLeaderboard(seasonId, max = 10) {
-        await ensureDb();
-        const { getDocs, limit, orderBy, query, whereEqualTo } = await fs();
-        try {
-          const q = query(
-            usersCol,
-            whereEqualTo('currentSeasonId', seasonId.toLowerCase()),
-            orderBy('score', 'desc'),
-            limit(max),
-          );
-          const snap = await getDocs(q);
-          if (snap.docs.length) {
-            return snap.docs.map((d, i) => ({ ...userFromMap(d.id, d.data()), rank: i + 1 }));
-          }
-        } catch {
-          // Fall back when composite index is missing.
-        }
+async function getSeasonLeaderboard(seasonId, max = 10) {
+  await ensureDb();
+  const { getDocs, limit, orderBy, query, whereEqualTo } = await fs();
+  try {
+    const q = query(
+      usersCol,
+      whereEqualTo('currentSeasonId', seasonId.toLowerCase()),
+      orderBy('score', 'desc'),
+      limit(max),
+    );
+    const snap = await getDocs(q);
+    if (snap.docs.length) {
+      return snap.docs.map((d, i) => ({ ...userFromMap(d.id, d.data()), rank: i + 1 }));
+    }
+  } catch {
+    // Fall back when composite index is missing.
+  }
 
-        const q = query(usersCol, orderBy('score', 'desc'), limit(200));
-        const snap = await getDocs(q);
-        return snap.docs
-          .filter((d) => userMatchesSeason(d.data(), seasonId))
-          .slice(0, max)
-          .map((d, i) => ({ ...userFromMap(d.id, d.data()), rank: i + 1 }));
-      }
+  const q = query(usersCol, orderBy('score', 'desc'), limit(200));
+  const snap = await getDocs(q);
+  return snap.docs
+    .filter((d) => userMatchesSeason(d.data(), seasonId))
+    .slice(0, max)
+    .map((d, i) => ({ ...userFromMap(d.id, d.data()), rank: i + 1 }));
+}
 
-      async function getSeasonStats(seasonId) {
-        await ensureDb();
-        const { getDocs } = await fs();
-        const adminEmails = await resolveAdminEmails();
-        const snap = await getDocs(usersCol);
-        let players = 0;
-        let totalScore = 0;
-        let activeToday = 0;
+async function getSeasonStats(seasonId) {
+  await ensureDb();
+  const { getDocs } = await fs();
+  const adminEmails = await resolveAdminEmails();
+  const snap = await getDocs(usersCol);
+  let players = 0;
+  let totalScore = 0;
+  let activeToday = 0;
 
-        snap.docs.forEach((d) => {
-          const user = userFromMap(d.id, d.data());
-          if (isAdminUser(user, adminEmails)) return;
-          if (!userMatchesSeason(d.data(), seasonId)) return;
-          players++;
-          totalScore += user.score;
-          const loginRef = user.lastLogin > 0 ? user.lastLogin : user.lastUpdated;
-          if (isLoggedInToday(loginRef)) activeToday++;
-        });
+  snap.docs.forEach((d) => {
+    const user = userFromMap(d.id, d.data());
+    if (isAdminUser(user, adminEmails)) return;
+    if (!userMatchesSeason(d.data(), seasonId)) return;
+    players++;
+    totalScore += user.score;
+    const loginRef = user.lastLogin > 0 ? user.lastLogin : user.lastUpdated;
+    if (isLoggedInToday(loginRef)) activeToday++;
+  });
 
-        return { players, totalScore, activeToday, avgScore: players ? Math.round(totalScore / players) : 0 };
-      }
+  return { players, totalScore, activeToday, avgScore: players ? Math.round(totalScore / players) : 0 };
+}
 
-      async function buildSeasonIndex(config) {
-        await ensureDb();
-        const { getDocs, collection } = await fs();
-        const adminEmails = await resolveAdminEmails();
-        const usersSnap = await getDocs(usersCol);
+async function buildSeasonIndex(config) {
+  await ensureDb();
+  const { getDocs, collection } = await fs();
+  const adminEmails = await resolveAdminEmails();
+  const usersSnap = await getDocs(usersCol);
 
-        const maxNum = Math.max(1, config.seasonNumber);
-        const seasons = Array.from({ length: maxNum }, (_, i) => {
-          const num = i + 1;
-          const seasonId = `s${num}`;
-          const isCurrent = seasonId === config.seasonId.toLowerCase();
-          return {
-            seasonId,
-            seasonNumber: num,
-            label: isCurrent ? config.seasonLabel : `Season ${num}`,
-            count: 0,
-            users: [],
-          };
-        });
-        const byId = Object.fromEntries(seasons.map((s) => [s.seasonId, s]));
-        const userSets = Object.fromEntries(seasons.map((s) => [s.seasonId, new Set()]));
+  const maxNum = Math.max(1, config.seasonNumber);
+  const seasons = Array.from({ length: maxNum }, (_, i) => {
+    const num = i + 1;
+    const seasonId = `s${num}`;
+    const isCurrent = seasonId === config.seasonId.toLowerCase();
+    return {
+      seasonId,
+      seasonNumber: num,
+      label: isCurrent ? config.seasonLabel : `Season ${num}`,
+      count: 0,
+      users: [],
+    };
+  });
+  const byId = Object.fromEntries(seasons.map((s) => [s.seasonId, s]));
+  const userSets = Object.fromEntries(seasons.map((s) => [s.seasonId, new Set()]));
 
-        const eligibleDocs = usersSnap.docs.filter((d) => !isAdminUser(userFromMap(d.id, d.data()), adminEmails));
+  const eligibleDocs = usersSnap.docs.filter((d) => !isAdminUser(userFromMap(d.id, d.data()), adminEmails));
 
-        const historyByUser = new Map();
-        await Promise.all(
-          eligibleDocs.map(async (d) => {
-            const histSnap = await getDocs(collection(firestore, 'users', d.id, 'seasonHistory'));
-            historyByUser.set(
-              d.id,
-              histSnap.docs.map((h) => ({ seasonId: h.id.toLowerCase(), ...h.data() })),
-            );
-          }),
-        );
+  const historyByUser = new Map();
+  await Promise.all(
+    eligibleDocs.map(async (d) => {
+      const histSnap = await getDocs(collection(firestore, 'users', d.id, 'seasonHistory'));
+      historyByUser.set(
+        d.id,
+        histSnap.docs.map((h) => ({ seasonId: h.id.toLowerCase(), ...h.data() })),
+      );
+    }),
+  );
 
-        for (const d of eligibleDocs) {
-          const user = userFromMap(d.id, d.data());
-          const currentSid = (d.data().currentSeasonId || DEFAULT_SEASON_ID).toLowerCase();
+  for (const d of eligibleDocs) {
+    const user = userFromMap(d.id, d.data());
+    const currentSid = (d.data().currentSeasonId || DEFAULT_SEASON_ID).toLowerCase();
 
-          if (byId[currentSid]) {
-            userSets[currentSid].add(d.id);
-            byId[currentSid].users.push({ ...user, source: 'current' });
-          }
+    if (byId[currentSid]) {
+      userSets[currentSid].add(d.id);
+      byId[currentSid].users.push({ ...user, source: 'current' });
+    }
 
-          for (const h of historyByUser.get(d.id) || []) {
-            const sid = (h.seasonId || '').toLowerCase();
-            if (!byId[sid]) continue;
-            userSets[sid].add(d.id);
-            if (currentSid !== sid) {
-              byId[sid].users.push({
-                ...user,
-                score: Number(h.score || 0),
-                gamesPlayed: Number(h.gamesPlayed || 0),
-                gamesWon: Number(h.gamesWon || 0),
-                rank: Number(h.rank || 0),
-                source: 'archived',
-              });
-            }
-          }
-        }
-
-        for (const s of seasons) {
-          s.count = userSets[s.seasonId].size;
-          s.users.sort((a, b) => b.score - a.score || (a.name || '').localeCompare(b.name || ''));
-          s.users.forEach((u, i) => {
-            u.rank = i + 1;
-          });
-        }
-
-        return {
-          seasons,
-          currentSeasonId: config.seasonId.toLowerCase(),
-          getSeason(seasonId) {
-            return byId[seasonId.toLowerCase()] || null;
-          },
-        };
-      }
-
-      async function getAllSeasonUsers(seasonId) {
-        const config = await getSeasonConfig();
-        const index = await buildSeasonIndex(config);
-        const season = index.getSeason(seasonId);
-        return season ? season.users : [];
-      }
-
-      function seasonLabelForId(seasonId, fallbackLabel) {
-        if (fallbackLabel) return fallbackLabel;
-        const num = Number(String(seasonId).replace(/^s/i, ''));
-        return num ? `Season ${num}` : seasonId.toUpperCase();
-      }
-
-      async function getSeasonComparison(oldId, newId, oldLabel, newLabel) {
-        const config = await getSeasonConfig();
-        const index = await buildSeasonIndex(config);
-        const oldSeason = index.getSeason(oldId) || { seasonId: oldId, label: seasonLabelForId(oldId, oldLabel), count: 0, users: [] };
-        const newSeason = index.getSeason(newId) || { seasonId: newId, label: seasonLabelForId(newId, newLabel), count: 0, users: [] };
-
-        return {
-          oldSeason: {
-            id: oldId.toLowerCase(),
-            label: oldLabel || oldSeason.label,
-            count: oldSeason.count,
-            users: oldSeason.users,
-          },
-          newSeason: {
-            id: newId.toLowerCase(),
-            label: newLabel || newSeason.label,
-            count: newSeason.count,
-            users: newSeason.users,
-          },
-        };
-      }
-
-      function buildEmptyTodayTasks() {
-        const now = Date.now();
-        return Object.fromEntries(
-          ALL_TASK_IDS.map((id) => [
-            String(id),
-            {
-              completed: false,
-              completedAt: 0,
-              resetAt: now,
-              streakDay: 1,
-              lastClaimEpochDay: -1,
-            },
-          ]),
-        );
-      }
-
-      async function getDailyResetMeta() {
-        await ensureDb();
-        const { getDoc } = await fs();
-        const snap = await getDoc(dailyTasksMetaDoc);
-        if (!snap.exists()) return { lastResetDate: '' };
-        return { lastResetDate: snap.data().lastResetDate || '' };
-      }
-
-      async function saveDailyResetMeta(date) {
-        await ensureDb();
-        const { setDoc } = await fs();
-        await setDoc(
-          dailyTasksMetaDoc,
-          { lastResetDate: date, lastResetAt: Date.now() },
-          { merge: true },
-        );
-      }
-
-      async function resetAllDailyTasks() {
-        await ensureDb();
-        const { getDocs, writeBatch, doc } = await fs();
-        const adminEmails = await resolveAdminEmails();
-        const snap = await getDocs(usersCol);
-        const today = todayKey();
-        const emptyTasks = buildEmptyTodayTasks();
-        const payload = {
-          dailyTaskDate: today,
-          dailyTasksCompleted: [],
-          dailyTaskCount: 0,
-          dailyTaskAllComplete: false,
-          dailyTaskUpdatedAt: Date.now(),
-          todayTasks: emptyTasks,
-        };
-
-        let batch = writeBatch(firestore);
-        let ops = 0;
-        let resetCount = 0;
-
-        for (const d of snap.docs) {
-          const user = userFromMap(d.id, d.data());
-          if (isAdminUser(user, adminEmails)) continue;
-          batch.update(doc(firestore, 'users', d.id), payload);
-          ops++;
-          resetCount++;
-          if (ops >= 400) {
-            await batch.commit();
-            batch = writeBatch(firestore);
-            ops = 0;
-          }
-        }
-        if (ops > 0) await batch.commit();
-        await saveDailyResetMeta(today);
-        return resetCount;
-      }
-
-      async function maybeAutoResetDailyTasks() {
-        const today = todayKey();
-        const meta = await getDailyResetMeta();
-        if (meta.lastResetDate === today) return null;
-        return resetAllDailyTasks();
-      }
-
-      async function getDashboardStats() {
-        const now = Date.now();
-        const dayStart = startOfToday();
-        const { getDocs } = await fs();
-        const [adminEmails, snapshot] = await Promise.all([resolveAdminEmails(), getDocs(usersCol)]);
-
-        const online = [];
-        const today = [];
-        const inactive = [];
-        let total = 0;
-        let loginTodayTotal = 0;
-
-        snapshot.docs.forEach((d) => {
-          const user = userFromMap(d.id, d.data());
-          if (isAdminUser(user, adminEmails)) return;
-          total++;
-          const loginRef = user.lastLogin > 0 ? user.lastLogin : user.lastUpdated;
-          const loggedToday = isLoggedInToday(loginRef);
-
-          if (isBanned(user)) {
-            inactive.push(user);
-            return;
-          }
-          const onlineNow = now - user.lastUpdated <= ACTIVE_NOW_MS;
-          if (loggedToday) loginTodayTotal++;
-          if (onlineNow) online.push(user);
-          else if (loggedToday) today.push(user);
-          else inactive.push(user);
-        });
-
-        const sort = (u) => Math.max(u.lastUpdated, u.lastLogin);
-        online.sort((a, b) => sort(b) - sort(a));
-        today.sort((a, b) => sort(b) - sort(a));
-        inactive.sort((a, b) => sort(b) - sort(a));
-
-        return {
-          totalUsers: total,
-          activeNow: online.length,
-          activeToday: loginTodayTotal,
-          inactiveUsers: inactive.length,
-          loginTodayOnly: today.length,
-          online,
-          today,
-          inactive,
-          dayStart,
-          generatedAt: now,
-        };
-      }
-
-      async function getAllUsers() {
-        const { getDocs, limit, orderBy, query } = await fs();
-        const q = query(usersCol, orderBy('lastUpdated', 'desc'), limit(500));
-        const snap = await getDocs(q);
-        return snap.docs.map((d) => userFromMap(d.id, d.data()));
-      }
-
-      async function getTopUsers() {
-        const { getDocs, limit, orderBy, query } = await fs();
-        const q = query(usersCol, orderBy('score', 'desc'), limit(100));
-        const snap = await getDocs(q);
-        return snap.docs.map((d, i) => ({ ...userFromMap(d.id, d.data()), rank: i + 1 }));
-      }
-
-      async function searchUsers(q) {
-        const trimmed = q.trim();
-        if (!trimmed) return [];
-        const lower = trimmed.toLowerCase();
-        const users = await getAllUsers();
-        return users.filter(
-          (u) =>
-            u.name.toLowerCase().includes(lower) ||
-            u.email.toLowerCase().includes(lower) ||
-            u.playerCode.toLowerCase().includes(lower),
-        );
-      }
-
-      async function getUserById(id) {
-        const { doc, getDoc } = await fs();
-        const snap = await getDoc(doc(firestore, 'users', id));
-        if (!snap.exists()) throw new Error('User not found');
-        return userFromMap(snap.id, snap.data());
-      }
-
-      async function updateUser(id, updates) {
-        const { doc, updateDoc } = await fs();
-        await updateDoc(doc(firestore, 'users', id), {
-          ...updates,
-          lastUpdated: Date.now(),
+    for (const h of historyByUser.get(d.id) || []) {
+      const sid = (h.seasonId || '').toLowerCase();
+      if (!byId[sid]) continue;
+      userSets[sid].add(d.id);
+      if (currentSid !== sid) {
+        byId[sid].users.push({
+          ...user,
+          score: Number(h.score || 0),
+          gamesPlayed: Number(h.gamesPlayed || 0),
+          gamesWon: Number(h.gamesWon || 0),
+          rank: Number(h.rank || 0),
+          source: 'archived',
         });
       }
+    }
+  }
 
-      async function deleteUser(id) {
-        const { deleteDoc, doc } = await fs();
-        await deleteDoc(doc(firestore, 'users', id));
-      }
+  for (const s of seasons) {
+    s.count = userSets[s.seasonId].size;
+    s.users.sort((a, b) => b.score - a.score || (a.name || '').localeCompare(b.name || ''));
+    s.users.forEach((u, i) => {
+      u.rank = i + 1;
+    });
+  }
 
-      function parseTasks(data) {
-        const todayTasks = data.todayTasks || {};
-        return ALL_TASK_IDS.map((taskId) => {
-          const t = todayTasks[String(taskId)] || {};
-          return {
-            taskId,
-            taskName: taskTitle(taskId),
-            completed: Boolean(t.completed),
-          };
-        });
-      }
+  return {
+    seasons,
+    currentSeasonId: config.seasonId.toLowerCase(),
+    getSeason(seasonId) {
+      return byId[seasonId.toLowerCase()] || null;
+    },
+  };
+}
 
-      function buildTaskRow(docData, user, adminEmails) {
-        if (isAdminUser(user, adminEmails)) return null;
-        const today = todayKey();
-        const taskDate = docData.dailyTaskDate || '';
-        const updatedAt = Number(docData.dailyTaskUpdatedAt || 0);
-        const entries = parseTasks(docData);
-        const hasToday = entries.some((t) => t.completed);
-        const legacy = (docData.dailyTasksCompleted || []).map(Number);
-        const legacyCount = Number(docData.dailyTaskCount ?? legacy.length);
-        const legacyAll = Boolean(docData.dailyTaskAllComplete ?? legacyCount >= ALL_TASK_IDS.length);
+async function getAllSeasonUsers(seasonId) {
+  const config = await getSeasonConfig();
+  const index = await buildSeasonIndex(config);
+  const season = index.getSeason(seasonId);
+  return season ? season.users : [];
+}
 
-        const tasks =
-          entries.some((t) => t.completed) || Object.keys(docData.todayTasks || {}).length
-            ? entries
-            : ALL_TASK_IDS.map((id) => ({
-                taskId: id,
-                taskName: taskTitle(id),
-                completed: legacy.includes(id),
-              }));
+function seasonLabelForId(seasonId, fallbackLabel) {
+  if (fallbackLabel) return fallbackLabel;
+  const num = Number(String(seasonId).replace(/^s/i, ''));
+  return num ? `Season ${num}` : seasonId.toUpperCase();
+}
 
-        const completedCount = tasks.filter((t) => t.completed).length;
-        const isToday = taskDate === today || hasToday;
-        const allFive =
-          Object.keys(docData.todayTasks || {}).length > 0
-            ? isToday && completedCount >= ALL_TASK_IDS.length
-            : isToday && legacyAll;
+async function getSeasonComparison(oldId, newId, oldLabel, newLabel) {
+  const config = await getSeasonConfig();
+  const index = await buildSeasonIndex(config);
+  const oldSeason = index.getSeason(oldId) || { seasonId: oldId, label: seasonLabelForId(oldId, oldLabel), count: 0, users: [] };
+  const newSeason = index.getSeason(newId) || { seasonId: newId, label: seasonLabelForId(newId, newLabel), count: 0, users: [] };
 
-        return {
-          user,
-          tasks,
-          completedCount: isToday ? completedCount : 0,
-          allFiveComplete: allFive,
-          taskDate: taskDate || (hasToday ? today : ''),
-          updatedAt: isToday ? updatedAt : 0,
-        };
-      }
+  return {
+    oldSeason: {
+      id: oldId.toLowerCase(),
+      label: oldLabel || oldSeason.label,
+      count: oldSeason.count,
+      users: oldSeason.users,
+    },
+    newSeason: {
+      id: newId.toLowerCase(),
+      label: newLabel || newSeason.label,
+      count: newSeason.count,
+      users: newSeason.users,
+    },
+  };
+}
 
-      async function getDailyTasks() {
-        const { getDocs } = await fs();
-        const [adminEmails, snap] = await Promise.all([resolveAdminEmails(), getDocs(usersCol)]);
-        return snap.docs
-          .map((d) => buildTaskRow(d.data(), userFromMap(d.id, d.data()), adminEmails))
-          .filter(Boolean)
-          .sort((a, b) => {
-            if (a.allFiveComplete !== b.allFiveComplete) return a.allFiveComplete ? 1 : -1;
-            if (a.completedCount !== b.completedCount) return b.completedCount - a.completedCount;
-            return a.user.name.localeCompare(b.user.name);
-          });
-      }
+function buildEmptyTodayTasks() {
+  const now = Date.now();
+  return Object.fromEntries(
+    ALL_TASK_IDS.map((id) => [
+      String(id),
+      {
+        completed: false,
+        completedAt: 0,
+        resetAt: now,
+        streakDay: 1,
+        lastClaimEpochDay: -1,
+      },
+    ]),
+  );
+}
 
-      function parseRtdbRooms(snap) {
-        return snap.exists() ? snap.val() : null;
-      }
+async function getDailyResetMeta() {
+  await ensureDb();
+  const { getDoc } = await fs();
+  const snap = await getDoc(dailyTasksMetaDoc);
+  if (!snap.exists()) return { lastResetDate: '' };
+  return { lastResetDate: snap.data().lastResetDate || '' };
+}
 
-      function resolveMatchWinner(data, hostName, guestName, hostScore, guestScore) {
-        const raw = String(data.tournamentWinner || data.winner || '').trim();
-        const token = raw.toLowerCase();
+async function saveDailyResetMeta(date) {
+  await ensureDb();
+  const { setDoc } = await fs();
+  await setDoc(
+    dailyTasksMetaDoc,
+    { lastResetDate: date, lastResetAt: Date.now() },
+    { merge: true },
+  );
+}
 
-        const hostWin = { label: hostName, kind: 'host' };
-        const guestWin = { label: guestName, kind: 'guest' };
-        const draw = { label: 'Draw', kind: 'draw' };
+async function resetAllDailyTasks() {
+  await ensureDb();
+  const { getDocs, writeBatch, doc } = await fs();
+  const adminEmails = await resolveAdminEmails();
+  const snap = await getDocs(usersCol);
+  const today = todayKey();
+  const emptyTasks = buildEmptyTodayTasks();
+  const payload = {
+    dailyTaskDate: today,
+    dailyTasksCompleted: [],
+    dailyTaskCount: 0,
+    dailyTaskAllComplete: false,
+    dailyTaskUpdatedAt: Date.now(),
+    todayTasks: emptyTasks,
+  };
 
-        if (token === 'host' || token === 'x' || token === 'white') return hostWin;
-        if (token === 'guest' || token === 'o' || token === 'black') return guestWin;
-        if (token === 'draw') return draw;
+  let batch = writeBatch(firestore);
+  let ops = 0;
+  let resetCount = 0;
 
-        if (raw && data.host && raw === data.host) return hostWin;
-        if (raw && data.guest && raw === data.guest) return guestWin;
-        if (raw && raw === hostName) return hostWin;
-        if (raw && raw === guestName) return guestWin;
+  for (const d of snap.docs) {
+    const user = userFromMap(d.id, d.data());
+    if (isAdminUser(user, adminEmails)) continue;
+    batch.update(doc(firestore, 'users', d.id), payload);
+    ops++;
+    resetCount++;
+    if (ops >= 400) {
+      await batch.commit();
+      batch = writeBatch(firestore);
+      ops = 0;
+    }
+  }
+  if (ops > 0) await batch.commit();
+  await saveDailyResetMeta(today);
+  return resetCount;
+}
 
-        if (hostScore > guestScore) return hostWin;
-        if (guestScore > hostScore) return guestWin;
-        if (raw) return { label: raw, kind: 'other' };
-        return draw;
-      }
+async function maybeAutoResetDailyTasks() {
+  const today = todayKey();
+  const meta = await getDailyResetMeta();
+  if (meta.lastResetDate === today) return null;
+  return resetAllDailyTasks();
+}
 
-      function winnerBadgeHtml(winner) {
-        if (!winner || winner.kind === 'draw') {
-          return '<span class="badge badge-muted">Draw</span>';
-        }
-        if (winner.kind === 'host') {
-          return `<span class="badge badge-success">🏆 ${esc(winner.label)}</span>`;
-        }
-        if (winner.kind === 'guest') {
-          return `<span class="badge badge-info">🏆 ${esc(winner.label)}</span>`;
-        }
-        return `<span class="badge badge-success">🏆 ${esc(winner.label)}</span>`;
-      }
+async function getDashboardStats() {
+  const now = Date.now();
+  const dayStart = startOfToday();
+  const { getDocs } = await fs();
+  const [adminEmails, snapshot] = await Promise.all([resolveAdminEmails(), getDocs(usersCol)]);
 
-      async function getMatches(aiOnly) {
-        const { get, ref } = await rtdbApi();
-        const snaps = await Promise.all(GAME_PATHS.map(({ path }) => get(ref(rtdb, path))));
-        const records = [];
+  const online = [];
+  const today = [];
+  const inactive = [];
+  let total = 0;
+  let loginTodayTotal = 0;
 
-        GAME_PATHS.forEach(({ path, label }, i) => {
-          const rooms = parseRtdbRooms(snaps[i]);
-          if (!rooms) return;
-          for (const [code, data] of Object.entries(rooms)) {
-            const isAi = isAiRoom(data);
-            if (aiOnly && !isAi) continue;
-            if (!aiOnly && isAi) continue;
-            const ended = data.gameEnded === true || data.tournamentEnded === true;
-            if (!ended) continue;
-            const hostName = data.hostName || 'Host';
-            const guestName = data.guestName || 'Guest';
-            const hostScore = Number(data.hostScore ?? data.hostWins ?? 0);
-            const guestScore = Number(data.guestScore ?? data.guestWins ?? 0);
-            const winner = resolveMatchWinner(data, hostName, guestName, hostScore, guestScore);
-            const endedAt = Number(data.matchEndsAt ?? data.createdAt ?? 0);
-            records.push({
-              gamePath: path,
-              gameType: label,
-              roomCode: code,
-              hostName,
-              guestName,
-              hostScore,
-              guestScore,
-              winner: winner.label,
-              winnerKind: winner.kind,
-              winnerHtml: winnerBadgeHtml(winner),
-              betAmount: Number(data.betAmount ?? 0),
-              endedAt,
-              isAi: isAi,
-            });
-          }
-        });
-        return records.sort((a, b) => b.endedAt - a.endedAt);
-      }
+  snapshot.docs.forEach((d) => {
+    const user = userFromMap(d.id, d.data());
+    if (isAdminUser(user, adminEmails)) return;
+    total++;
+    const loginRef = user.lastLogin > 0 ? user.lastLogin : user.lastUpdated;
+    const loggedToday = isLoggedInToday(loginRef);
 
-      async function getAiRecords() {
-        const { get, ref } = await rtdbApi();
-        const snaps = await Promise.all(GAME_PATHS.map(({ path }) => get(ref(rtdb, path))));
-        const records = [];
+    if (isBanned(user)) {
+      inactive.push(user);
+      return;
+    }
+    const onlineNow = now - user.lastUpdated <= ACTIVE_NOW_MS;
+    if (loggedToday) loginTodayTotal++;
+    if (onlineNow) online.push(user);
+    else if (loggedToday) today.push(user);
+    else inactive.push(user);
+  });
 
-        GAME_PATHS.forEach(({ path, label }, i) => {
-          const rooms = parseRtdbRooms(snaps[i]);
-          if (!rooms) return;
-          for (const [code, data] of Object.entries(rooms)) {
-            if (!isAiRoom(data)) continue;
-            const ended = data.gameEnded === true;
-            const started = data.gameStarted === true;
-            records.push({
-              gamePath: path,
-              gameType: label,
-              roomCode: code,
-              aiName: data.guestName || 'AI Bot',
-              hostName: data.hostName || 'Host',
-              joinedAt: Number(data.aiJoinedAt ?? data.createdAt ?? 0),
-              status: ended ? 'ended' : started ? 'in_match' : 'waiting',
-              betAmount: Number(data.betAmount ?? 0),
-            });
-          }
-        });
-        return records.sort((a, b) => b.joinedAt - a.joinedAt);
-      }
+  const sort = (u) => Math.max(u.lastUpdated, u.lastLogin);
+  online.sort((a, b) => sort(b) - sort(a));
+  today.sort((a, b) => sort(b) - sort(a));
+  inactive.sort((a, b) => sort(b) - sort(a));
 
-      async function deleteRtdbRoom(gamePath, roomCode) {
-        const { ref, remove } = await rtdbApi();
-        await remove(ref(rtdb, `${gamePath}/${roomCode}`));
-      }
+  return {
+    totalUsers: total,
+    activeNow: online.length,
+    activeToday: loginTodayTotal,
+    inactiveUsers: inactive.length,
+    loginTodayOnly: today.length,
+    online,
+    today,
+    inactive,
+    dayStart,
+    generatedAt: now,
+  };
+}
 
-      async function deleteAllMatchRecords(aiOnly) {
-        const records = await getMatches(aiOnly);
-        await Promise.all(records.map((r) => deleteRtdbRoom(r.gamePath, r.roomCode)));
-        return records.length;
-      }
+async function getAllUsers() {
+  const { getDocs, limit, orderBy, query } = await fs();
+  const q = query(usersCol, orderBy('lastUpdated', 'desc'), limit(500));
+  const snap = await getDocs(q);
+  return snap.docs.map((d) => userFromMap(d.id, d.data()));
+}
 
-      async function deleteAllAiRooms() {
-        const records = await getAiRecords();
-        await Promise.all(records.map((r) => deleteRtdbRoom(r.gamePath, r.roomCode)));
-        return records.length;
-      }
+async function getTopUsers() {
+  const { getDocs, limit, orderBy, query } = await fs();
+  const q = query(usersCol, orderBy('score', 'desc'), limit(100));
+  const snap = await getDocs(q);
+  return snap.docs.map((d, i) => ({ ...userFromMap(d.id, d.data()), rank: i + 1 }));
+}
 
-      // ── Email sending function ──
-      function sendTaskEmail(userEmail, userName, tasks) {
-        const completedCount = tasks.filter(t => t.completed).length;
-        const totalCount = tasks.length;
-        
-        let subject, body;
-        
-        if (completedCount === 0) {
-          subject = `🌟 ${userName}, Your Daily Tasks Are Waiting! Don't Miss Out!`;
-          body = getTaskReminderEmailBody(userName, tasks);
-        } else if (completedCount < totalCount) {
-          subject = `🚀 Great Start ${userName}! Only ${totalCount - completedCount} Tasks Left!`;
-          body = getTaskIncompleteEmailBody(userName, tasks, completedCount, totalCount);
-        } else {
-          subject = `🎉 Amazing ${userName}! All Tasks Completed Today!`;
-          body = `Dear ${userName || 'Player'},
+async function searchUsers(q) {
+  const trimmed = q.trim();
+  if (!trimmed) return [];
+  const lower = trimmed.toLowerCase();
+  const users = await getAllUsers();
+  return users.filter(
+    (u) =>
+      u.name.toLowerCase().includes(lower) ||
+      u.email.toLowerCase().includes(lower) ||
+      u.playerCode.toLowerCase().includes(lower),
+  );
+}
+
+async function getUserById(id) {
+  const { doc, getDoc } = await fs();
+  const snap = await getDoc(doc(firestore, 'users', id));
+  if (!snap.exists()) throw new Error('User not found');
+  return userFromMap(snap.id, snap.data());
+}
+
+async function updateUser(id, updates) {
+  const { doc, updateDoc } = await fs();
+  await updateDoc(doc(firestore, 'users', id), {
+    ...updates,
+    lastUpdated: Date.now(),
+  });
+}
+
+async function deleteUser(id) {
+  const { deleteDoc, doc } = await fs();
+  await deleteDoc(doc(firestore, 'users', id));
+}
+
+function parseTasks(data) {
+  const todayTasks = data.todayTasks || {};
+  return ALL_TASK_IDS.map((taskId) => {
+    const t = todayTasks[String(taskId)] || {};
+    return {
+      taskId,
+      taskName: taskTitle(taskId),
+      completed: Boolean(t.completed),
+    };
+  });
+}
+
+function buildTaskRow(docData, user, adminEmails) {
+  if (isAdminUser(user, adminEmails)) return null;
+  const today = todayKey();
+  const taskDate = docData.dailyTaskDate || '';
+  const updatedAt = Number(docData.dailyTaskUpdatedAt || 0);
+  const entries = parseTasks(docData);
+  const hasToday = entries.some((t) => t.completed);
+  const legacy = (docData.dailyTasksCompleted || []).map(Number);
+  const legacyCount = Number(docData.dailyTaskCount ?? legacy.length);
+  const legacyAll = Boolean(docData.dailyTaskAllComplete ?? legacyCount >= ALL_TASK_IDS.length);
+
+  const tasks =
+    entries.some((t) => t.completed) || Object.keys(docData.todayTasks || {}).length
+      ? entries
+      : ALL_TASK_IDS.map((id) => ({
+          taskId: id,
+          taskName: taskTitle(id),
+          completed: legacy.includes(id),
+        }));
+
+  const completedCount = tasks.filter((t) => t.completed).length;
+  const isToday = taskDate === today || hasToday;
+  const allFive =
+    Object.keys(docData.todayTasks || {}).length > 0
+      ? isToday && completedCount >= ALL_TASK_IDS.length
+      : isToday && legacyAll;
+
+  return {
+    user,
+    tasks,
+    completedCount: isToday ? completedCount : 0,
+    allFiveComplete: allFive,
+    taskDate: taskDate || (hasToday ? today : ''),
+    updatedAt: isToday ? updatedAt : 0,
+  };
+}
+
+async function getDailyTasks() {
+  const { getDocs } = await fs();
+  const [adminEmails, snap] = await Promise.all([resolveAdminEmails(), getDocs(usersCol)]);
+  return snap.docs
+    .map((d) => buildTaskRow(d.data(), userFromMap(d.id, d.data()), adminEmails))
+    .filter(Boolean)
+    .sort((a, b) => {
+      if (a.allFiveComplete !== b.allFiveComplete) return a.allFiveComplete ? 1 : -1;
+      if (a.completedCount !== b.completedCount) return b.completedCount - a.completedCount;
+      return a.user.name.localeCompare(b.user.name);
+    });
+}
+
+function parseRtdbRooms(snap) {
+  return snap.exists() ? snap.val() : null;
+}
+
+function resolveMatchWinner(data, hostName, guestName, hostScore, guestScore) {
+  const raw = String(data.tournamentWinner || data.winner || '').trim();
+  const token = raw.toLowerCase();
+
+  const hostWin = { label: hostName, kind: 'host' };
+  const guestWin = { label: guestName, kind: 'guest' };
+  const draw = { label: 'Draw', kind: 'draw' };
+
+  if (token === 'host' || token === 'x' || token === 'white') return hostWin;
+  if (token === 'guest' || token === 'o' || token === 'black') return guestWin;
+  if (token === 'draw') return draw;
+
+  if (raw && data.host && raw === data.host) return hostWin;
+  if (raw && data.guest && raw === data.guest) return guestWin;
+  if (raw && raw === hostName) return hostWin;
+  if (raw && raw === guestName) return guestWin;
+
+  if (hostScore > guestScore) return hostWin;
+  if (guestScore > hostScore) return guestWin;
+  if (raw) return { label: raw, kind: 'other' };
+  return draw;
+}
+
+function winnerBadgeHtml(winner) {
+  if (!winner || winner.kind === 'draw') {
+    return '<span class="badge badge-muted">Draw</span>';
+  }
+  if (winner.kind === 'host') {
+    return `<span class="badge badge-success">🏆 ${esc(winner.label)}</span>`;
+  }
+  if (winner.kind === 'guest') {
+    return `<span class="badge badge-info">🏆 ${esc(winner.label)}</span>`;
+  }
+  return `<span class="badge badge-success">🏆 ${esc(winner.label)}</span>`;
+}
+
+async function getMatches(aiOnly) {
+  const { get, ref } = await rtdbApi();
+  const snaps = await Promise.all(GAME_PATHS.map(({ path }) => get(ref(rtdb, path))));
+  const records = [];
+
+  GAME_PATHS.forEach(({ path, label }, i) => {
+    const rooms = parseRtdbRooms(snaps[i]);
+    if (!rooms) return;
+    for (const [code, data] of Object.entries(rooms)) {
+      const isAi = isAiRoom(data);
+      if (aiOnly && !isAi) continue;
+      if (!aiOnly && isAi) continue;
+      const ended = data.gameEnded === true || data.tournamentEnded === true;
+      if (!ended) continue;
+      const hostName = data.hostName || 'Host';
+      const guestName = data.guestName || 'Guest';
+      const hostScore = Number(data.hostScore ?? data.hostWins ?? 0);
+      const guestScore = Number(data.guestScore ?? data.guestWins ?? 0);
+      const winner = resolveMatchWinner(data, hostName, guestName, hostScore, guestScore);
+      const endedAt = Number(data.matchEndsAt ?? data.createdAt ?? 0);
+      records.push({
+        gamePath: path,
+        gameType: label,
+        roomCode: code,
+        hostName,
+        guestName,
+        hostScore,
+        guestScore,
+        winner: winner.label,
+        winnerKind: winner.kind,
+        winnerHtml: winnerBadgeHtml(winner),
+        betAmount: Number(data.betAmount ?? 0),
+        endedAt,
+        isAi: isAi,
+      });
+    }
+  });
+  return records.sort((a, b) => b.endedAt - a.endedAt);
+}
+
+async function getAiRecords() {
+  const { get, ref } = await rtdbApi();
+  const snaps = await Promise.all(GAME_PATHS.map(({ path }) => get(ref(rtdb, path))));
+  const records = [];
+
+  GAME_PATHS.forEach(({ path, label }, i) => {
+    const rooms = parseRtdbRooms(snaps[i]);
+    if (!rooms) return;
+    for (const [code, data] of Object.entries(rooms)) {
+      if (!isAiRoom(data)) continue;
+      const ended = data.gameEnded === true;
+      const started = data.gameStarted === true;
+      records.push({
+        gamePath: path,
+        gameType: label,
+        roomCode: code,
+        aiName: data.guestName || 'AI Bot',
+        hostName: data.hostName || 'Host',
+        joinedAt: Number(data.aiJoinedAt ?? data.createdAt ?? 0),
+        status: ended ? 'ended' : started ? 'in_match' : 'waiting',
+        betAmount: Number(data.betAmount ?? 0),
+      });
+    }
+  });
+  return records.sort((a, b) => b.joinedAt - a.joinedAt);
+}
+
+async function deleteRtdbRoom(gamePath, roomCode) {
+  const { ref, remove } = await rtdbApi();
+  await remove(ref(rtdb, `${gamePath}/${roomCode}`));
+}
+
+async function deleteAllMatchRecords(aiOnly) {
+  const records = await getMatches(aiOnly);
+  await Promise.all(records.map((r) => deleteRtdbRoom(r.gamePath, r.roomCode)));
+  return records.length;
+}
+
+async function deleteAllAiRooms() {
+  const records = await getAiRecords();
+  await Promise.all(records.map((r) => deleteRtdbRoom(r.gamePath, r.roomCode)));
+  return records.length;
+}
+
+// ── Email sending function ──
+function sendTaskEmail(userEmail, userName, tasks) {
+  const completedCount = tasks.filter(t => t.completed).length;
+  const totalCount = tasks.length;
+  
+  let subject, body;
+  
+  if (completedCount === 0) {
+    subject = `🌟 ${userName}, Your Daily Tasks Are Waiting! Don't Miss Out!`;
+    body = getTaskReminderEmailBody(userName, tasks);
+  } else if (completedCount < totalCount) {
+    subject = `🚀 Great Start ${userName}! Only ${totalCount - completedCount} Tasks Left!`;
+    body = getTaskIncompleteEmailBody(userName, tasks, completedCount, totalCount);
+  } else {
+    subject = `🎉 Amazing ${userName}! All Tasks Completed Today!`;
+    body = `Dear ${userName || 'Player'},
 
 🌟 CONGRATULATIONS! You're a Daily Task Champion! 🌟
 
@@ -1976,1557 +1904,1536 @@ Stay legendary,
 The CroomX Team 👑
 
 "Success is the sum of small efforts repeated day in and day out."`;
+  }
+  
+  // Create mailto link with encoded parameters
+  const mailtoLink = `mailto:${encodeURIComponent(userEmail)}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+  
+  // Open email client
+  window.open(mailtoLink, '_blank');
+}
+
+const CHART_COLORS = ['#22c55e', '#3b82f6', '#eab308', '#ec4899', '#a855f7', '#f97316', '#06b6d4', '#ef4444'];
+
+function renderBarChartSvg(labels, values, { yLabel = 'Count', xLabel = 'Category', markerId } = {}) {
+  if (!labels.length) {
+    return '<p class="empty">No chart data yet.</p>';
+  }
+
+  const arrowId = markerId || `arrow-${Math.random().toString(36).slice(2, 9)}`;
+
+  const maxVal = Math.max(...values, 1);
+  const yMax = Math.max(10, Math.ceil(maxVal / 5) * 5);
+  const tickStep = yMax <= 10 ? 1 : Math.ceil(yMax / 10);
+  const ticks = [];
+  for (let v = 0; v <= yMax; v += tickStep) ticks.push(v);
+
+  const barW = 56;
+  const gap = 32;
+  const chartH = 260;
+  const padL = 56;
+  const padR = 28;
+  const padT = 28;
+  const padB = 88;
+  const innerW = labels.length * barW + (labels.length - 1) * gap;
+  const width = padL + innerW + padR;
+  const height = padT + chartH + padB;
+  const gridLines = ticks
+    .map((t) => {
+      const y = padT + chartH - (t / yMax) * chartH;
+      return `<line x1="${padL}" y1="${y}" x2="${width - padR}" y2="${y}" stroke="#cbd5e1" stroke-width="1"/>`;
+    })
+    .join('');
+
+  const yLabels = ticks
+    .map((t) => {
+      const y = padT + chartH - (t / yMax) * chartH;
+      return `<text class="chart-tick" x="${padL - 10}" y="${y + 4}" text-anchor="end">${t}</text>`;
+    })
+    .join('');
+
+  const bars = labels
+    .map((label, i) => {
+      const val = values[i];
+      const h = Math.max(2, (val / yMax) * chartH);
+      const x = padL + i * (barW + gap);
+      const y = padT + chartH - h;
+      const color = CHART_COLORS[i % CHART_COLORS.length];
+      const guideY = y;
+      const short = label.length > 12 ? `${label.slice(0, 11)}…` : label;
+      return `
+        <rect x="${x}" y="${y}" width="${barW}" height="${h}" fill="${color}" rx="4"/>
+        <line x1="${padL - 4}" y1="${guideY}" x2="${x + barW / 2}" y2="${guideY}" stroke="#dc2626" stroke-width="1.5" stroke-dasharray="4 3" marker-end="url(#${arrowId})"/>
+        <text class="chart-bar-value" x="${x + barW / 2}" y="${padT + chartH + 18}" text-anchor="middle">${val}</text>
+        <text class="chart-bar-label" x="${x + barW / 2}" y="${padT + chartH + 38}" text-anchor="middle">${esc(short)}</text>
+      `;
+    })
+    .join('');
+
+  return `
+    <div class="chart-wrap">
+      <svg width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" role="img" aria-label="${esc(yLabel)} bar chart">
+        <defs>
+          <marker id="${arrowId}" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+            <path d="M0,0 L6,3 L0,6 Z" fill="#dc2626"/>
+          </marker>
+        </defs>
+        ${gridLines}
+        ${yLabels}
+        ${bars}
+        <text class="chart-axis-label" x="16" y="${padT + chartH / 2}" transform="rotate(-90 16 ${padT + chartH / 2})" text-anchor="middle">${esc(yLabel)}</text>
+        <text class="chart-axis-label" x="${padL + innerW / 2}" y="${height - 8}" text-anchor="middle">${esc(xLabel)}</text>
+      </svg>
+    </div>`;
+}
+
+function renderSeasonUsersTable(users, emptyText) {
+  if (!users.length) {
+    return `<p class="empty">${esc(emptyText)}</p>`;
+  }
+  return `
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Rank</th><th>Player</th><th>Email</th><th>Code</th>
+            <th class="text-right">Score</th><th class="text-right">Games</th><th class="text-right">Wins</th><th>Data</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${users
+            .map(
+              (u) => `<tr>
+            <td>#${u.rank}</td>
+            <td>${esc(u.name || 'Unnamed')}</td>
+            <td>${esc(u.email || '—')}</td>
+            <td>${esc(playerId(u))}</td>
+            <td class="text-right">${u.score}</td>
+            <td class="text-right">${u.gamesPlayed}</td>
+            <td class="text-right">${u.gamesWon}</td>
+            <td>${u.source === 'archived' ? '<span class="badge badge-muted">Archived</span>' : '<span class="badge badge-success">Current</span>'}</td>
+          </tr>`,
+            )
+            .join('')}
+        </tbody>
+      </table>
+    </div>`;
+}
+
+function renderChartPanel(title, labels, values, options = {}) {
+  const id = options.id || `chart-${Math.random().toString(36).slice(2, 9)}`;
+  const markerId = `arrow-${id}`;
+  const extraBtn = options.extraButton
+    ? `<button type="button" class="chart-btn chart-btn-text" data-extra-btn="${esc(options.extraButtonId || '')}">${esc(options.extraButton)}</button>`
+    : '';
+  return `
+    <div class="chart-panel" id="${id}" data-chart-panel>
+      <div class="chart-panel-head">
+        <h3>${esc(title)}</h3>
+        <div class="chart-controls">
+          ${extraBtn}
+          <button type="button" class="chart-btn" data-action="minimize" title="Minimize">−</button>
+          <button type="button" class="chart-btn" data-action="maximize" title="Maximize">□</button>
+          <button type="button" class="chart-btn" data-action="fullscreen" title="Full screen">⛶</button>
+        </div>
+      </div>
+      <div class="chart-panel-body">
+        ${renderBarChartSvg(labels, values, { ...options, markerId })}
+      </div>
+      ${options.bodyBelow || ''}
+    </div>`;
+}
+
+function bindChartControls(root = document) {
+  root.querySelectorAll('[data-chart-panel]').forEach((panel) => {
+    panel.querySelectorAll('.chart-btn[data-action]').forEach((btn) => {
+      btn.onclick = () => {
+        const action = btn.dataset.action;
+        if (action === 'minimize') {
+          panel.classList.toggle('minimized');
+          panel.classList.remove('maximized');
+        } else if (action === 'maximize') {
+          panel.classList.toggle('maximized');
+          panel.classList.remove('minimized');
+        } else if (action === 'fullscreen') {
+          if (document.fullscreenElement === panel) {
+            void document.exitFullscreen();
+          } else {
+            void panel.requestFullscreen?.();
+          }
         }
-        
-        const mailtoLink = `mailto:${encodeURIComponent(userEmail)}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-        window.open(mailtoLink, '_blank');
-      }
-
-      const CHART_COLORS = ['#22c55e', '#3b82f6', '#eab308', '#ec4899', '#a855f7', '#f97316', '#06b6d4', '#ef4444'];
-
-      function renderBarChartSvg(labels, values, { yLabel = 'Count', xLabel = 'Category', markerId } = {}) {
-        if (!labels.length) {
-          return '<p class="empty">No chart data yet.</p>';
-        }
-
-        const arrowId = markerId || `arrow-${Math.random().toString(36).slice(2, 9)}`;
-
-        const maxVal = Math.max(...values, 1);
-        const yMax = Math.max(10, Math.ceil(maxVal / 5) * 5);
-        const tickStep = yMax <= 10 ? 1 : Math.ceil(yMax / 10);
-        const ticks = [];
-        for (let v = 0; v <= yMax; v += tickStep) ticks.push(v);
-
-        const barW = 56;
-        const gap = 32;
-        const chartH = 260;
-        const padL = 56;
-        const padR = 28;
-        const padT = 28;
-        const padB = 88;
-        const innerW = labels.length * barW + (labels.length - 1) * gap;
-        const width = padL + innerW + padR;
-        const height = padT + chartH + padB;
-        const gridLines = ticks
-          .map((t) => {
-            const y = padT + chartH - (t / yMax) * chartH;
-            return `<line x1="${padL}" y1="${y}" x2="${width - padR}" y2="${y}" stroke="#cbd5e1" stroke-width="1"/>`;
-          })
-          .join('');
-
-        const yLabels = ticks
-          .map((t) => {
-            const y = padT + chartH - (t / yMax) * chartH;
-            return `<text class="chart-tick" x="${padL - 10}" y="${y + 4}" text-anchor="end">${t}</text>`;
-          })
-          .join('');
-
-        const bars = labels
-          .map((label, i) => {
-            const val = values[i];
-            const h = Math.max(2, (val / yMax) * chartH);
-            const x = padL + i * (barW + gap);
-            const y = padT + chartH - h;
-            const color = CHART_COLORS[i % CHART_COLORS.length];
-            const guideY = y;
-            const short = label.length > 12 ? `${label.slice(0, 11)}…` : label;
-            return `
-              <rect x="${x}" y="${y}" width="${barW}" height="${h}" fill="${color}" rx="4"/>
-              <line x1="${padL - 4}" y1="${guideY}" x2="${x + barW / 2}" y2="${guideY}" stroke="#dc2626" stroke-width="1.5" stroke-dasharray="4 3" marker-end="url(#${arrowId})"/>
-              <text class="chart-bar-value" x="${x + barW / 2}" y="${padT + chartH + 18}" text-anchor="middle">${val}</text>
-              <text class="chart-bar-label" x="${x + barW / 2}" y="${padT + chartH + 38}" text-anchor="middle">${esc(short)}</text>
-            `;
-          })
-          .join('');
-
-        return `
-          <div class="chart-wrap">
-            <svg width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" role="img" aria-label="${esc(yLabel)} bar chart">
-              <defs>
-                <marker id="${arrowId}" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
-                  <path d="M0,0 L6,3 L0,6 Z" fill="#dc2626"/>
-                </marker>
-              </defs>
-              ${gridLines}
-              ${yLabels}
-              ${bars}
-              <text class="chart-axis-label" x="16" y="${padT + chartH / 2}" transform="rotate(-90 16 ${padT + chartH / 2})" text-anchor="middle">${esc(yLabel)}</text>
-              <text class="chart-axis-label" x="${padL + innerW / 2}" y="${height - 8}" text-anchor="middle">${esc(xLabel)}</text>
-            </svg>
-          </div>`;
-      }
-
-      function renderSeasonUsersTable(users, emptyText) {
-        if (!users.length) {
-          return `<p class="empty">${esc(emptyText)}</p>`;
-        }
-        return `
-          <div class="table-wrap">
-            <table>
-              <thead>
-                <tr>
-                  <th>Rank</th><th>Player</th><th>Email</th><th>Code</th>
-                  <th class="text-right">Score</th><th class="text-right">Games</th><th class="text-right">Wins</th><th>Data</th>
-                </tr>
-              </thead>
-              <tbody>
-                ${users
-                  .map(
-                    (u) => `<tr>
-                  <td>#${u.rank}</td>
-                  <td>${esc(u.name || 'Unnamed')}</td>
-                  <td>${esc(u.email || '—')}</td>
-                  <td>${esc(playerId(u))}</td>
-                  <td class="text-right">${u.score}</td>
-                  <td class="text-right">${u.gamesPlayed}</td>
-                  <td class="text-right">${u.gamesWon}</td>
-                  <td>${u.source === 'archived' ? '<span class="badge badge-muted">Archived</span>' : '<span class="badge badge-success">Current</span>'}</td>
-                </tr>`,
-                  )
-                  .join('')}
-              </tbody>
-            </table>
-          </div>`;
-      }
-
-      function renderChartPanel(title, labels, values, options = {}) {
-        const id = options.id || `chart-${Math.random().toString(36).slice(2, 9)}`;
-        const markerId = `arrow-${id}`;
-        const extraBtn = options.extraButton
-          ? `<button type="button" class="chart-btn chart-btn-text" data-extra-btn="${esc(options.extraButtonId || '')}">${esc(options.extraButton)}</button>`
-          : '';
-        return `
-          <div class="chart-panel" id="${id}" data-chart-panel>
-            <div class="chart-panel-head">
-              <h3>${esc(title)}</h3>
-              <div class="chart-controls">
-                ${extraBtn}
-                <button type="button" class="chart-btn" data-action="minimize" title="Minimize">−</button>
-                <button type="button" class="chart-btn" data-action="maximize" title="Maximize">□</button>
-                <button type="button" class="chart-btn" data-action="fullscreen" title="Full screen">⛶</button>
-              </div>
-            </div>
-            <div class="chart-panel-body">
-              ${renderBarChartSvg(labels, values, { ...options, markerId })}
-            </div>
-            ${options.bodyBelow || ''}
-          </div>`;
-      }
-
-      function bindChartControls(root = document) {
-        root.querySelectorAll('[data-chart-panel]').forEach((panel) => {
-          panel.querySelectorAll('.chart-btn[data-action]').forEach((btn) => {
-            btn.onclick = () => {
-              const action = btn.dataset.action;
-              if (action === 'minimize') {
-                panel.classList.toggle('minimized');
-                panel.classList.remove('maximized');
-              } else if (action === 'maximize') {
-                panel.classList.toggle('maximized');
-                panel.classList.remove('minimized');
-              } else if (action === 'fullscreen') {
-                if (document.fullscreenElement === panel) {
-                  void document.exitFullscreen();
-                } else {
-                  void panel.requestFullscreen?.();
-                }
-              }
-            };
-          });
-        });
-      }
-
-      function renderBarChart(labels, values, options = {}) {
-        return renderChartPanel(options.title || 'Chart', labels, values, options);
-      }
-
-      // ── App ──
-      const $ = (sel) => document.querySelector(sel);
-      const loginScreen = $('#login-screen');
-      const deniedScreen = $('#denied-screen');
-      const appShell = $('#app-shell');
-      const pageContent = $('#page-content');
-      const sidebar = $('#sidebar');
-      const deniedEmail = $('#denied-email');
-      const loginError = $('#login-error');
-
-      let currentUser = null;
-      let isAdmin = false;
-
-      const routes = {
-        dashboard: renderDashboard,
-        users: renderUsers,
-        'user-detail': renderUserDetail,
-        tasks: renderTasks,
-        matches: renderMatches,
-        ai: renderAi,
-        season: renderSeason,
       };
+    });
+  });
+}
 
-      function show(el) {
-        // Hide all main screens
-        loginScreen.classList.add('hidden');
-        deniedScreen.classList.add('hidden');
-        appShell.classList.add('hidden');
-        // Show requested element
-        el.classList.remove('hidden');
+function renderBarChart(labels, values, options = {}) {
+  return renderChartPanel(options.title || 'Chart', labels, values, options);
+}
+
+// ── App ──
+const $ = (sel) => document.querySelector(sel);
+const loginScreen = $('#login-screen');
+const deniedScreen = $('#denied-screen');
+const appShell = $('#app-shell');
+const pageContent = $('#page-content');
+const sidebar = $('#sidebar');
+const deniedEmail = $('#denied-email');
+const loginError = $('#login-error');
+
+let currentUser = null;
+let isAdmin = false;
+
+const routes = {
+  dashboard: renderDashboard,
+  users: renderUsers,
+  'user-detail': renderUserDetail,
+  tasks: renderTasks,
+  matches: renderMatches,
+  ai: renderAi,
+  season: renderSeason,
+};
+
+function show(el) {
+  loginScreen.classList.add('hidden');
+  deniedScreen.classList.add('hidden');
+  appShell.classList.add('hidden');
+  el.classList.remove('hidden');
+}
+
+function setActiveNav() {
+  const hash = location.hash.slice(2) || 'dashboard';
+  const page = hash.split('/')[0];
+  document.querySelectorAll('.nav a').forEach((a) => {
+    a.classList.toggle('active', a.dataset.page === page);
+  });
+}
+
+function navigate(page, param) {
+  pauseAutoRefresh(2500);
+  location.hash = param ? `#/${page}/${param}` : `#/${page}`;
+}
+
+const REFRESH_INTERVAL_MS = 2500;
+let currentRouteKey = '';
+let routeBusy = false;
+let routeGeneration = 0;
+let pauseRefreshUntil = 0;
+let lastHash = '';
+
+function routeKey() {
+  return (location.hash.slice(2) || 'dashboard').split('?')[0];
+}
+
+function isCurrentRoute(page, param) {
+  const key = routeKey();
+  return param ? key === `${page}/${param}` : key === page;
+}
+
+function pauseAutoRefresh(ms = 2500) {
+  pauseRefreshUntil = Date.now() + ms;
+}
+
+async function route(options = {}) {
+  const soft = options.soft === true;
+  const key = routeKey();
+  const parts = key.split('/');
+  const page = parts[0];
+  const param = parts[1];
+  const fn = routes[page] || routes.dashboard;
+
+  if (soft) {
+    if (Date.now() < pauseRefreshUntil || routeBusy || document.hidden) return;
+    if (page === 'user-detail') return;
+    if (!['dashboard', 'users', 'season', 'matches', 'ai', 'tasks'].includes(page)) return;
+  } else {
+    pauseAutoRefresh(2000);
+    if (currentRouteKey === key && pageContent.querySelector('.page-header') && !routeBusy) {
+      setActiveNav();
+      return;
+    }
+    currentRouteKey = key;
+    routeGeneration += 1;
+    const myGen = routeGeneration;
+    setActiveNav();
+    pageContent.classList.add('is-navigating');
+    routeBusy = true;
+    try {
+      await fn(param, { soft });
+      if (myGen !== routeGeneration) return;
+    } catch (e) {
+      if (myGen !== routeGeneration) return;
+      pageContent.innerHTML = `<div class="alert alert-error">${esc(e.message)}</div>`;
+    } finally {
+      if (myGen === routeGeneration) {
+        routeBusy = false;
+        pageContent.classList.remove('is-navigating');
       }
+    }
+    return;
+  }
 
-      function setActiveNav() {
-        const hash = location.hash.slice(2) || 'dashboard';
-        const page = hash.split('/')[0];
-        document.querySelectorAll('.nav a').forEach((a) => {
-          a.classList.toggle('active', a.dataset.page === page);
-        });
+  routeBusy = true;
+  const softGen = routeGeneration;
+  try {
+    await fn(param, { soft });
+  } catch (e) {
+    // Soft refresh errors are non-blocking.
+  } finally {
+    if (softGen === routeGeneration) routeBusy = false;
+  }
+}
+
+let usersPageState = null;
+let seasonPageState = { selectedSeasonId: null, showScoreUsers: true };
+let matchesPageState = null;
+let aiPageState = null;
+let dashPanelCache = {};
+let lastDashSubtitleAt = 0;
+let adminRefreshTimer = null;
+
+function stopAdminAutoRefresh() {
+  if (adminRefreshTimer) {
+    clearInterval(adminRefreshTimer);
+    adminRefreshTimer = null;
+  }
+}
+
+function startAdminAutoRefresh() {
+  stopAdminAutoRefresh();
+  adminRefreshTimer = setInterval(() => {
+    if (!isAdmin || document.hidden || Date.now() < pauseRefreshUntil || routeBusy) return;
+    void route({ soft: true });
+  }, REFRESH_INTERVAL_MS);
+}
+
+function chartFingerprint(labels, values) {
+  return JSON.stringify({ labels, values });
+}
+
+const chartRenderCache = new Map();
+
+function mountChartPanel(container, cacheKey, title, labels, values, options = {}) {
+  if (!container) return;
+  const fp = chartFingerprint(labels, values);
+  if (chartRenderCache.get(cacheKey) === fp && container.querySelector('[data-chart-panel]')) {
+    return;
+  }
+  chartRenderCache.set(cacheKey, fp);
+  container.innerHTML = renderChartPanel(title, labels, values, options);
+  bindChartControls(container);
+}
+
+function setTextIfChanged(el, text) {
+  if (el && el.textContent !== String(text)) el.textContent = String(text);
+}
+
+function usersPanelKey(users) {
+  return users.map((u) => `${u.id}:${u.score}:${Math.max(u.lastUpdated, u.lastLogin)}`).join('|');
+}
+
+function updateUserPanel(panel, title, users, empty, cacheKey, panelCache) {
+  if (!panel) return;
+  const key = usersPanelKey(users);
+  if (panelCache[cacheKey] === key) return;
+  panelCache[cacheKey] = key;
+  panel.innerHTML = `<h3>${title}</h3>${userListHtml(users, empty)}`;
+}
+
+function userListHtml(users, empty) {
+  if (!users.length) return `<p class="empty">${empty}</p>`;
+  return `<ul class="user-list">${users
+    .slice(0, 20)
+    .map(
+      (u) => `
+    <li>
+      <div>
+        <strong>${esc(u.name || 'Unnamed')}</strong>
+        <div class="meta">${esc(playerId(u))} • ${fmtRelative(Math.max(u.lastUpdated, u.lastLogin))}</div>
+      </div>
+      <span class="badge badge-muted">${u.score}</span>
+    </li>`,
+    )
+    .join('')}</ul>`;
+}
+
+async function renderDashboard(_param, options = {}) {
+  const soft = options.soft === true;
+  const [stats, resetMeta, config] = await Promise.all([
+    getDashboardStats(),
+    getDailyResetMeta(),
+    getSeasonConfig(),
+  ]);
+  const seasonIndex = await buildSeasonIndex(config);
+  const seasonLabels = seasonIndex.seasons.map((s) => s.label);
+  const seasonValues = seasonIndex.seasons.map((s) => s.count);
+  const statusLabels = ['Online', 'Login Today', 'Inactive'];
+  const statusValues = [stats.activeNow, stats.activeToday, stats.inactiveUsers];
+
+  if (soft && $('#dash-stat-total')) {
+    setTextIfChanged($('#dash-stat-total'), stats.totalUsers);
+    setTextIfChanged($('#dash-stat-online'), stats.activeNow);
+    setTextIfChanged($('#dash-stat-today'), stats.activeToday);
+    setTextIfChanged($('#dash-stat-inactive'), stats.inactiveUsers);
+    if (Date.now() - lastDashSubtitleAt > 5000) {
+      setTextIfChanged($('#dash-subtitle'), `Updated ${fmtDate(stats.generatedAt)} • Live`);
+      lastDashSubtitleAt = Date.now();
+    }
+    updateUserPanel($('#dash-panel-online'), 'Online now', stats.online, 'No users online.', 'online', dashPanelCache);
+    updateUserPanel(
+      $('#dash-panel-today'),
+      'Logged in today',
+      [...stats.online, ...stats.today],
+      'No users logged in today.',
+      'today',
+      dashPanelCache,
+    );
+    updateUserPanel($('#dash-panel-inactive'), 'Inactive / banned', stats.inactive, 'No inactive users.', 'inactive', dashPanelCache);
+    mountChartPanel($('#dash-status-chart-slot'), 'dash-status', 'User status', statusLabels, statusValues, {
+      id: 'chart-user-status',
+      yLabel: 'Number of users',
+      xLabel: 'User status',
+    });
+    mountChartPanel(
+      $('#dash-season-chart-slot'),
+      'dash-season',
+      'All seasons (users saved per season)',
+      seasonLabels,
+      seasonValues,
+      {
+        id: 'chart-season-compare',
+        yLabel: 'Total users',
+        xLabel: 'Season',
+      },
+    );
+    return;
+  }
+
+  dashPanelCache = {};
+  chartRenderCache.delete('dash-status');
+  chartRenderCache.delete('dash-season');
+
+  let resetNotice = '';
+  const today = todayKey();
+  if (resetMeta.lastResetDate !== today) {
+    try {
+      const count = await maybeAutoResetDailyTasks();
+      if (count !== null) {
+        resetNotice = `<div class="alert alert-info">Daily tasks auto-reset for ${count} users (new day after 12:00 AM).</div>`;
       }
+    } catch (e) {
+      resetNotice = `<div class="alert alert-error">Daily task auto-reset failed: ${esc(e.message)}</div>`;
+    }
+  }
 
-      function navigate(page, param) {
-        pauseAutoRefresh(2500);
-        location.hash = param ? `#/${page}/${param}` : `#/${page}`;
-      }
+  const statusLabelsInit = statusLabels;
+  const statusValuesInit = statusValues;
 
-      const REFRESH_INTERVAL_MS = 2500;
-      let currentRouteKey = '';
-      let routeBusy = false;
-      let routeGeneration = 0;
-      let pauseRefreshUntil = 0;
-      let lastHash = '';
+  if (!isCurrentRoute('dashboard')) return;
 
-      function routeKey() {
-        return (location.hash.slice(2) || 'dashboard').split('?')[0];
-      }
+  pageContent.innerHTML = `
+    <div class="page-header">
+      <div>
+        <h2>Dashboard</h2>
+        <p class="subtitle" id="dash-subtitle">Updated ${fmtDate(stats.generatedAt)} • Live</p>
+      </div>
+      <div class="page-actions">
+        <button class="btn btn-outline btn-sm" id="dash-reset-tasks">Reset daily tasks</button>
+        <button class="btn btn-outline btn-sm" onclick="location.reload()">↻ Refresh</button>
+      </div>
+    </div>
+    ${resetNotice}
+    <div class="stats-grid">
+      <div class="stat-card"><div class="label">Total users</div><div class="value" id="dash-stat-total">${stats.totalUsers}</div></div>
+      <div class="stat-card"><div class="label">Online now (5 min)</div><div class="value green" id="dash-stat-online">${stats.activeNow}</div></div>
+      <div class="stat-card"><div class="label">Logged in today</div><div class="value blue" id="dash-stat-today">${stats.activeToday}</div></div>
+      <div class="stat-card"><div class="label">Inactive / banned</div><div class="value" id="dash-stat-inactive">${stats.inactiveUsers}</div></div>
+    </div>
+    <div class="charts-row">
+      <div id="dash-status-chart-slot">
+      ${renderChartPanel('User status', statusLabelsInit, statusValuesInit, {
+        id: 'chart-user-status',
+        yLabel: 'Number of users',
+        xLabel: 'User status',
+      })}
+      </div>
+      <div id="dash-season-chart-slot">
+      ${renderChartPanel('All seasons (users saved per season)', seasonLabels, seasonValues, {
+        id: 'chart-season-compare',
+        yLabel: 'Total users',
+        xLabel: 'Season',
+      })}
+      </div>
+    </div>
+    <div class="stats-grid">
+      <div class="panel" id="dash-panel-online"><h3>Online now</h3>${userListHtml(stats.online, 'No users online.')}</div>
+      <div class="panel" id="dash-panel-today"><h3>Logged in today</h3>${userListHtml([...stats.online, ...stats.today], 'No users logged in today.')}</div>
+      <div class="panel" id="dash-panel-inactive"><h3>Inactive / banned</h3>${userListHtml(stats.inactive, 'No inactive users.')}</div>
+    </div>
+    <p id="dash-msg" class="subtitle"></p>`;
 
-      function isCurrentRoute(page, param) {
-        const key = routeKey();
-        return param ? key === `${page}/${param}` : key === page;
-      }
+  bindChartControls(pageContent);
 
-      function pauseAutoRefresh(ms = 2500) {
-        pauseRefreshUntil = Date.now() + ms;
-      }
+  $('#dash-reset-tasks').onclick = async () => {
+    pauseAutoRefresh(3000);
+    if (!confirm('Reset daily tasks for all users for today?')) return;
+    const btn = $('#dash-reset-tasks');
+    btn.disabled = true;
+    $('#dash-msg').textContent = 'Resetting daily tasks…';
+    try {
+      const count = await resetAllDailyTasks();
+      $('#dash-msg').textContent = `Daily tasks reset for ${count} users.`;
+    } catch (e) {
+      $('#dash-msg').textContent = e.message || 'Reset failed.';
+    } finally {
+      btn.disabled = false;
+    }
+  };
+}
 
-      async function route(options = {}) {
-        const soft = options.soft === true;
-        const key = routeKey();
-        const parts = key.split('/');
-        const page = parts[0];
-        const param = parts[1];
-        const fn = routes[page] || routes.dashboard;
+async function renderUsers(_param, options = {}) {
+  const soft = options.soft === true;
+  const config = await getSeasonConfig();
+  const seasonIndex = await buildSeasonIndex(config);
 
-        if (soft) {
-          if (Date.now() < pauseRefreshUntil || routeBusy || document.hidden) return;
-          if (page === 'user-detail') return;
-          if (!['dashboard', 'users', 'season', 'matches', 'ai', 'tasks'].includes(page)) return;
-        } else {
-          pauseAutoRefresh(2000);
-          if (currentRouteKey === key && pageContent.querySelector('.page-header') && !routeBusy) {
-            setActiveNav();
-            return;
-          }
-          currentRouteKey = key;
-          routeGeneration += 1;
-          const myGen = routeGeneration;
-          setActiveNav();
-          pageContent.classList.add('is-navigating');
-          routeBusy = true;
-          try {
-            await fn(param, { soft });
-            if (myGen !== routeGeneration) return;
-          } catch (e) {
-            if (myGen !== routeGeneration) return;
-            pageContent.innerHTML = `<div class="alert alert-error">${esc(e.message)}</div>`;
-          } finally {
-            if (myGen === routeGeneration) {
-              routeBusy = false;
-              pageContent.classList.remove('is-navigating');
-            }
-          }
-          return;
-        }
+  if (!usersPageState || !soft) {
+    usersPageState = {
+      tab: usersPageState?.tab || 'all',
+      query: usersPageState?.query || '',
+      selectedSeasonId: usersPageState?.selectedSeasonId || config.seasonId.toLowerCase(),
+      tableKey: '',
+    };
+  }
 
-        routeBusy = true;
-        const softGen = routeGeneration;
-        try {
-          await fn(param, { soft });
-        } catch (e) {
-          // Soft refresh errors are non-blocking.
-        } finally {
-          if (softGen === routeGeneration) routeBusy = false;
-        }
-      }
+  usersPageState.seasonIndex = seasonIndex;
+  usersPageState.config = config;
 
-      let usersPageState = null;
-      let seasonPageState = { selectedSeasonId: null, showScoreUsers: true };
-      let matchesPageState = null;
-      let aiPageState = null;
-      let dashPanelCache = {};
-      let lastDashSubtitleAt = 0;
-      let adminRefreshTimer = null;
+  function seasonUsersForTable() {
+    const season = seasonIndex.getSeason(usersPageState.selectedSeasonId);
+    if (!season) return [];
+    let users = season.users.map((u) => ({ ...u }));
+    if (usersPageState.tab === 'top') {
+      users.sort((a, b) => b.score - a.score || (a.name || '').localeCompare(b.name || ''));
+      users.forEach((u, i) => {
+        u.rank = i + 1;
+      });
+    } else {
+      users.sort((a, b) => b.lastUpdated - a.lastUpdated);
+    }
+    const q = usersPageState.query.trim().toLowerCase();
+    if (!q) return users;
+    return users.filter(
+      (u) =>
+        (u.name || '').toLowerCase().includes(q) ||
+        (u.email || '').toLowerCase().includes(q) ||
+        playerId(u).toLowerCase().includes(q),
+    );
+  }
 
-      function stopAdminAutoRefresh() {
-        if (adminRefreshTimer) {
-          clearInterval(adminRefreshTimer);
-          adminRefreshTimer = null;
-        }
-      }
+  function usersTableKey(users) {
+    return `${usersPageState.tab}:${usersPageState.selectedSeasonId}:${usersPageState.query}:${users.map((u) => `${u.id}:${u.score}:${u.rank}`).join('|')}`;
+  }
 
-      function startAdminAutoRefresh() {
-        stopAdminAutoRefresh();
-        adminRefreshTimer = setInterval(() => {
-          if (!isAdmin || document.hidden || Date.now() < pauseRefreshUntil || routeBusy) return;
-          void route({ soft: true });
-        }, REFRESH_INTERVAL_MS);
-      }
+  function renderUsersTableBody() {
+    const users = seasonUsersForTable();
+    const season = seasonIndex.getSeason(usersPageState.selectedSeasonId);
+    const hintEl = $('#users-season-hint');
+    if (hintEl) {
+      setTextIfChanged(hintEl, season ? `${season.label} (${season.count} users) • Live` : 'Season not found');
+    }
 
-      function chartFingerprint(labels, values) {
-        return JSON.stringify({ labels, values });
-      }
+    document.querySelectorAll('#users-season-row button').forEach((btn) => {
+      const sid = btn.dataset.seasonId;
+      const s = seasonIndex.getSeason(sid);
+      const label = s ? `${s.label} (${s.count})` : sid.toUpperCase();
+      if (btn.textContent !== label) btn.textContent = label;
+      btn.classList.toggle('active', sid === usersPageState.selectedSeasonId);
+      btn.classList.toggle('current', sid === seasonIndex.currentSeasonId);
+    });
 
-      const chartRenderCache = new Map();
+    const tKey = usersTableKey(users);
+    if (usersPageState.tableKey === tKey) return;
+    usersPageState.tableKey = tKey;
 
-      function mountChartPanel(container, cacheKey, title, labels, values, options = {}) {
-        if (!container) return;
-        const fp = chartFingerprint(labels, values);
-        if (chartRenderCache.get(cacheKey) === fp && container.querySelector('[data-chart-panel]')) {
-          return;
-        }
-        chartRenderCache.set(cacheKey, fp);
-        container.innerHTML = renderChartPanel(title, labels, values, options);
-        bindChartControls(container);
-      }
+    $('#users-table-body').innerHTML =
+      users.length === 0
+        ? '<tr><td colspan="8" class="empty">No users in this season</td></tr>'
+        : users
+            .map(
+              (u) => `
+      <tr class="clickable" data-id="${esc(u.id)}">
+        <td>${u.profilePictureUrl ? `<img class="avatar" src="${esc(u.profilePictureUrl)}" alt="">` : ''}${esc(u.name || 'Unnamed')}</td>
+        <td>${esc(u.email)}</td>
+        <td>${esc(playerId(u))}</td>
+        <td class="text-right">${u.score}</td>
+        <td class="text-right">${usersPageState.tab === 'top' ? u.rank : u.rank || '—'}</td>
+        <td>${fmtRelative(u.lastUpdated)}</td>
+        <td>${isBanned(u) ? '<span class="badge badge-danger">Banned</span>' : '<span class="badge badge-success">Active</span>'}</td>
+        <td>${u.source === 'archived' ? '<span class="badge badge-muted">Archived</span>' : '<span class="badge badge-info">Current</span>'}</td>
+      </tr>`,
+            )
+            .join('');
+  }
 
-      function setTextIfChanged(el, text) {
-        if (el && el.textContent !== String(text)) el.textContent = String(text);
-      }
+  if (soft && $('#users-table-body')) {
+    renderUsersTableBody();
+    return;
+  }
 
-      function usersPanelKey(users) {
-        return users.map((u) => `${u.id}:${u.score}:${Math.max(u.lastUpdated, u.lastLogin)}`).join('|');
-      }
+  if (!isCurrentRoute('users')) return;
 
-      function updateUserPanel(panel, title, users, empty, cacheKey, panelCache) {
-        if (!panel) return;
-        const key = usersPanelKey(users);
-        if (panelCache[cacheKey] === key) return;
-        panelCache[cacheKey] = key;
-        panel.innerHTML = `<h3>${title}</h3>${userListHtml(users, empty)}`;
-      }
-
-      function userListHtml(users, empty) {
-        if (!users.length) return `<p class="empty">${empty}</p>`;
-        return `<ul class="user-list">${users
-          .slice(0, 20)
+  pageContent.innerHTML = `
+    <div class="page-header">
+      <div><h2>Users</h2><p class="subtitle">Search by name, email, or player code — filtered by season</p></div>
+      <div class="page-actions">
+        <div class="toggle-group" id="users-tab">
+          <button data-tab="all" class="${usersPageState.tab === 'all' ? 'active' : ''}">All users</button>
+          <button data-tab="top" class="${usersPageState.tab === 'top' ? 'active' : ''}">Top scores</button>
+        </div>
+        <button class="btn btn-outline btn-sm" id="users-refresh">↻ Refresh</button>
+      </div>
+    </div>
+    <div class="panel" style="margin-bottom:1rem;padding:1rem 1.25rem">
+      <h3 style="margin-bottom:0.75rem;font-size:0.95rem">Season</h3>
+      <div class="season-pick-row" id="users-season-row">
+        ${seasonIndex.seasons
           .map(
-            (u) => `
-          <li>
-            <div>
-              <strong>${esc(u.name || 'Unnamed')}</strong>
-              <div class="meta">${esc(playerId(u))} • ${fmtRelative(Math.max(u.lastUpdated, u.lastLogin))}</div>
-            </div>
-            <span class="badge badge-muted">${u.score}</span>
-          </li>`,
+            (s) => `
+          <button type="button" class="btn btn-outline btn-sm ${s.seasonId === usersPageState.selectedSeasonId ? 'active' : ''} ${s.seasonId === seasonIndex.currentSeasonId ? 'current' : ''}" data-season-id="${esc(s.seasonId)}">
+            ${esc(s.label)} (${s.count})
+          </button>`,
           )
-          .join('')}</ul>`;
+          .join('')}
+      </div>
+      <p class="subtitle" id="users-season-hint"></p>
+    </div>
+    <input class="search-input" id="users-search" placeholder="Search players..." value="${esc(usersPageState.query)}" />
+    <div class="table-wrap">
+      <table>
+        <thead><tr>
+          <th>Player</th><th>Email</th><th>Code</th>
+          <th class="text-right">Score</th><th class="text-right">Rank</th>
+          <th>Last active</th><th>Status</th><th>Season data</th>
+        </tr></thead>
+        <tbody id="users-table-body"></tbody>
+      </table>
+    </div>`;
+
+  $('#users-tab').onclick = (e) => {
+    const btn = e.target.closest('button[data-tab]');
+    if (!btn) return;
+    pauseAutoRefresh(1500);
+    usersPageState.tab = btn.dataset.tab;
+    usersPageState.tableKey = '';
+    document.querySelectorAll('#users-tab button').forEach((b) => b.classList.toggle('active', b === btn));
+    renderUsersTableBody();
+  };
+  $('#users-search').oninput = (e) => {
+    usersPageState.query = e.target.value;
+    usersPageState.tableKey = '';
+    renderUsersTableBody();
+  };
+  $('#users-refresh').onclick = () => {
+    pauseAutoRefresh(1500);
+    usersPageState.tableKey = '';
+    void renderUsers(null, { soft: false });
+  };
+  $('#users-season-row').onclick = (e) => {
+    const btn = e.target.closest('button[data-season-id]');
+    if (!btn) return;
+    pauseAutoRefresh(1500);
+    usersPageState.selectedSeasonId = btn.dataset.seasonId;
+    usersPageState.tableKey = '';
+    renderUsersTableBody();
+  };
+
+  renderUsersTableBody();
+}
+
+async function renderUserDetail(userId, options = {}) {
+  const soft = options.soft === true;
+  if (soft) return;
+  if (!userId) {
+    navigate('users');
+    return;
+  }
+
+  const existing = pageContent.querySelector('#user-detail-root');
+  if (existing?.dataset.userId === userId) return;
+
+  const user = await getUserById(userId);
+  if (!isCurrentRoute('user-detail', userId)) return;
+  const banned = isBanned(user);
+
+  pageContent.innerHTML = `
+    <div id="user-detail-root" data-user-id="${esc(userId)}">
+    <div class="page-header">
+      <div><h2>User detail</h2><p class="subtitle">${esc(playerId(user))}</p></div>
+      <button class="btn btn-outline btn-sm" id="user-detail-back">← Back</button>
+    </div>
+    <div class="panel">
+      <div class="user-detail-header">
+        ${user.profilePictureUrl ? `<img class="avatar-lg" src="${esc(user.profilePictureUrl)}" alt="">` : '<div class="avatar-lg"></div>'}
+        <div>
+          <h3>${esc(user.name || 'Unnamed')}</h3>
+          <p class="subtitle">${esc(user.email)}</p>
+        </div>
+      </div>
+      <div class="form-grid">
+        <div class="form-group"><label>Name</label><input class="form-input" id="f-name" value="${esc(user.name)}"></div>
+        <div class="form-group"><label>Email</label><input class="form-input" id="f-email" value="${esc(user.email)}" disabled></div>
+        <div class="form-group"><label>Score</label><input class="form-input" id="f-score" type="number" value="${user.score}"></div>
+        <div class="form-group"><label>Rank</label><input class="form-input" id="f-rank" type="number" value="${user.rank}"></div>
+        <div class="form-group"><label>Games played</label><input class="form-input" id="f-played" type="number" value="${user.gamesPlayed}"></div>
+        <div class="form-group"><label>Games won</label><input class="form-input" id="f-won" type="number" value="${user.gamesWon}"></div>
+      </div>
+      <div class="switch-row">
+        <div>
+          <strong>Temporary ban</strong>
+          <p class="subtitle" id="ban-label">${banned ? (user.bannedUntil > 0 ? `Banned until ${fmtDate(user.bannedUntil)}` : 'Permanently banned') : 'Player is active'}</p>
+        </div>
+        <label class="switch">
+          <input type="checkbox" id="f-ban" ${banned ? 'checked' : ''}>
+          <span class="slider"></span>
+        </label>
+      </div>
+      <div id="ban-days-wrap" class="${banned ? '' : 'hidden'}">
+        <div class="form-group"><label>Ban days (0 = permanent)</label><input class="form-input" id="f-ban-days" type="number" value="7"></div>
+      </div>
+      <div class="alert alert-info">Ban writes <code>isBanned</code> and <code>bannedUntil</code> to Firestore.</div>
+      <div class="form-actions">
+        <button class="btn btn-primary" id="btn-save">Save changes</button>
+        <button class="btn btn-danger" id="btn-delete">Delete user</button>
+        <button class="btn btn-outline" onclick="navigate('users')">Cancel</button>
+      </div>
+      <div id="save-msg"></div>
+    </div>
+    </div>`;
+
+  $('#user-detail-back').onclick = () => navigate('users');
+
+  const banToggle = $('#f-ban');
+  const banDaysWrap = $('#ban-days-wrap');
+  banToggle.onchange = () => banDaysWrap.classList.toggle('hidden', !banToggle.checked);
+
+  $('#btn-save').onclick = async () => {
+    const banOn = banToggle.checked;
+    const days = Number($('#f-ban-days').value) || 0;
+    const DAY = 86400000;
+    try {
+      await updateUser(userId, {
+        name: $('#f-name').value,
+        score: Number($('#f-score').value) || 0,
+        rank: Number($('#f-rank').value) || 0,
+        gamesPlayed: Number($('#f-played').value) || 0,
+        gamesWon: Number($('#f-won').value) || 0,
+        isBanned: banOn,
+        bannedUntil: !banOn ? 0 : days <= 0 ? 0 : Date.now() + days * DAY,
+      });
+      navigate('users');
+    } catch (e) {
+      $('#save-msg').innerHTML = `<div class="alert alert-error">${esc(e.message)}</div>`;
+    }
+  };
+
+  $('#btn-delete').onclick = async () => {
+    if (!confirm(`Delete ${user.name}?`)) return;
+    await deleteUser(userId);
+    navigate('users');
+  };
+}
+
+let tasksPageState = { filter: 'all' };
+
+async function renderTasks(_param, options = {}) {
+  const soft = options.soft === true;
+  let filter = tasksPageState.filter;
+  let tasksNotice = '';
+
+  try {
+    const meta = await getDailyResetMeta();
+    if (meta.lastResetDate !== todayKey()) {
+      const count = await maybeAutoResetDailyTasks();
+      if (count !== null) {
+        tasksNotice = `Daily tasks auto-reset for ${count} users (new day after 12:00 AM).`;
       }
+    }
+  } catch {
+    // Non-blocking on tasks page.
+  }
 
-      async function renderDashboard(_param, options = {}) {
-        const soft = options.soft === true;
-        const [stats, resetMeta, config] = await Promise.all([
-          getDashboardStats(),
-          getDailyResetMeta(),
-          getSeasonConfig(),
-        ]);
-        const seasonIndex = await buildSeasonIndex(config);
-        const seasonLabels = seasonIndex.seasons.map((s) => s.label);
-        const seasonValues = seasonIndex.seasons.map((s) => s.count);
-        const statusLabels = ['Online', 'Login Today', 'Inactive'];
-        const statusValues = [stats.activeNow, stats.activeToday, stats.inactiveUsers];
+  async function load() {
+    let rows = await getDailyTasks();
+    if (filter === 'done') rows = rows.filter((r) => r.completedCount >= 4);
+    if (filter === 'not') rows = rows.filter((r) => !r.allFiveComplete);
 
-        if (soft && $('#dash-stat-total')) {
-          setTextIfChanged($('#dash-stat-total'), stats.totalUsers);
-          setTextIfChanged($('#dash-stat-online'), stats.activeNow);
-          setTextIfChanged($('#dash-stat-today'), stats.activeToday);
-          setTextIfChanged($('#dash-stat-inactive'), stats.inactiveUsers);
-          if (Date.now() - lastDashSubtitleAt > 5000) {
-            setTextIfChanged($('#dash-subtitle'), `Updated ${fmtDate(stats.generatedAt)} • Live`);
-            lastDashSubtitleAt = Date.now();
-          }
-          updateUserPanel($('#dash-panel-online'), 'Online now', stats.online, 'No users online.', 'online', dashPanelCache);
-          updateUserPanel(
-            $('#dash-panel-today'),
-            'Logged in today',
-            [...stats.online, ...stats.today],
-            'No users logged in today.',
-            'today',
-            dashPanelCache,
-          );
-          updateUserPanel($('#dash-panel-inactive'), 'Inactive / banned', stats.inactive, 'No inactive users.', 'inactive', dashPanelCache);
-          mountChartPanel($('#dash-status-chart-slot'), 'dash-status', 'User status', statusLabels, statusValues, {
-            id: 'chart-user-status',
-            yLabel: 'Number of users',
-            xLabel: 'User status',
-          });
-          mountChartPanel(
-            $('#dash-season-chart-slot'),
-            'dash-season',
-            'All seasons (users saved per season)',
-            seasonLabels,
-            seasonValues,
-            {
-              id: 'chart-season-compare',
-              yLabel: 'Total users',
-              xLabel: 'Season',
-            },
-          );
-          return;
-        }
-
-        dashPanelCache = {};
-        chartRenderCache.delete('dash-status');
-        chartRenderCache.delete('dash-season');
-
-        let resetNotice = '';
-        const today = todayKey();
-        if (resetMeta.lastResetDate !== today) {
-          try {
-            const count = await maybeAutoResetDailyTasks();
-            if (count !== null) {
-              resetNotice = `<div class="alert alert-info">Daily tasks auto-reset for ${count} users (new day after 12:00 AM).</div>`;
-            }
-          } catch (e) {
-            resetNotice = `<div class="alert alert-error">Daily task auto-reset failed: ${esc(e.message)}</div>`;
-          }
-        }
-
-        const statusLabelsInit = statusLabels;
-        const statusValuesInit = statusValues;
-
-        if (!isCurrentRoute('dashboard')) return;
-
-        pageContent.innerHTML = `
-          <div class="page-header">
-            <div>
-              <h2>Dashboard</h2>
-              <p class="subtitle" id="dash-subtitle">Updated ${fmtDate(stats.generatedAt)} • Live</p>
-            </div>
-            <div class="page-actions">
-              <button class="btn btn-outline btn-sm" id="dash-reset-tasks">Reset daily tasks</button>
-              <button class="btn btn-outline btn-sm" onclick="location.reload()">↻ Refresh</button>
-            </div>
-          </div>
-          ${resetNotice}
-          <div class="stats-grid">
-            <div class="stat-card"><div class="label">Total users</div><div class="value" id="dash-stat-total">${stats.totalUsers}</div></div>
-            <div class="stat-card"><div class="label">Online now (5 min)</div><div class="value green" id="dash-stat-online">${stats.activeNow}</div></div>
-            <div class="stat-card"><div class="label">Logged in today</div><div class="value blue" id="dash-stat-today">${stats.activeToday}</div></div>
-            <div class="stat-card"><div class="label">Inactive / banned</div><div class="value" id="dash-stat-inactive">${stats.inactiveUsers}</div></div>
-          </div>
-          <div class="charts-row">
-            <div id="dash-status-chart-slot">
-            ${renderChartPanel('User status', statusLabelsInit, statusValuesInit, {
-              id: 'chart-user-status',
-              yLabel: 'Number of users',
-              xLabel: 'User status',
-            })}
-            </div>
-            <div id="dash-season-chart-slot">
-            ${renderChartPanel('All seasons (users saved per season)', seasonLabels, seasonValues, {
-              id: 'chart-season-compare',
-              yLabel: 'Total users',
-              xLabel: 'Season',
-            })}
-            </div>
-          </div>
-          <div class="stats-grid">
-            <div class="panel" id="dash-panel-online"><h3>Online now</h3>${userListHtml(stats.online, 'No users online.')}</div>
-            <div class="panel" id="dash-panel-today"><h3>Logged in today</h3>${userListHtml([...stats.online, ...stats.today], 'No users logged in today.')}</div>
-            <div class="panel" id="dash-panel-inactive"><h3>Inactive / banned</h3>${userListHtml(stats.inactive, 'No inactive users.')}</div>
-          </div>
-          <p id="dash-msg" class="subtitle"></p>`;
-
-        bindChartControls(pageContent);
-
-        $('#dash-reset-tasks').onclick = async () => {
-          pauseAutoRefresh(3000);
-          if (!confirm('Reset daily tasks for all users for today?')) return;
-          const btn = $('#dash-reset-tasks');
-          btn.disabled = true;
-          $('#dash-msg').textContent = 'Resetting daily tasks…';
-          try {
-            const count = await resetAllDailyTasks();
-            $('#dash-msg').textContent = `Daily tasks reset for ${count} users.`;
-          } catch (e) {
-            $('#dash-msg').textContent = e.message || 'Reset failed.';
-          } finally {
-            btn.disabled = false;
-          }
-        };
-      }
-
-      async function renderUsers(_param, options = {}) {
-        const soft = options.soft === true;
-        const config = await getSeasonConfig();
-        const seasonIndex = await buildSeasonIndex(config);
-
-        if (!usersPageState || !soft) {
-          usersPageState = {
-            tab: usersPageState?.tab || 'all',
-            query: usersPageState?.query || '',
-            selectedSeasonId: usersPageState?.selectedSeasonId || config.seasonId.toLowerCase(),
-            tableKey: '',
-          };
-        }
-
-        usersPageState.seasonIndex = seasonIndex;
-        usersPageState.config = config;
-
-        function seasonUsersForTable() {
-          const season = seasonIndex.getSeason(usersPageState.selectedSeasonId);
-          if (!season) return [];
-          let users = season.users.map((u) => ({ ...u }));
-          if (usersPageState.tab === 'top') {
-            users.sort((a, b) => b.score - a.score || (a.name || '').localeCompare(b.name || ''));
-            users.forEach((u, i) => {
-              u.rank = i + 1;
-            });
-          } else {
-            users.sort((a, b) => b.lastUpdated - a.lastUpdated);
-          }
-          const q = usersPageState.query.trim().toLowerCase();
-          if (!q) return users;
-          return users.filter(
-            (u) =>
-              (u.name || '').toLowerCase().includes(q) ||
-              (u.email || '').toLowerCase().includes(q) ||
-              playerId(u).toLowerCase().includes(q),
-          );
-        }
-
-        function usersTableKey(users) {
-          return `${usersPageState.tab}:${usersPageState.selectedSeasonId}:${usersPageState.query}:${users.map((u) => `${u.id}:${u.score}:${u.rank}`).join('|')}`;
-        }
-
-        function renderUsersTableBody() {
-          const users = seasonUsersForTable();
-          const season = seasonIndex.getSeason(usersPageState.selectedSeasonId);
-          const hintEl = $('#users-season-hint');
-          if (hintEl) {
-            setTextIfChanged(hintEl, season ? `${season.label} (${season.count} users) • Live` : 'Season not found');
-          }
-
-          document.querySelectorAll('#users-season-row button').forEach((btn) => {
-            const sid = btn.dataset.seasonId;
-            const s = seasonIndex.getSeason(sid);
-            const label = s ? `${s.label} (${s.count})` : sid.toUpperCase();
-            if (btn.textContent !== label) btn.textContent = label;
-            btn.classList.toggle('active', sid === usersPageState.selectedSeasonId);
-            btn.classList.toggle('current', sid === seasonIndex.currentSeasonId);
-          });
-
-          const tKey = usersTableKey(users);
-          if (usersPageState.tableKey === tKey) return;
-          usersPageState.tableKey = tKey;
-
-          $('#users-table-body').innerHTML =
-            users.length === 0
-              ? '<tr><td colspan="8" class="empty">No users in this season</td></tr>'
-              : users
-                  .map(
-                    (u) => `
-            <tr class="clickable" data-id="${esc(u.id)}">
-              <td>${u.profilePictureUrl ? `<img class="avatar" src="${esc(u.profilePictureUrl)}" alt="">` : ''}${esc(u.name || 'Unnamed')}</td>
-              <td>${esc(u.email)}</td>
-              <td>${esc(playerId(u))}</td>
-              <td class="text-right">${u.score}</td>
-              <td class="text-right">${usersPageState.tab === 'top' ? u.rank : u.rank || '—'}</td>
-              <td>${fmtRelative(u.lastUpdated)}</td>
-              <td>${isBanned(u) ? '<span class="badge badge-danger">Banned</span>' : '<span class="badge badge-success">Active</span>'}</td>
-              <td>${u.source === 'archived' ? '<span class="badge badge-muted">Archived</span>' : '<span class="badge badge-info">Current</span>'}</td>
-            </tr>`,
-                  )
-                  .join('');
-        }
-
-        if (soft && $('#users-table-body')) {
-          renderUsersTableBody();
-          return;
-        }
-
-        if (!isCurrentRoute('users')) return;
-
-        pageContent.innerHTML = `
-          <div class="page-header">
-            <div><h2>Users</h2><p class="subtitle">Search by name, email, or player code — filtered by season</p></div>
-            <div class="page-actions">
-              <div class="toggle-group" id="users-tab">
-                <button data-tab="all" class="${usersPageState.tab === 'all' ? 'active' : ''}">All users</button>
-                <button data-tab="top" class="${usersPageState.tab === 'top' ? 'active' : ''}">Top scores</button>
-              </div>
-              <button class="btn btn-outline btn-sm" id="users-refresh">↻ Refresh</button>
-            </div>
-          </div>
-          <div class="panel" style="margin-bottom:1rem;padding:1rem 1.25rem">
-            <h3 style="margin-bottom:0.75rem;font-size:0.95rem">Season</h3>
-            <div class="season-pick-row" id="users-season-row">
-              ${seasonIndex.seasons
+    $('#tasks-body').innerHTML =
+      rows.length === 0
+        ? '<tr><td colspan="7" class="empty">No rows match filter</td></tr>'
+        : rows
+            .map((r) => {
+              const chips = r.tasks
                 .map(
-                  (s) => `
-                <button type="button" class="btn btn-outline btn-sm ${s.seasonId === usersPageState.selectedSeasonId ? 'active' : ''} ${s.seasonId === seasonIndex.currentSeasonId ? 'current' : ''}" data-season-id="${esc(s.seasonId)}">
-                  ${esc(s.label)} (${s.count})
-                </button>`,
+                  (t) =>
+                    `<span class="task-chip ${t.completed ? 'done' : 'pending'}" title="${esc(t.taskName)}">${t.taskId}</span>`,
                 )
-                .join('')}
-            </div>
-            <p class="subtitle" id="users-season-hint"></p>
-          </div>
-          <input class="search-input" id="users-search" placeholder="Search players..." value="${esc(usersPageState.query)}" />
-          <div class="table-wrap">
-            <table>
-              <thead><tr>
-                <th>Player</th><th>Email</th><th>Code</th>
-                <th class="text-right">Score</th><th class="text-right">Rank</th>
-                <th>Last active</th><th>Status</th><th>Season data</th>
-              </tr></thead>
-              <tbody id="users-table-body"></tbody>
-            </table>
-          </div>`;
+                .join('');
+              const badge = r.allFiveComplete
+                ? '<span class="badge badge-success">All done</span>'
+                : r.completedCount > 0
+                  ? `<span class="badge badge-muted">${r.completedCount}/${ALL_TASK_IDS.length}</span>`
+                  : '<span class="badge badge-muted">None</span>';
+              return `<tr>
+          <td><a href="#/user-detail/${r.user.id}">${esc(r.user.name || 'Unnamed')}</a><div class="meta">${esc(playerId(r.user))}</div></td>
+          <td>${esc(r.user.email)}</td>
+          <td>${r.completedCount}/${ALL_TASK_IDS.length} ${badge}</td>
+          <td>${esc(r.taskDate || '—')}</td>
+          <td>${fmtDate(r.updatedAt)}</td>
+          <td><div class="task-chips">${chips}</div></td>
+          <td><button type="button" class="email-task-btn btn-email-task-single" data-email="${esc(r.user.email)}" data-name="${esc(r.user.name || 'Unnamed')}" data-tasks='${esc(JSON.stringify(r.tasks))}'>📧 Send Email</button></td>
+        </tr>`;
+            })
+            .join('');
 
-        $('#users-tab').onclick = (e) => {
-          const btn = e.target.closest('button[data-tab]');
-          if (!btn) return;
-          pauseAutoRefresh(1500);
-          usersPageState.tab = btn.dataset.tab;
-          usersPageState.tableKey = '';
-          document.querySelectorAll('#users-tab button').forEach((b) => b.classList.toggle('active', b === btn));
-          renderUsersTableBody();
-        };
-        $('#users-search').oninput = (e) => {
-          usersPageState.query = e.target.value;
-          usersPageState.tableKey = '';
-          renderUsersTableBody();
-        };
-        $('#users-refresh').onclick = () => {
-          pauseAutoRefresh(1500);
-          usersPageState.tableKey = '';
-          void renderUsers(null, { soft: false });
-        };
-        $('#users-season-row').onclick = (e) => {
-          const btn = e.target.closest('button[data-season-id]');
-          if (!btn) return;
-          pauseAutoRefresh(1500);
-          usersPageState.selectedSeasonId = btn.dataset.seasonId;
-          usersPageState.tableKey = '';
-          renderUsersTableBody();
-        };
-
-        renderUsersTableBody();
-      }
-
-      async function renderUserDetail(userId, options = {}) {
-        const soft = options.soft === true;
-        if (soft) return;
-        if (!userId) {
-          navigate('users');
+    // Bind email buttons
+    document.querySelectorAll('.btn-email-task-single').forEach((btn) => {
+      btn.onclick = (e) => {
+        e.stopPropagation();
+        const email = btn.dataset.email;
+        const name = btn.dataset.name;
+        const tasks = JSON.parse(btn.dataset.tasks || '[]');
+        
+        if (!email) {
+          alert('No email found for this user');
           return;
         }
+        
+        sendTaskEmail(email, name, tasks);
+      };
+    });
+  }
 
-        const existing = pageContent.querySelector('#user-detail-root');
-        if (existing?.dataset.userId === userId) return;
+  if (soft && $('#tasks-body')) {
+    await load();
+    return;
+  }
 
-        const user = await getUserById(userId);
-        if (!isCurrentRoute('user-detail', userId)) return;
-        const banned = isBanned(user);
+  if (!isCurrentRoute('tasks')) return;
 
-        pageContent.innerHTML = `
-          <div id="user-detail-root" data-user-id="${esc(userId)}">
-          <div class="page-header">
-            <div><h2>User detail</h2><p class="subtitle">${esc(playerId(user))}</p></div>
-            <button class="btn btn-outline btn-sm" id="user-detail-back">← Back</button>
-          </div>
-          <div class="panel">
-            <div class="user-detail-header">
-              ${user.profilePictureUrl ? `<img class="avatar-lg" src="${esc(user.profilePictureUrl)}" alt="">` : '<div class="avatar-lg"></div>'}
-              <div>
-                <h3>${esc(user.name || 'Unnamed')}</h3>
-                <p class="subtitle">${esc(user.email)}</p>
-              </div>
-            </div>
-            <div class="form-grid">
-              <div class="form-group"><label>Name</label><input class="form-input" id="f-name" value="${esc(user.name)}"></div>
-              <div class="form-group"><label>Email</label><input class="form-input" id="f-email" value="${esc(user.email)}" disabled></div>
-              <div class="form-group"><label>Score</label><input class="form-input" id="f-score" type="number" value="${user.score}"></div>
-              <div class="form-group"><label>Rank</label><input class="form-input" id="f-rank" type="number" value="${user.rank}"></div>
-              <div class="form-group"><label>Games played</label><input class="form-input" id="f-played" type="number" value="${user.gamesPlayed}"></div>
-              <div class="form-group"><label>Games won</label><input class="form-input" id="f-won" type="number" value="${user.gamesWon}"></div>
-            </div>
-            <div class="switch-row">
-              <div>
-                <strong>Temporary ban</strong>
-                <p class="subtitle" id="ban-label">${banned ? (user.bannedUntil > 0 ? `Banned until ${fmtDate(user.bannedUntil)}` : 'Permanently banned') : 'Player is active'}</p>
-              </div>
-              <label class="switch">
-                <input type="checkbox" id="f-ban" ${banned ? 'checked' : ''}>
-                <span class="slider"></span>
-              </label>
-            </div>
-            <div id="ban-days-wrap" class="${banned ? '' : 'hidden'}">
-              <div class="form-group"><label>Ban days (0 = permanent)</label><input class="form-input" id="f-ban-days" type="number" value="7"></div>
-            </div>
-            <div class="alert alert-info">Ban writes <code>isBanned</code> and <code>bannedUntil</code> to Firestore.</div>
-            <div class="form-actions">
-              <button class="btn btn-primary" id="btn-save">Save changes</button>
-              <button class="btn btn-danger" id="btn-delete">Delete user</button>
-              <button class="btn btn-outline" onclick="navigate('users')">Cancel</button>
-            </div>
-            <div id="save-msg"></div>
-          </div>
-          </div>`;
+  pageContent.innerHTML = `
+    <div class="page-header">
+      <div><h2>Daily tasks</h2><p class="subtitle">Today's completion report • resets at 12:00 AM • Click 📧 to email players</p></div>
+      <div class="page-actions">
+        <div class="toggle-group" id="tasks-filter">
+          <button data-f="all" class="${tasksPageState.filter === 'all' ? 'active' : ''}">All</button>
+          <button data-f="done" class="${tasksPageState.filter === 'done' ? 'active' : ''}">Done (4+)</button>
+          <button data-f="not" class="${tasksPageState.filter === 'not' ? 'active' : ''}">Not Done (&lt;5)</button>
+        </div>
+        <button class="btn btn-email btn-sm" id="tasks-email-all">📧 Email All Incomplete</button>
+        <button class="btn btn-outline btn-sm" id="tasks-reset">Reset daily tasks</button>
+        <button class="btn btn-outline btn-sm" id="tasks-refresh">↻ Refresh</button>
+      </div>
+    </div>
+    <p id="tasks-msg" class="subtitle" style="margin-bottom:1rem">${esc(tasksNotice)}</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Player</th><th>Email</th><th>Progress</th><th>Task date</th><th>Updated</th><th>Tasks</th><th>Action</th></tr></thead>
+        <tbody id="tasks-body"></tbody>
+      </table>
+    </div>`;
 
-        $('#user-detail-back').onclick = () => navigate('users');
-
-        const banToggle = $('#f-ban');
-        const banDaysWrap = $('#ban-days-wrap');
-        banToggle.onchange = () => banDaysWrap.classList.toggle('hidden', !banToggle.checked);
-
-        $('#btn-save').onclick = async () => {
-          const banOn = banToggle.checked;
-          const days = Number($('#f-ban-days').value) || 0;
-          const DAY = 86400000;
-          try {
-            await updateUser(userId, {
-              name: $('#f-name').value,
-              score: Number($('#f-score').value) || 0,
-              rank: Number($('#f-rank').value) || 0,
-              gamesPlayed: Number($('#f-played').value) || 0,
-              gamesWon: Number($('#f-won').value) || 0,
-              isBanned: banOn,
-              bannedUntil: !banOn ? 0 : days <= 0 ? 0 : Date.now() + days * DAY,
-            });
-            navigate('users');
-          } catch (e) {
-            $('#save-msg').innerHTML = `<div class="alert alert-error">${esc(e.message)}</div>`;
-          }
-        };
-
-        $('#btn-delete').onclick = async () => {
-          if (!confirm(`Delete ${user.name}?`)) return;
-          await deleteUser(userId);
-          navigate('users');
-        };
+  $('#tasks-filter').onclick = (e) => {
+    const btn = e.target.closest('button[data-f]');
+    if (!btn) return;
+    pauseAutoRefresh(1500);
+    filter = btn.dataset.f;
+    tasksPageState.filter = filter;
+    document.querySelectorAll('#tasks-filter button').forEach((b) => b.classList.toggle('active', b === btn));
+    void load();
+  };
+  $('#tasks-refresh').onclick = () => {
+    pauseAutoRefresh(1500);
+    void load();
+  };
+  $('#tasks-reset').onclick = async () => {
+    if (!confirm('Reset daily tasks for all users for today?')) return;
+    const btn = $('#tasks-reset');
+    btn.disabled = true;
+    $('#tasks-msg').textContent = 'Resetting…';
+    try {
+      const count = await resetAllDailyTasks();
+      $('#tasks-msg').textContent = `Reset complete for ${count} users.`;
+      await load();
+    } catch (e) {
+      $('#tasks-msg').textContent = e.message || 'Reset failed.';
+    } finally {
+      btn.disabled = false;
+    }
+  };
+  
+  // Email all incomplete button
+  $('#tasks-email-all').onclick = async () => {
+    const rows = await getDailyTasks();
+    const incompleteUsers = rows.filter(r => !r.allFiveComplete && r.user.email);
+    
+    if (incompleteUsers.length === 0) {
+      alert('All users have completed their tasks today! 🎉');
+      return;
+    }
+    
+    if (!confirm(`Send task reminder emails to ${incompleteUsers.length} user(s) with incomplete tasks?`)) return;
+    
+    const btn = $('#tasks-email-all');
+    btn.disabled = true;
+    btn.textContent = 'Sending...';
+    
+    try {
+      for (const row of incompleteUsers) {
+        sendTaskEmail(row.user.email, row.user.name || 'Player', row.tasks);
+        // Small delay between emails to prevent browser blocking
+        await new Promise(resolve => setTimeout(resolve, 300));
       }
+      $('#tasks-msg').textContent = `📧 Task reminder emails sent to ${incompleteUsers.length} user(s)!`;
+    } catch (e) {
+      $('#tasks-msg').textContent = `Error: ${e.message || 'Failed to send some emails'}`;
+    } finally {
+      btn.disabled = false;
+      btn.textContent = '📧 Email All Incomplete';
+    }
+  };
+  
+  await load();
+}
 
-      let tasksPageState = { filter: 'all' };
+async function renderMatches(_param, options = {}) {
+  const soft = options.soft === true;
+  let aiOnly = matchesPageState?.aiOnly ?? false;
 
-      async function renderTasks(_param, options = {}) {
-        const soft = options.soft === true;
-        let filter = tasksPageState.filter;
-        let tasksNotice = '';
+  async function load() {
+    const records = await getMatches(aiOnly);
+    const countEl = $('#matches-count');
+    const countText = `${records.length} completed match${records.length === 1 ? '' : 'es'}`;
+    setTextIfChanged(countEl, countText);
+    const rowKey = records.map((r) => `${r.gamePath}/${r.roomCode}:${r.endedAt}:${r.winner}`).join('|');
+    if (matchesPageState?.rowKey === rowKey && $('#matches-body')?.children.length) return;
+    if (matchesPageState) matchesPageState.rowKey = rowKey;
 
+    $('#matches-body').innerHTML =
+      records.length === 0
+        ? '<tr><td colspan="9" class="empty">No match records</td></tr>'
+        : records
+            .map(
+              (r) => `<tr data-path="${esc(r.gamePath)}" data-code="${esc(r.roomCode)}">
+        <td>${esc(r.gameType)}</td>
+        <td>${esc(r.roomCode)}</td>
+        <td>${esc(r.hostName)}</td>
+        <td>${esc(r.guestName)}${r.isAi ? ' <span class="badge badge-info">AI</span>' : ''}</td>
+        <td class="text-right">${r.hostScore} - ${r.guestScore}</td>
+        <td>${r.winnerHtml || winnerBadgeHtml({ label: r.winner || 'Draw', kind: r.winnerKind || 'draw' })}</td>
+        <td class="text-right">${r.betAmount}</td>
+        <td>${fmtDate(r.endedAt)}</td>
+        <td><button type="button" class="btn btn-danger btn-sm btn-del-match">Delete</button></td>
+      </tr>`,
+            )
+            .join('');
+
+    document.querySelectorAll('.btn-del-match').forEach((btn) => {
+      btn.onclick = async (e) => {
+        e.stopPropagation();
+        const row = btn.closest('tr');
+        if (!row || !confirm(`Delete match ${row.dataset.code}?`)) return;
+        btn.disabled = true;
         try {
-          const meta = await getDailyResetMeta();
-          if (meta.lastResetDate !== todayKey()) {
-            const count = await maybeAutoResetDailyTasks();
-            if (count !== null) {
-              tasksNotice = `Daily tasks auto-reset for ${count} users (new day after 12:00 AM).`;
-            }
-          }
-        } catch {
-          // Non-blocking on tasks page.
-        }
-
-        async function load() {
-          let rows = await getDailyTasks();
-          if (filter === 'done') rows = rows.filter((r) => r.completedCount >= 4);
-          if (filter === 'not') rows = rows.filter((r) => !r.allFiveComplete);
-
-          $('#tasks-body').innerHTML =
-            rows.length === 0
-              ? '<tr><td colspan="7" class="empty">No rows match filter</td></tr>'
-              : rows
-                  .map((r) => {
-                    const chips = r.tasks
-                      .map(
-                        (t) =>
-                          `<span class="task-chip ${t.completed ? 'done' : 'pending'}" title="${esc(t.taskName)}">${t.taskId}</span>`,
-                      )
-                      .join('');
-                    const badge = r.allFiveComplete
-                      ? '<span class="badge badge-success">All done</span>'
-                      : r.completedCount > 0
-                        ? `<span class="badge badge-muted">${r.completedCount}/${ALL_TASK_IDS.length}</span>`
-                        : '<span class="badge badge-muted">None</span>';
-                    return `<tr>
-                <td><a href="#/user-detail/${r.user.id}">${esc(r.user.name || 'Unnamed')}</a><div class="meta">${esc(playerId(r.user))}</div></td>
-                <td>${esc(r.user.email)}</td>
-                <td>${r.completedCount}/${ALL_TASK_IDS.length} ${badge}</td>
-                <td>${esc(r.taskDate || '—')}</td>
-                <td>${fmtDate(r.updatedAt)}</td>
-                <td><div class="task-chips">${chips}</div></td>
-                <td><button type="button" class="email-task-btn btn-email-task-single" data-email="${esc(r.user.email)}" data-name="${esc(r.user.name || 'Unnamed')}" data-tasks='${esc(JSON.stringify(r.tasks))}'>📧 Send Email</button></td>
-              </tr>`;
-                  })
-                  .join('');
-
-          document.querySelectorAll('.btn-email-task-single').forEach((btn) => {
-            btn.onclick = (e) => {
-              e.stopPropagation();
-              const email = btn.dataset.email;
-              const name = btn.dataset.name;
-              const tasks = JSON.parse(btn.dataset.tasks || '[]');
-              
-              if (!email) {
-                alert('No email found for this user');
-                return;
-              }
-              
-              sendTaskEmail(email, name, tasks);
-            };
-          });
-        }
-
-        if (soft && $('#tasks-body')) {
+          await deleteRtdbRoom(row.dataset.path, row.dataset.code);
           await load();
-          return;
+        } catch (err) {
+          alert(err.message || 'Delete failed');
+          btn.disabled = false;
         }
+      };
+    });
+  }
 
-        if (!isCurrentRoute('tasks')) return;
+  if (soft && $('#matches-body')) {
+    if (!matchesPageState) matchesPageState = { aiOnly };
+    await load();
+    return;
+  }
 
-        pageContent.innerHTML = `
-          <div class="page-header">
-            <div><h2>Daily tasks</h2><p class="subtitle">Today's completion report • resets at 12:00 AM • Click 📧 to email players</p></div>
-            <div class="page-actions">
-              <div class="toggle-group" id="tasks-filter">
-                <button data-f="all" class="${tasksPageState.filter === 'all' ? 'active' : ''}">All</button>
-                <button data-f="done" class="${tasksPageState.filter === 'done' ? 'active' : ''}">Done (4+)</button>
-                <button data-f="not" class="${tasksPageState.filter === 'not' ? 'active' : ''}">Not Done (&lt;5)</button>
-              </div>
-              <button class="btn btn-email btn-sm" id="tasks-email-all">📧 Email All Incomplete</button>
-              <button class="btn btn-outline btn-sm" id="tasks-reset">Reset daily tasks</button>
-              <button class="btn btn-outline btn-sm" id="tasks-refresh">↻ Refresh</button>
-            </div>
-          </div>
-          <p id="tasks-msg" class="subtitle" style="margin-bottom:1rem">${esc(tasksNotice)}</p>
-          <div class="table-wrap">
-            <table>
-              <thead><tr><th>Player</th><th>Email</th><th>Progress</th><th>Task date</th><th>Updated</th><th>Tasks</th><th>Action</th></tr></thead>
-              <tbody id="tasks-body"></tbody>
-            </table>
-          </div>`;
+  matchesPageState = { aiOnly, rowKey: '' };
 
-        $('#tasks-filter').onclick = (e) => {
-          const btn = e.target.closest('button[data-f]');
-          if (!btn) return;
-          pauseAutoRefresh(1500);
-          filter = btn.dataset.f;
-          tasksPageState.filter = filter;
-          document.querySelectorAll('#tasks-filter button').forEach((b) => b.classList.toggle('active', b === btn));
-          void load();
-        };
-        $('#tasks-refresh').onclick = () => {
-          pauseAutoRefresh(1500);
-          void load();
-        };
-        $('#tasks-reset').onclick = async () => {
-          if (!confirm('Reset daily tasks for all users for today?')) return;
-          const btn = $('#tasks-reset');
-          btn.disabled = true;
-          $('#tasks-msg').textContent = 'Resetting…';
-          try {
-            const count = await resetAllDailyTasks();
-            $('#tasks-msg').textContent = `Reset complete for ${count} users.`;
-            await load();
-          } catch (e) {
-            $('#tasks-msg').textContent = e.message || 'Reset failed.';
-          } finally {
-            btn.disabled = false;
-          }
-        };
-        
-        $('#tasks-email-all').onclick = async () => {
-          const rows = await getDailyTasks();
-          const incompleteUsers = rows.filter(r => !r.allFiveComplete && r.user.email);
-          
-          if (incompleteUsers.length === 0) {
-            alert('All users have completed their tasks today! 🎉');
-            return;
-          }
-          
-          if (!confirm(`Send task reminder emails to ${incompleteUsers.length} user(s) with incomplete tasks?`)) return;
-          
-          const btn = $('#tasks-email-all');
-          btn.disabled = true;
-          btn.textContent = 'Sending...';
-          
-          try {
-            for (const row of incompleteUsers) {
-              sendTaskEmail(row.user.email, row.user.name || 'Player', row.tasks);
-              await new Promise(resolve => setTimeout(resolve, 300));
-            }
-            $('#tasks-msg').textContent = `📧 Task reminder emails sent to ${incompleteUsers.length} user(s)!`;
-          } catch (e) {
-            $('#tasks-msg').textContent = `Error: ${e.message || 'Failed to send some emails'}`;
-          } finally {
-            btn.disabled = false;
-            btn.textContent = '📧 Email All Incomplete';
-          }
-        };
-        
-        await load();
-      }
+  if (!isCurrentRoute('matches')) return;
 
-      async function renderMatches(_param, options = {}) {
-        const soft = options.soft === true;
-        let aiOnly = matchesPageState?.aiOnly ?? false;
+  pageContent.innerHTML = `
+    <div class="page-header">
+      <div>
+        <h2>Match records</h2>
+        <p class="subtitle">All completed matches from Firebase • <span id="matches-count">0 matches</span></p>
+      </div>
+      <div class="page-actions">
+        <div class="toggle-group" id="match-tab">
+          <button data-ai="0" class="${!aiOnly ? 'active' : ''}">Human vs Human</button>
+          <button data-ai="1" class="${aiOnly ? 'active' : ''}">AI matches</button>
+        </div>
+        <button class="btn btn-danger btn-sm" id="match-delete-all">Delete all</button>
+        <button class="btn btn-outline btn-sm" id="match-refresh">↻ Refresh</button>
+      </div>
+    </div>
+    <p id="match-msg" class="subtitle" style="margin-bottom:1rem"></p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Game</th><th>Room</th><th>Host</th><th>Guest</th><th class="text-right">Score</th><th>Winner</th><th class="text-right">Bet</th><th>Ended</th><th></th></tr></thead>
+        <tbody id="matches-body"></tbody>
+      </table>
+    </div>`;
 
-        async function load() {
-          const records = await getMatches(aiOnly);
-          const countEl = $('#matches-count');
-          const countText = `${records.length} completed match${records.length === 1 ? '' : 'es'}`;
-          setTextIfChanged(countEl, countText);
-          const rowKey = records.map((r) => `${r.gamePath}/${r.roomCode}:${r.endedAt}:${r.winner}`).join('|');
-          if (matchesPageState?.rowKey === rowKey && $('#matches-body')?.children.length) return;
-          if (matchesPageState) matchesPageState.rowKey = rowKey;
+  $('#match-tab').onclick = (e) => {
+    const btn = e.target.closest('button[data-ai]');
+    if (!btn) return;
+    pauseAutoRefresh(1500);
+    aiOnly = btn.dataset.ai === '1';
+    matchesPageState.aiOnly = aiOnly;
+    document.querySelectorAll('#match-tab button').forEach((b) => b.classList.toggle('active', b === btn));
+    void load();
+  };
+  $('#match-refresh').onclick = () => {
+    pauseAutoRefresh(1500);
+    void load();
+  };
+  $('#match-delete-all').onclick = async () => {
+    const label = aiOnly ? 'AI match records' : 'human vs human match records';
+    if (!confirm(`Delete ALL ${label} from Firebase? This cannot be undone.`)) return;
+    const btn = $('#match-delete-all');
+    btn.disabled = true;
+    $('#match-msg').textContent = 'Deleting from Firebase…';
+    try {
+      const count = await deleteAllMatchRecords(aiOnly);
+      $('#match-msg').textContent = `Deleted ${count} match record${count === 1 ? '' : 's'} from Firebase.`;
+      await load();
+    } catch (e) {
+      $('#match-msg').textContent = e.message || 'Delete failed.';
+    } finally {
+      btn.disabled = false;
+    }
+  };
+  await load();
+}
 
-          $('#matches-body').innerHTML =
-            records.length === 0
-              ? '<tr><td colspan="9" class="empty">No match records</td></tr>'
-              : records
-                  .map(
-                    (r) => `<tr data-path="${esc(r.gamePath)}" data-code="${esc(r.roomCode)}">
-              <td>${esc(r.gameType)}</td>
-              <td>${esc(r.roomCode)}</td>
-              <td>${esc(r.hostName)}</td>
-              <td>${esc(r.guestName)}${r.isAi ? ' <span class="badge badge-info">AI</span>' : ''}</td>
-              <td class="text-right">${r.hostScore} - ${r.guestScore}</td>
-              <td>${r.winnerHtml || winnerBadgeHtml({ label: r.winner || 'Draw', kind: r.winnerKind || 'draw' })}</td>
-              <td class="text-right">${r.betAmount}</td>
-              <td>${fmtDate(r.endedAt)}</td>
-              <td><button type="button" class="btn btn-danger btn-sm btn-del-match">Delete</button></td>
-            </tr>`,
-                  )
-                  .join('');
+async function renderAi(_param, options = {}) {
+  const soft = options.soft === true;
 
-          document.querySelectorAll('.btn-del-match').forEach((btn) => {
-            btn.onclick = async (e) => {
-              e.stopPropagation();
-              const row = btn.closest('tr');
-              if (!row || !confirm(`Delete match ${row.dataset.code}?`)) return;
-              btn.disabled = true;
-              try {
-                await deleteRtdbRoom(row.dataset.path, row.dataset.code);
-                await load();
-              } catch (err) {
-                alert(err.message || 'Delete failed');
-                btn.disabled = false;
-              }
-            };
-          });
-        }
+  async function load() {
+    const records = await getAiRecords();
+    const countText = `${records.length} AI room${records.length === 1 ? '' : 's'}`;
+    setTextIfChanged($('#ai-count'), countText);
+    const rowKey = records.map((r) => `${r.gamePath}/${r.roomCode}:${r.status}`).join('|');
+    if (aiPageState?.rowKey === rowKey && $('#ai-body')?.children.length) return;
+    if (aiPageState) aiPageState.rowKey = rowKey;
 
-        if (soft && $('#matches-body')) {
-          if (!matchesPageState) matchesPageState = { aiOnly };
+    const statusBadge = (s) => {
+      if (s === 'ended') return '<span class="badge badge-muted">Ended</span>';
+      if (s === 'in_match') return '<span class="badge badge-warn">In match</span>';
+      return '<span class="badge badge-info">Waiting</span>';
+    };
+
+    $('#ai-body').innerHTML =
+      records.length === 0
+        ? '<tr><td colspan="8" class="empty">No AI rooms</td></tr>'
+        : records
+            .map(
+              (r) => `<tr data-path="${esc(r.gamePath)}" data-code="${esc(r.roomCode)}">
+            <td>${esc(r.gameType)}</td>
+            <td>${esc(r.roomCode)}</td>
+            <td>${esc(r.aiName)}</td>
+            <td>${esc(r.hostName)}</td>
+            <td>${statusBadge(r.status)}</td>
+            <td class="text-right">${r.betAmount}</td>
+            <td>${fmtDate(r.joinedAt)}</td>
+            <td><button type="button" class="btn btn-danger btn-sm btn-del-ai">Delete</button></td>
+          </tr>`,
+            )
+            .join('');
+
+    document.querySelectorAll('.btn-del-ai').forEach((btn) => {
+      btn.onclick = async (e) => {
+        e.stopPropagation();
+        const row = btn.closest('tr');
+        if (!row || !confirm(`Delete AI room ${row.dataset.code}?`)) return;
+        btn.disabled = true;
+        try {
+          await deleteRtdbRoom(row.dataset.path, row.dataset.code);
           await load();
-          return;
+        } catch (err) {
+          alert(err.message || 'Delete failed');
+          btn.disabled = false;
         }
+      };
+    });
+  }
 
-        matchesPageState = { aiOnly, rowKey: '' };
+  if (soft && $('#ai-body')) {
+    if (!aiPageState) aiPageState = {};
+    await load();
+    return;
+  }
 
-        if (!isCurrentRoute('matches')) return;
+  aiPageState = { rowKey: '' };
 
-        pageContent.innerHTML = `
-          <div class="page-header">
-            <div>
-              <h2>Match records</h2>
-              <p class="subtitle">All completed matches from Firebase • <span id="matches-count">0 matches</span></p>
-            </div>
-            <div class="page-actions">
-              <div class="toggle-group" id="match-tab">
-                <button data-ai="0" class="${!aiOnly ? 'active' : ''}">Human vs Human</button>
-                <button data-ai="1" class="${aiOnly ? 'active' : ''}">AI matches</button>
-              </div>
-              <button class="btn btn-danger btn-sm" id="match-delete-all">Delete all</button>
-              <button class="btn btn-outline btn-sm" id="match-refresh">↻ Refresh</button>
-            </div>
-          </div>
-          <p id="match-msg" class="subtitle" style="margin-bottom:1rem"></p>
-          <div class="table-wrap">
-            <table>
-              <thead><tr><th>Game</th><th>Room</th><th>Host</th><th>Guest</th><th class="text-right">Score</th><th>Winner</th><th class="text-right">Bet</th><th>Ended</th><th></th></tr></thead>
-              <tbody id="matches-body"></tbody>
-            </table>
-          </div>`;
+  if (!isCurrentRoute('ai')) return;
 
-        $('#match-tab').onclick = (e) => {
-          const btn = e.target.closest('button[data-ai]');
-          if (!btn) return;
-          pauseAutoRefresh(1500);
-          aiOnly = btn.dataset.ai === '1';
-          matchesPageState.aiOnly = aiOnly;
-          document.querySelectorAll('#match-tab button').forEach((b) => b.classList.toggle('active', b === btn));
-          void load();
-        };
-        $('#match-refresh').onclick = () => {
-          pauseAutoRefresh(1500);
-          void load();
-        };
-        $('#match-delete-all').onclick = async () => {
-          const label = aiOnly ? 'AI match records' : 'human vs human match records';
-          if (!confirm(`Delete ALL ${label} from Firebase? This cannot be undone.`)) return;
-          const btn = $('#match-delete-all');
-          btn.disabled = true;
-          $('#match-msg').textContent = 'Deleting from Firebase…';
-          try {
-            const count = await deleteAllMatchRecords(aiOnly);
-            $('#match-msg').textContent = `Deleted ${count} match record${count === 1 ? '' : 's'} from Firebase.`;
-            await load();
-          } catch (e) {
-            $('#match-msg').textContent = e.message || 'Delete failed.';
-          } finally {
-            btn.disabled = false;
-          }
-        };
-        await load();
-      }
+  pageContent.innerHTML = `
+    <div class="page-header">
+      <div>
+        <h2>AI control</h2>
+        <p class="subtitle">All AI opponent rooms in Firebase • <span id="ai-count">0 rooms</span></p>
+      </div>
+      <div class="page-actions">
+        <button class="btn btn-danger btn-sm" id="ai-delete-all">Delete all AI rooms</button>
+        <button class="btn btn-outline btn-sm" id="ai-refresh">↻ Refresh</button>
+      </div>
+    </div>
+    <p id="ai-msg" class="subtitle" style="margin-bottom:1rem"></p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Game</th><th>Room</th><th>AI name</th><th>Host</th><th>Status</th><th class="text-right">Bet</th><th>Joined</th><th></th></tr></thead>
+        <tbody id="ai-body"></tbody>
+      </table>
+    </div>`;
 
-      async function renderAi(_param, options = {}) {
-        const soft = options.soft === true;
+  $('#ai-refresh').onclick = () => {
+    pauseAutoRefresh(1500);
+    void load();
+  };
+  $('#ai-delete-all').onclick = async () => {
+    if (!confirm('Delete ALL AI rooms from Firebase? This removes waiting, in-match, and ended AI rooms.')) return;
+    const btn = $('#ai-delete-all');
+    btn.disabled = true;
+    $('#ai-msg').textContent = 'Deleting from Firebase…';
+    try {
+      const count = await deleteAllAiRooms();
+      $('#ai-msg').textContent = `Deleted ${count} AI room${count === 1 ? '' : 's'} from Firebase.`;
+      await load();
+    } catch (e) {
+      $('#ai-msg').textContent = e.message || 'Delete failed.';
+    } finally {
+      btn.disabled = false;
+    }
+  };
+  await load();
+}
 
-        async function load() {
-          const records = await getAiRecords();
-          const countText = `${records.length} AI room${records.length === 1 ? '' : 's'}`;
-          setTextIfChanged($('#ai-count'), countText);
-          const rowKey = records.map((r) => `${r.gamePath}/${r.roomCode}:${r.status}`).join('|');
-          if (aiPageState?.rowKey === rowKey && $('#ai-body')?.children.length) return;
-          if (aiPageState) aiPageState.rowKey = rowKey;
+async function renderSeason(_param, options = {}) {
+  const soft = options.soft === true;
+  const config = await getSeasonConfig();
+  const seasonIndex = await buildSeasonIndex(config);
 
-          const statusBadge = (s) => {
-            if (s === 'ended') return '<span class="badge badge-muted">Ended</span>';
-            if (s === 'in_match') return '<span class="badge badge-warn">In match</span>';
-            return '<span class="badge badge-info">Waiting</span>';
+  if (soft && $('#season-scores-chart-slot')) {
+    const selectedSeasonId = seasonPageState.selectedSeasonId || config.seasonId.toLowerCase();
+    document.querySelectorAll('#season-pick-row button').forEach((btn) => {
+      const sid = btn.dataset.seasonId;
+      const s = seasonIndex.getSeason(sid);
+      if (s) btn.textContent = `${s.label} (${s.count})`;
+      btn.classList.toggle('active', sid === selectedSeasonId);
+    });
+    const season = seasonIndex.getSeason(selectedSeasonId);
+    if (season) {
+      const labels = season.users.slice(0, 5).map((u) => u.name || playerId(u));
+      const values = season.users.slice(0, 5).map((u) => u.score);
+      const overviewLabels = seasonIndex.seasons.map((s) => s.label);
+      const overviewValues = seasonIndex.seasons.map((s) => s.count);
+      mountChartPanel(
+        $('#season-overview-chart-slot'),
+        'season-overview',
+        'All seasons — users per season',
+        overviewLabels,
+        overviewValues,
+        {
+          id: 'chart-all-seasons',
+          yLabel: 'Total users',
+          xLabel: 'Season',
+        },
+      );
+
+      const usersBlock = seasonPageState.showScoreUsers
+        ? `<div class="season-users-panel" id="score-users-panel">
+            <h4>All users in ${esc(season.label)} (${season.count})</h4>
+            ${renderSeasonUsersTable(season.users, 'No users in this season yet.')}
+          </div>`
+        : '';
+      const scoresFp = chartFingerprint(labels, values) + (seasonPageState.showScoreUsers ? ':show' : ':hide') + ':' + usersPanelKey(season.users);
+      const scoresCacheKey = 'season-scores';
+      const scoresSlot = $('#season-scores-chart-slot');
+      if (chartRenderCache.get(scoresCacheKey) !== scoresFp || !scoresSlot.querySelector('[data-chart-panel]')) {
+        chartRenderCache.set(scoresCacheKey, scoresFp);
+        scoresSlot.innerHTML = renderChartPanel(
+          `Top scores — ${season.label}`,
+          labels,
+          values,
+          {
+            id: 'chart-season-scores',
+            yLabel: 'Score',
+            xLabel: 'Top players',
+            extraButton: seasonPageState.showScoreUsers ? 'Hide users' : 'All users',
+            extraButtonId: 'toggle-score-users',
+            bodyBelow: usersBlock,
+          },
+        );
+        bindChartControls(scoresSlot);
+        const toggleBtn = scoresSlot.querySelector('[data-extra-btn="toggle-score-users"]');
+        if (toggleBtn) {
+          toggleBtn.onclick = () => {
+            seasonPageState.showScoreUsers = !seasonPageState.showScoreUsers;
+            chartRenderCache.delete('season-scores');
+            void renderSeason(null, { soft: true });
           };
-
-          $('#ai-body').innerHTML =
-            records.length === 0
-              ? '<tr><td colspan="8" class="empty">No AI rooms</td></tr>'
-              : records
-                  .map(
-                    (r) => `<tr data-path="${esc(r.gamePath)}" data-code="${esc(r.roomCode)}">
-                  <td>${esc(r.gameType)}</td>
-                  <td>${esc(r.roomCode)}</td>
-                  <td>${esc(r.aiName)}</td>
-                  <td>${esc(r.hostName)}</td>
-                  <td>${statusBadge(r.status)}</td>
-                  <td class="text-right">${r.betAmount}</td>
-                  <td>${fmtDate(r.joinedAt)}</td>
-                  <td><button type="button" class="btn btn-danger btn-sm btn-del-ai">Delete</button></td>
-                </tr>`,
-                  )
-                  .join('');
-
-          document.querySelectorAll('.btn-del-ai').forEach((btn) => {
-            btn.onclick = async (e) => {
-              e.stopPropagation();
-              const row = btn.closest('tr');
-              if (!row || !confirm(`Delete AI room ${row.dataset.code}?`)) return;
-              btn.disabled = true;
-              try {
-                await deleteRtdbRoom(row.dataset.path, row.dataset.code);
-                await load();
-              } catch (err) {
-                alert(err.message || 'Delete failed');
-                btn.disabled = false;
-              }
-            };
-          });
         }
-
-        if (soft && $('#ai-body')) {
-          if (!aiPageState) aiPageState = {};
-          await load();
-          return;
+      } else if (seasonPageState.showScoreUsers) {
+        const panel = $('#score-users-panel');
+        const tableHtml = renderSeasonUsersTable(season.users, 'No users in this season yet.');
+        const tableKey = usersPanelKey(season.users);
+        if (panel && panel.dataset.key !== tableKey) {
+          panel.dataset.key = tableKey;
+          panel.innerHTML = `<h4>All users in ${esc(season.label)} (${season.count})</h4>${tableHtml}`;
         }
-
-        aiPageState = { rowKey: '' };
-
-        if (!isCurrentRoute('ai')) return;
-
-        pageContent.innerHTML = `
-          <div class="page-header">
-            <div>
-              <h2>AI control</h2>
-              <p class="subtitle">All AI opponent rooms in Firebase • <span id="ai-count">0 rooms</span></p>
-            </div>
-            <div class="page-actions">
-              <button class="btn btn-danger btn-sm" id="ai-delete-all">Delete all AI rooms</button>
-              <button class="btn btn-outline btn-sm" id="ai-refresh">↻ Refresh</button>
-            </div>
-          </div>
-          <p id="ai-msg" class="subtitle" style="margin-bottom:1rem"></p>
-          <div class="table-wrap">
-            <table>
-              <thead><tr><th>Game</th><th>Room</th><th>AI name</th><th>Host</th><th>Status</th><th class="text-right">Bet</th><th>Joined</th><th></th></tr></thead>
-              <tbody id="ai-body"></tbody>
-            </table>
-          </div>`;
-
-        $('#ai-refresh').onclick = () => {
-          pauseAutoRefresh(1500);
-          void load();
-        };
-        $('#ai-delete-all').onclick = async () => {
-          if (!confirm('Delete ALL AI rooms from Firebase? This removes waiting, in-match, and ended AI rooms.')) return;
-          const btn = $('#ai-delete-all');
-          btn.disabled = true;
-          $('#ai-msg').textContent = 'Deleting from Firebase…';
-          try {
-            const count = await deleteAllAiRooms();
-            $('#ai-msg').textContent = `Deleted ${count} AI room${count === 1 ? '' : 's'} from Firebase.`;
-            await load();
-          } catch (e) {
-            $('#ai-msg').textContent = e.message || 'Delete failed.';
-          } finally {
-            btn.disabled = false;
-          }
-        };
-        await load();
       }
 
-      async function renderSeason(_param, options = {}) {
-        const soft = options.soft === true;
-        const config = await getSeasonConfig();
-        const seasonIndex = await buildSeasonIndex(config);
+      const hint = $('#season-pick-hint');
+      if (hint) {
+        const hintText = `Showing top players for ${season.label} — ${season.count} total users`;
+        setTextIfChanged(hint, hintText);
+      }
+    }
+    return;
+  }
 
-        if (soft && $('#season-scores-chart-slot')) {
-          const selectedSeasonId = seasonPageState.selectedSeasonId || config.seasonId.toLowerCase();
-          document.querySelectorAll('#season-pick-row button').forEach((btn) => {
-            const sid = btn.dataset.seasonId;
-            const s = seasonIndex.getSeason(sid);
-            if (s) btn.textContent = `${s.label} (${s.count})`;
-            btn.classList.toggle('active', sid === selectedSeasonId);
-          });
-          const season = seasonIndex.getSeason(selectedSeasonId);
-          if (season) {
-            const labels = season.users.slice(0, 5).map((u) => u.name || playerId(u));
-            const values = season.users.slice(0, 5).map((u) => u.score);
-            const overviewLabels = seasonIndex.seasons.map((s) => s.label);
-            const overviewValues = seasonIndex.seasons.map((s) => s.count);
-            mountChartPanel(
-              $('#season-overview-chart-slot'),
-              'season-overview',
-              'All seasons — users per season',
-              overviewLabels,
-              overviewValues,
-              {
-                id: 'chart-all-seasons',
-                yLabel: 'Total users',
-                xLabel: 'Season',
-              },
-            );
+  chartRenderCache.delete('season-overview');
+  chartRenderCache.delete('season-scores');
 
-            const usersBlock = seasonPageState.showScoreUsers
-              ? `<div class="season-users-panel" id="score-users-panel">
-                  <h4>All users in ${esc(season.label)} (${season.count})</h4>
-                  ${renderSeasonUsersTable(season.users, 'No users in this season yet.')}
-                </div>`
-              : '';
-            const scoresFp = chartFingerprint(labels, values) + (seasonPageState.showScoreUsers ? ':show' : ':hide') + ':' + usersPanelKey(season.users);
-            const scoresCacheKey = 'season-scores';
-            const scoresSlot = $('#season-scores-chart-slot');
-            if (chartRenderCache.get(scoresCacheKey) !== scoresFp || !scoresSlot.querySelector('[data-chart-panel]')) {
-              chartRenderCache.set(scoresCacheKey, scoresFp);
-              scoresSlot.innerHTML = renderChartPanel(
-                `Top scores — ${season.label}`,
-                labels,
-                values,
-                {
-                  id: 'chart-season-scores',
-                  yLabel: 'Score',
-                  xLabel: 'Top players',
-                  extraButton: seasonPageState.showScoreUsers ? 'Hide users' : 'All users',
-                  extraButtonId: 'toggle-score-users',
-                  bodyBelow: usersBlock,
-                },
-              );
-              bindChartControls(scoresSlot);
-              const toggleBtn = scoresSlot.querySelector('[data-extra-btn="toggle-score-users"]');
-              if (toggleBtn) {
-                toggleBtn.onclick = () => {
-                  seasonPageState.showScoreUsers = !seasonPageState.showScoreUsers;
-                  chartRenderCache.delete('season-scores');
-                  void renderSeason(null, { soft: true });
-                };
-              }
-            } else if (seasonPageState.showScoreUsers) {
-              const panel = $('#score-users-panel');
-              const tableHtml = renderSeasonUsersTable(season.users, 'No users in this season yet.');
-              const tableKey = usersPanelKey(season.users);
-              if (panel && panel.dataset.key !== tableKey) {
-                panel.dataset.key = tableKey;
-                panel.innerHTML = `<h4>All users in ${esc(season.label)} (${season.count})</h4>${tableHtml}`;
-              }
-            }
+  let selectedSeasonId = seasonPageState.selectedSeasonId || config.seasonId.toLowerCase();
+  let showScoreUsers = seasonPageState.showScoreUsers;
+  seasonPageState.selectedSeasonId = selectedSeasonId;
+  seasonPageState.showScoreUsers = showScoreUsers;
 
-            const hint = $('#season-pick-hint');
-            if (hint) {
-              const hintText = `Showing top players for ${season.label} — ${season.count} total users`;
-              setTextIfChanged(hint, hintText);
-            }
-          }
-          return;
-        }
+  function getSelectedSeason() {
+    return seasonIndex.getSeason(selectedSeasonId) || seasonIndex.seasons[seasonIndex.seasons.length - 1];
+  }
 
-        chartRenderCache.delete('season-overview');
-        chartRenderCache.delete('season-scores');
+  if (!isCurrentRoute('season')) return;
 
-        let selectedSeasonId = seasonPageState.selectedSeasonId || config.seasonId.toLowerCase();
-        let showScoreUsers = seasonPageState.showScoreUsers;
-        seasonPageState.selectedSeasonId = selectedSeasonId;
+  pageContent.innerHTML = `
+    <div class="page-header">
+      <div>
+        <h2>Season</h2>
+        <p class="subtitle">Each season keeps its own users — live updates</p>
+      </div>
+      <div class="page-actions">
+        <button class="btn btn-outline btn-sm" id="season-refresh">↻ Refresh</button>
+      </div>
+    </div>
+    <div class="stats-grid">
+      <div class="stat-card"><div class="label">Active season</div><div class="value blue">${esc(config.seasonLabel)}</div></div>
+      ${seasonIndex.seasons
+        .map(
+          (s) => `
+      <div class="stat-card">
+        <div class="label">${esc(s.label)}</div>
+        <div class="value ${s.seasonId === seasonIndex.currentSeasonId ? 'green' : ''}">${s.count}</div>
+      </div>`,
+        )
+        .join('')}
+    </div>
+    <div id="season-overview-chart-slot"></div>
+    <div class="panel">
+      <h3>Pick a season — top players graph updates</h3>
+      <div class="season-pick-row" id="season-pick-row">
+        ${seasonIndex.seasons
+          .map(
+            (s) => `
+          <button type="button" class="btn btn-outline btn-sm ${s.seasonId === selectedSeasonId ? 'active' : ''} ${s.seasonId === seasonIndex.currentSeasonId ? 'current' : ''}" data-season-id="${esc(s.seasonId)}">
+            ${esc(s.label)} (${s.count})
+          </button>`,
+          )
+          .join('')}
+      </div>
+      <p class="subtitle" id="season-pick-hint">Showing top players for <strong>${esc(getSelectedSeason().label)}</strong> — ${getSelectedSeason().count} total users</p>
+    </div>
+    <div id="season-scores-chart-slot"></div>
+    <div class="panel">
+      <h3>Season config (Firestore: app_config / leaderboard)</h3>
+      <form id="season-form" class="season-form">
+        <div>
+          <label for="season-id">Season ID</label>
+          <input id="season-id" value="${esc(config.seasonId)}" required />
+        </div>
+        <div>
+          <label for="season-number">Season number</label>
+          <input id="season-number" type="number" min="1" value="${config.seasonNumber}" required />
+        </div>
+        <div>
+          <label for="season-label">Season label</label>
+          <input id="season-label" value="${esc(config.seasonLabel)}" required />
+        </div>
+      </form>
+      <div class="page-actions">
+        <button type="button" class="btn btn-outline btn-sm" id="season-next">Next season</button>
+        <button type="submit" form="season-form" class="btn btn-primary btn-sm">Save config</button>
+      </div>
+      <p id="season-msg" class="subtitle" style="margin-top:0.75rem"></p>
+    </div>`;
+
+  const msg = $('#season-msg');
+
+  function renderOverviewChart() {
+    const labels = seasonIndex.seasons.map((s) => s.label);
+    const values = seasonIndex.seasons.map((s) => s.count);
+    $('#season-overview-chart-slot').innerHTML = renderChartPanel(
+      'All seasons — users per season',
+      labels,
+      values,
+      {
+        id: 'chart-all-seasons',
+        yLabel: 'Total users',
+        xLabel: 'Season',
+      },
+    );
+    bindChartControls($('#season-overview-chart-slot'));
+  }
+
+  function renderScoresChart() {
+    const season = getSelectedSeason();
+    const labels = season.users.slice(0, 5).map((u) => u.name || playerId(u));
+    const values = season.users.slice(0, 5).map((u) => u.score);
+    const usersBlock = showScoreUsers
+      ? `<div class="season-users-panel" id="score-users-panel">
+          <h4>All users in ${esc(season.label)} (${season.count})</h4>
+          ${renderSeasonUsersTable(season.users, 'No users in this season yet.')}
+        </div>`
+      : '';
+
+    $('#season-scores-chart-slot').innerHTML = renderChartPanel(
+      `Top scores — ${season.label}`,
+      labels,
+      values,
+      {
+        id: 'chart-season-scores',
+        yLabel: 'Score',
+        xLabel: 'Top players',
+        extraButton: showScoreUsers ? 'Hide users' : 'All users',
+        extraButtonId: 'toggle-score-users',
+        bodyBelow: usersBlock,
+      },
+    );
+    bindChartControls($('#season-scores-chart-slot'));
+    const toggleBtn = $('#season-scores-chart-slot').querySelector('[data-extra-btn="toggle-score-users"]');
+    if (toggleBtn) {
+      toggleBtn.onclick = () => {
+        showScoreUsers = !showScoreUsers;
         seasonPageState.showScoreUsers = showScoreUsers;
-
-        function getSelectedSeason() {
-          return seasonIndex.getSeason(selectedSeasonId) || seasonIndex.seasons[seasonIndex.seasons.length - 1];
-        }
-
-        if (!isCurrentRoute('season')) return;
-
-        pageContent.innerHTML = `
-          <div class="page-header">
-            <div>
-              <h2>Season</h2>
-              <p class="subtitle">Each season keeps its own users — live updates</p>
-            </div>
-            <div class="page-actions">
-              <button class="btn btn-outline btn-sm" id="season-refresh">↻ Refresh</button>
-            </div>
-          </div>
-          <div class="stats-grid">
-            <div class="stat-card"><div class="label">Active season</div><div class="value blue">${esc(config.seasonLabel)}</div></div>
-            ${seasonIndex.seasons
-              .map(
-                (s) => `
-            <div class="stat-card">
-              <div class="label">${esc(s.label)}</div>
-              <div class="value ${s.seasonId === seasonIndex.currentSeasonId ? 'green' : ''}">${s.count}</div>
-            </div>`,
-              )
-              .join('')}
-          </div>
-          <div id="season-overview-chart-slot"></div>
-          <div class="panel">
-            <h3>Pick a season — top players graph updates</h3>
-            <div class="season-pick-row" id="season-pick-row">
-              ${seasonIndex.seasons
-                .map(
-                  (s) => `
-                <button type="button" class="btn btn-outline btn-sm ${s.seasonId === selectedSeasonId ? 'active' : ''} ${s.seasonId === seasonIndex.currentSeasonId ? 'current' : ''}" data-season-id="${esc(s.seasonId)}">
-                  ${esc(s.label)} (${s.count})
-                </button>`,
-                )
-                .join('')}
-            </div>
-            <p class="subtitle" id="season-pick-hint">Showing top players for <strong>${esc(getSelectedSeason().label)}</strong> — ${getSelectedSeason().count} total users</p>
-          </div>
-          <div id="season-scores-chart-slot"></div>
-          <div class="panel">
-            <h3>Season config (Firestore: app_config / leaderboard)</h3>
-            <form id="season-form" class="season-form">
-              <div>
-                <label for="season-id">Season ID</label>
-                <input id="season-id" value="${esc(config.seasonId)}" required />
-              </div>
-              <div>
-                <label for="season-number">Season number</label>
-                <input id="season-number" type="number" min="1" value="${config.seasonNumber}" required />
-              </div>
-              <div>
-                <label for="season-label">Season label</label>
-                <input id="season-label" value="${esc(config.seasonLabel)}" required />
-              </div>
-            </form>
-            <div class="page-actions">
-              <button type="button" class="btn btn-outline btn-sm" id="season-next">Next season</button>
-              <button type="submit" form="season-form" class="btn btn-primary btn-sm">Save config</button>
-            </div>
-            <p id="season-msg" class="subtitle" style="margin-top:0.75rem"></p>
-          </div>`;
-
-        const msg = $('#season-msg');
-
-        function renderOverviewChart() {
-          const labels = seasonIndex.seasons.map((s) => s.label);
-          const values = seasonIndex.seasons.map((s) => s.count);
-          $('#season-overview-chart-slot').innerHTML = renderChartPanel(
-            'All seasons — users per season',
-            labels,
-            values,
-            {
-              id: 'chart-all-seasons',
-              yLabel: 'Total users',
-              xLabel: 'Season',
-            },
-          );
-          bindChartControls($('#season-overview-chart-slot'));
-        }
-
-        function renderScoresChart() {
-          const season = getSelectedSeason();
-          const labels = season.users.slice(0, 5).map((u) => u.name || playerId(u));
-          const values = season.users.slice(0, 5).map((u) => u.score);
-          const usersBlock = showScoreUsers
-            ? `<div class="season-users-panel" id="score-users-panel">
-                <h4>All users in ${esc(season.label)} (${season.count})</h4>
-                ${renderSeasonUsersTable(season.users, 'No users in this season yet.')}
-              </div>`
-            : '';
-
-          $('#season-scores-chart-slot').innerHTML = renderChartPanel(
-            `Top scores — ${season.label}`,
-            labels,
-            values,
-            {
-              id: 'chart-season-scores',
-              yLabel: 'Score',
-              xLabel: 'Top players',
-              extraButton: showScoreUsers ? 'Hide users' : 'All users',
-              extraButtonId: 'toggle-score-users',
-              bodyBelow: usersBlock,
-            },
-          );
-          bindChartControls($('#season-scores-chart-slot'));
-          const toggleBtn = $('#season-scores-chart-slot').querySelector('[data-extra-btn="toggle-score-users"]');
-          if (toggleBtn) {
-            toggleBtn.onclick = () => {
-              showScoreUsers = !showScoreUsers;
-              seasonPageState.showScoreUsers = showScoreUsers;
-              renderScoresChart();
-            };
-          }
-        }
-
-        function updateSeasonPickButtons() {
-          document.querySelectorAll('#season-pick-row button').forEach((btn) => {
-            const sid = btn.dataset.seasonId;
-            btn.classList.toggle('active', sid === selectedSeasonId);
-          });
-          const season = getSelectedSeason();
-          $('#season-pick-hint').innerHTML = `Showing top players for <strong>${esc(season.label)}</strong> — ${season.count} total users (saved in this season)`;
-        }
-
-        renderOverviewChart();
         renderScoresChart();
+      };
+    }
+  }
 
-        $('#season-pick-row').onclick = (e) => {
-          const btn = e.target.closest('button[data-season-id]');
-          if (!btn) return;
-          pauseAutoRefresh(120000);
-          selectedSeasonId = btn.dataset.seasonId;
-          seasonPageState.selectedSeasonId = selectedSeasonId;
-          updateSeasonPickButtons();
-          renderScoresChart();
-        };
+  function updateSeasonPickButtons() {
+    document.querySelectorAll('#season-pick-row button').forEach((btn) => {
+      const sid = btn.dataset.seasonId;
+      btn.classList.toggle('active', sid === selectedSeasonId);
+    });
+    const season = getSelectedSeason();
+    $('#season-pick-hint').innerHTML = `Showing top players for <strong>${esc(season.label)}</strong> — ${season.count} total users (saved in this season)`;
+  }
 
-        $('#season-refresh').onclick = () => {
-          pauseAutoRefresh(1500);
-          void renderSeason();
-        };
+  renderOverviewChart();
+  renderScoresChart();
 
-        $('#season-next').onclick = () => {
-          const nextNum = Number($('#season-number').value || config.seasonNumber) + 1;
-          $('#season-number').value = String(nextNum);
-          $('#season-id').value = `s${nextNum}`;
-          $('#season-label').value = `Season ${nextNum}`;
-          msg.textContent = 'Fields updated — click Save config to apply. New season button will appear after save.';
-        };
+  $('#season-pick-row').onclick = (e) => {
+    const btn = e.target.closest('button[data-season-id]');
+    if (!btn) return;
+    pauseAutoRefresh(120000);
+    selectedSeasonId = btn.dataset.seasonId;
+    seasonPageState.selectedSeasonId = selectedSeasonId;
+    updateSeasonPickButtons();
+    renderScoresChart();
+  };
 
-        $('#season-form').onsubmit = async (e) => {
-          e.preventDefault();
-          const saveBtn = document.querySelector('button[form="season-form"]');
-          if (saveBtn) saveBtn.disabled = true;
-          msg.textContent = 'Saving…';
-          try {
-            const next = {
-              seasonId: $('#season-id').value.trim().toLowerCase(),
-              seasonNumber: Number($('#season-number').value),
-              seasonLabel: $('#season-label').value.trim(),
-            };
-            if (!next.seasonId || !next.seasonLabel || !next.seasonNumber) {
-              throw new Error('All season fields are required.');
-            }
-            await saveSeasonConfig(next);
-            msg.textContent = 'Season config saved. Users who login now are saved in the new season; old season data stays in seasonHistory.';
-            await renderSeason();
-          } catch (err) {
-            msg.textContent = err.message || 'Failed to save season config.';
-          } finally {
-            if (saveBtn) saveBtn.disabled = false;
-          }
-        };
+  $('#season-refresh').onclick = () => {
+    pauseAutoRefresh(1500);
+    void renderSeason();
+  };
+
+  $('#season-next').onclick = () => {
+    const nextNum = Number($('#season-number').value || config.seasonNumber) + 1;
+    $('#season-number').value = String(nextNum);
+    $('#season-id').value = `s${nextNum}`;
+    $('#season-label').value = `Season ${nextNum}`;
+    msg.textContent = 'Fields updated — click Save config to apply. New season button will appear after save.';
+  };
+
+  $('#season-form').onsubmit = async (e) => {
+    e.preventDefault();
+    const saveBtn = document.querySelector('button[form="season-form"]');
+    if (saveBtn) saveBtn.disabled = true;
+    msg.textContent = 'Saving…';
+    try {
+      const next = {
+        seasonId: $('#season-id').value.trim().toLowerCase(),
+        seasonNumber: Number($('#season-number').value),
+        seasonLabel: $('#season-label').value.trim(),
+      };
+      if (!next.seasonId || !next.seasonLabel || !next.seasonNumber) {
+        throw new Error('All season fields are required.');
       }
+      await saveSeasonConfig(next);
+      msg.textContent = 'Season config saved. Users who login now are saved in the new season; old season data stays in seasonHistory.';
+      await renderSeason();
+    } catch (err) {
+      msg.textContent = err.message || 'Failed to save season config.';
+    } finally {
+      if (saveBtn) saveBtn.disabled = false;
+    }
+  };
+}
 
-      // ── Combined login UI logic ──
-      const loginOptions = $('#login-options');
-      const emailFormWrapper = $('#email-login-form-wrapper');
-      const showEmailFormBtn = $('#btn-show-email-form');
-      const backToLoginOptions = $('#back-to-login-options');
-      const googleSignInBtn = $('#btn-google-signin');
-      const emailLoginForm = $('#email-login-form');
-      const emailSignInBtn = $('#btn-email-signin');
+// Auth
+const signInBtn = $('#btn-google-signin');
+signInBtn.onclick = async () => {
+  signInBtn.disabled = true;
+  signInBtn.textContent = 'Signing in…';
+  loginError.classList.add('hidden');
+  try {
+    await signInWithPopup(auth, googleProvider);
+  } catch (err) {
+    signInBtn.disabled = false;
+    signInBtn.innerHTML = `
+      <svg width="18" height="18" viewBox="0 0 24 24">
+        <path fill="#fff" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 0 1-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z"/>
+        <path fill="#fff" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+        <path fill="#fff" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
+        <path fill="#fff" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
+      </svg>
+      Sign in with Google`;
+    if (err?.code !== 'auth/popup-closed-by-user') {
+      loginError.textContent = err.message || 'Sign-in failed';
+      loginError.classList.remove('hidden');
+    }
+  }
+};
 
-      // Toggle: show email form
-      showEmailFormBtn.addEventListener('click', () => {
-        loginOptions.classList.add('hidden');
-        emailFormWrapper.classList.remove('hidden');
-        loginError.classList.add('hidden');
-      });
+// Email/Password sign in
+$('#email-login-form').onsubmit = async (e) => {
+  e.preventDefault();
+  const email = $('#login-email').value.trim();
+  const password = $('#login-password').value;
+  const emailSignInBtn = $('#btn-email-signin');
+  
+  emailSignInBtn.disabled = true;
+  emailSignInBtn.textContent = 'Signing in…';
+  loginError.classList.add('hidden');
+  
+  try {
+    await signInWithEmailAndPassword(auth, email, password);
+  } catch (err) {
+    emailSignInBtn.disabled = false;
+    emailSignInBtn.textContent = '📧 Sign in with Email';
+    
+    let errorMsg = 'Sign-in failed';
+    if (err.code === 'auth/user-not-found') {
+      errorMsg = 'No account found with this email.';
+    } else if (err.code === 'auth/wrong-password') {
+      errorMsg = 'Incorrect password.';
+    } else if (err.code === 'auth/invalid-email') {
+      errorMsg = 'Invalid email address.';
+    } else if (err.code === 'auth/invalid-credential') {
+      errorMsg = 'Invalid email or password.';
+    } else {
+      errorMsg = err.message || errorMsg;
+    }
+    
+    loginError.textContent = errorMsg;
+    loginError.classList.remove('hidden');
+  }
+};
 
-      // Toggle: back to main options
-      backToLoginOptions.addEventListener('click', () => {
-        emailFormWrapper.classList.add('hidden');
-        loginOptions.classList.remove('hidden');
-        loginError.classList.add('hidden');
-      });
+$('#btn-signout-denied').onclick = () => {
+  stopAdminAutoRefresh();
+  signOut(auth);
+};
+$('#btn-signout').onclick = () => {
+  stopAdminAutoRefresh();
+  signOut(auth);
+};
+$('#menu-btn').onclick = () => sidebar.classList.toggle('open');
 
-      // Google Sign‑In
-      googleSignInBtn.onclick = async () => {
-        googleSignInBtn.disabled = true;
-        googleSignInBtn.textContent = 'Signing in…';
-        loginError.classList.add('hidden');
-        try {
-          await signInWithPopup(auth, googleProvider);
-        } catch (err) {
-          googleSignInBtn.disabled = false;
-          googleSignInBtn.innerHTML = `
-            <svg width="18" height="18" viewBox="0 0 24 24">
-              <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 0 1-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z"/>
-              <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
-              <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
-              <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
-            </svg>
-            Sign in with Google`;
-          if (err?.code !== 'auth/popup-closed-by-user') {
-            loginError.textContent = err.message || 'Sign-in failed';
-            loginError.classList.remove('hidden');
-          }
-        }
-      };
+window.navigate = navigate;
 
-      // Email/Password sign in
-      emailLoginForm.onsubmit = async (e) => {
-        e.preventDefault();
-        const email = $('#login-email').value.trim();
-        const password = $('#login-password').value;
-        
-        emailSignInBtn.disabled = true;
-        emailSignInBtn.textContent = 'Signing in…';
-        loginError.classList.add('hidden');
-        
-        try {
-          await signInWithEmailAndPassword(auth, email, password);
-        } catch (err) {
-          emailSignInBtn.disabled = false;
-          emailSignInBtn.textContent = '🔐 Sign in with Email';
-          
-          let errorMsg = 'Sign-in failed';
-          if (err.code === 'auth/user-not-found') {
-            errorMsg = 'No account found with this email.';
-          } else if (err.code === 'auth/wrong-password') {
-            errorMsg = 'Incorrect password.';
-          } else if (err.code === 'auth/invalid-email') {
-            errorMsg = 'Invalid email address.';
-          } else if (err.code === 'auth/invalid-credential') {
-            errorMsg = 'Invalid email or password.';
-          } else {
-            errorMsg = err.message || errorMsg;
-          }
-          
-          loginError.textContent = errorMsg;
-          loginError.classList.remove('hidden');
-        }
-      };
+onAuthStateChanged(auth, async (user) => {
+  currentUser = user;
+  if (!user) {
+    stopAdminAutoRefresh();
+    signInBtn.disabled = false;
+    signInBtn.innerHTML = `
+      <svg width="18" height="18" viewBox="0 0 24 24">
+        <path fill="#fff" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 0 1-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z"/>
+        <path fill="#fff" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+        <path fill="#fff" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
+        <path fill="#fff" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
+      </svg>
+      Sign in with Google`;
+    loginError.classList.add('hidden');
+    $('#login-email').value = '';
+    $('#login-password').value = '';
+    show(loginScreen);
+    return;
+  }
+  isAdmin = await isEmailAdmin(user.email);
+  if (!isAdmin) {
+    deniedEmail.textContent = user.email;
+    show(deniedScreen);
+    return;
+  }
 
-      $('#btn-signout-denied').onclick = () => {
-        stopAdminAutoRefresh();
-        signOut(auth);
-      };
-      $('#btn-signout').onclick = () => {
-        stopAdminAutoRefresh();
-        signOut(auth);
-      };
-      $('#menu-btn').onclick = () => sidebar.classList.toggle('open');
+  await ensureDb();
+  show(appShell);
+  $('#user-name').textContent = user.displayName || user.email?.split('@')[0] || 'Admin';
+  $('#user-email').textContent = user.email || '';
+  if (user.photoURL) {
+    $('#user-avatar').src = user.photoURL;
+  } else {
+    // Create a default avatar with first letter
+    const initial = (user.email?.[0] || 'A').toUpperCase();
+    $('#user-avatar').src = `data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='36' height='36'%3E%3Crect width='36' height='36' fill='%233b82f6'/%3E%3Ctext x='18' y='24' font-size='16' fill='white' text-anchor='middle' font-family='sans-serif'%3E${initial}%3C/text%3E%3C/svg%3E`;
+  }
 
-      window.navigate = navigate;
+  if (!location.hash || location.hash === '#') location.hash = '#/dashboard';
+  lastHash = location.hash;
+  startAdminAutoRefresh();
+  await route();
+});
 
-      onAuthStateChanged(auth, async (user) => {
-        currentUser = user;
-        if (!user) {
-          stopAdminAutoRefresh();
-          googleSignInBtn.disabled = false;
-          googleSignInBtn.innerHTML = `
-            <svg width="18" height="18" viewBox="0 0 24 24">
-              <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 0 1-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z"/>
-              <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
-              <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
-              <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
-            </svg>
-            Sign in with Google`;
-          emailSignInBtn.disabled = false;
-          emailSignInBtn.textContent = '🔐 Sign in with Email';
-          loginError.classList.add('hidden');
-          $('#login-email').value = '';
-          $('#login-password').value = '';
-          // Reset login step to main options
-          loginOptions.classList.remove('hidden');
-          emailFormWrapper.classList.add('hidden');
-          show(loginScreen);
-          return;
-        }
-        isAdmin = await isEmailAdmin(user.email);
-        if (!isAdmin) {
-          deniedEmail.textContent = user.email;
-          show(deniedScreen);
-          return;
-        }
+window.addEventListener('hashchange', () => {
+  if (!isAdmin) return;
+  const h = location.hash || '#/dashboard';
+  if (h === lastHash) return;
+  lastHash = h;
+  void route();
+});
 
-        await ensureDb();
-        show(appShell);
-        $('#user-name').textContent = user.displayName || user.email?.split('@')[0] || 'Admin';
-        $('#user-email').textContent = user.email || '';
-        if (user.photoURL) {
-          $('#user-avatar').src = user.photoURL;
-        } else {
-          const initial = (user.email?.[0] || 'A').toUpperCase();
-          $('#user-avatar').src = `data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='36' height='36'%3E%3Crect width='36' height='36' fill='%233b82f6'/%3E%3Ctext x='18' y='24' font-size='16' fill='white' text-anchor='middle' font-family='sans-serif'%3E${initial}%3C/text%3E%3C/svg%3E`;
-        }
+pageContent.addEventListener('click', (e) => {
+  const row = e.target.closest('#users-table-body tr[data-id]');
+  if (!row) return;
+  e.preventDefault();
+  pauseAutoRefresh(3000);
+  navigate('user-detail', row.dataset.id);
+});
 
-        if (!location.hash || location.hash === '#') location.hash = '#/dashboard';
-        lastHash = location.hash;
-        startAdminAutoRefresh();
-        await route();
-      });
-
-      window.addEventListener('hashchange', () => {
-        if (!isAdmin) return;
-        const h = location.hash || '#/dashboard';
-        if (h === lastHash) return;
-        lastHash = h;
-        void route();
-      });
-
-      pageContent.addEventListener('click', (e) => {
-        const row = e.target.closest('#users-table-body tr[data-id]');
-        if (!row) return;
-        e.preventDefault();
-        pauseAutoRefresh(3000);
-        navigate('user-detail', row.dataset.id);
-      });
-
-      document.querySelectorAll('.nav a').forEach((a) => {
-        a.onclick = (e) => {
-          e.preventDefault();
-          pauseAutoRefresh(2000);
-          navigate(a.dataset.page);
-          sidebar.classList.remove('open');
-        };
-      });
+document.querySelectorAll('.nav a').forEach((a) => {
+  a.onclick = (e) => {
+    e.preventDefault();
+    pauseAutoRefresh(2000);
+    navigate(a.dataset.page);
+    sidebar.classList.remove('open');
+  };
+});
     </script>
   </body>
 </html>
