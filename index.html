@@ -1061,7 +1061,6 @@ let usersCol;
 let adminsDoc;
 let seasonConfigDoc;
 let dailyTasksMetaDoc;
-let aiMatchHistoryCol;
 
 async function ensureDb() {
   if (!dbReady) {
@@ -1076,11 +1075,10 @@ async function ensureDb() {
       adminsDoc = doc(firestore, 'admins', 'admin_emails');
       seasonConfigDoc = doc(firestore, 'app_config', 'leaderboard');
       dailyTasksMetaDoc = doc(firestore, 'app_config', 'daily_tasks');
-      aiMatchHistoryCol = collection(firestore, 'ai_match_history');
     })();
   }
   await dbReady;
-  return { firestore, rtdb, usersCol, adminsDoc, seasonConfigDoc, dailyTasksMetaDoc, aiMatchHistoryCol };
+  return { firestore, rtdb, usersCol, adminsDoc, seasonConfigDoc, dailyTasksMetaDoc };
 }
 
 // ── Config ──
@@ -1836,38 +1834,17 @@ async function getAiRecords() {
     if (!rooms) return;
     for (const [code, data] of Object.entries(rooms)) {
       if (!isAiRoom(data)) continue;
-      const ended = data.gameEnded === true || data.tournamentEnded === true;
-      const started = data.gameStarted === true || data.tournamentStarted === true;
-
-      const hostName = data.hostName || 'Host';
-      const guestName = data.guestName || 'AI Bot';
-      const hostScore = Number(data.hostScore ?? data.hostWins ?? 0);
-      const guestScore = Number(data.guestScore ?? data.guestWins ?? 0);
-
-      let winnerLabel = '';
-      let winnerKind = 'draw';
-      if (ended) {
-        const w = resolveMatchWinner(data, hostName, guestName, hostScore, guestScore);
-        winnerLabel = w.label;
-        winnerKind = w.kind;
-      }
-
+      const ended = data.gameEnded === true;
+      const started = data.gameStarted === true;
       records.push({
         gamePath: path,
         gameType: label,
         roomCode: code,
         aiName: data.guestName || 'AI Bot',
-        hostName,
-        guestName,
+        hostName: data.hostName || 'Host',
         joinedAt: Number(data.aiJoinedAt ?? data.createdAt ?? 0),
-        endedAt: Number(data.matchEndsAt ?? data.createdAt ?? 0),
         status: ended ? 'ended' : started ? 'in_match' : 'waiting',
         betAmount: Number(data.betAmount ?? 0),
-        hostScore,
-        guestScore,
-        winner: winnerLabel,
-        winnerKind,
-        isAi: true,
       });
     }
   });
@@ -1889,101 +1866,6 @@ async function deleteAllAiRooms() {
   const records = await getAiRecords();
   await Promise.all(records.map((r) => deleteRtdbRoom(r.gamePath, r.roomCode)));
   return records.length;
-}
-
-// ── AI match history (Firestore persistence) ──
-async function saveAiMatchRecord(record) {
-  await ensureDb();
-  const { addDoc } = await fs();
-  const docRef = await addDoc(aiMatchHistoryCol, {
-    gamePath: record.gamePath,
-    gameType: record.gameType,
-    roomCode: record.roomCode,
-    aiName: record.aiName || 'AI Bot',
-    hostName: record.hostName || 'Host',
-    guestName: record.guestName || record.aiName || 'AI Bot',
-    hostScore: record.hostScore ?? 0,
-    guestScore: record.guestScore ?? 0,
-    winner: record.winner || '',
-    winnerKind: record.winnerKind || 'draw',
-    betAmount: record.betAmount ?? 0,
-    joinedAt: record.joinedAt ?? 0,
-    endedAt: record.endedAt ?? Date.now(),
-    status: record.status || 'ended',
-    savedAt: Date.now(),
-  });
-  return docRef.id;
-}
-
-async function getAiMatchHistory(maxRecords = 500) {
-  await ensureDb();
-  const { getDocs, query, orderBy, limit } = await fs();
-  try {
-    const q = query(
-      aiMatchHistoryCol,
-      orderBy('savedAt', 'desc'),
-      limit(maxRecords),
-    );
-    const snap = await getDocs(q);
-    return snap.docs.map((d) => ({ id: d.id, ...d.data() }));
-  } catch {
-    const snap = await getDocs(aiMatchHistoryCol);
-    return snap.docs
-      .map((d) => ({ id: d.id, ...d.data() }))
-      .sort((a, b) => (b.savedAt || 0) - (a.savedAt || 0))
-      .slice(0, maxRecords);
-  }
-}
-
-async function deleteAiMatchRecord(recordId) {
-  await ensureDb();
-  const { doc, deleteDoc } = await fs();
-  await deleteDoc(doc(firestore, 'ai_match_history', recordId));
-}
-
-async function deleteAllAiMatchHistory() {
-  await ensureDb();
-  const { getDocs, writeBatch, doc } = await fs();
-  const snap = await getDocs(aiMatchHistoryCol);
-  let batch = writeBatch(firestore);
-  let ops = 0;
-  let count = 0;
-  for (const d of snap.docs) {
-    batch.delete(doc(firestore, 'ai_match_history', d.id));
-    ops++;
-    count++;
-    if (ops >= 400) {
-      await batch.commit();
-      batch = writeBatch(firestore);
-      ops = 0;
-    }
-  }
-  if (ops > 0) await batch.commit();
-  return count;
-}
-
-// Auto-save ended AI matches that haven't been saved yet
-async function autoSaveEndedAiMatches() {
-  const [liveRecords, historyRecords] = await Promise.all([
-    getAiRecords(),
-    getAiMatchHistory(1000),
-  ]);
-  const historyKeys = new Set(
-    historyRecords.map((r) => `${r.gamePath}/${r.roomCode}/${r.endedAt}`),
-  );
-  const toSave = liveRecords.filter(
-    (r) => r.status === 'ended' && !historyKeys.has(`${r.gamePath}/${r.roomCode}/${r.endedAt}`),
-  );
-  let saved = 0;
-  for (const r of toSave) {
-    try {
-      await saveAiMatchRecord(r);
-      saved++;
-    } catch {
-      // skip failed saves
-    }
-  }
-  return saved;
 }
 
 // ── Email sending function ──
@@ -2024,7 +1906,10 @@ The CroomX Team 👑
 "Success is the sum of small efforts repeated day in and day out."`;
   }
   
+  // Create mailto link with encoded parameters
   const mailtoLink = `mailto:${encodeURIComponent(userEmail)}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+  
+  // Open email client
   window.open(mailtoLink, '_blank');
 }
 
@@ -2810,6 +2695,7 @@ async function renderTasks(_param, options = {}) {
             })
             .join('');
 
+    // Bind email buttons
     document.querySelectorAll('.btn-email-task-single').forEach((btn) => {
       btn.onclick = (e) => {
         e.stopPropagation();
@@ -2885,6 +2771,7 @@ async function renderTasks(_param, options = {}) {
     }
   };
   
+  // Email all incomplete button
   $('#tasks-email-all').onclick = async () => {
     const rows = await getDailyTasks();
     const incompleteUsers = rows.filter(r => !r.allFiveComplete && r.user.email);
@@ -2903,6 +2790,7 @@ async function renderTasks(_param, options = {}) {
     try {
       for (const row of incompleteUsers) {
         sendTaskEmail(row.user.email, row.user.name || 'Player', row.tasks);
+        // Small delay between emails to prevent browser blocking
         await new Promise(resolve => setTimeout(resolve, 300));
       }
       $('#tasks-msg').textContent = `📧 Task reminder emails sent to ${incompleteUsers.length} user(s)!`;
@@ -3033,89 +2921,38 @@ async function renderMatches(_param, options = {}) {
 
 async function renderAi(_param, options = {}) {
   const soft = options.soft === true;
-  let autoSaveRan = false;
 
   async function load() {
-    // Auto-save ended AI matches that aren't saved yet (once per render)
-    if (!autoSaveRan) {
-      autoSaveRan = true;
-      try {
-        const saved = await autoSaveEndedAiMatches();
-        if (saved > 0) {
-          const msg = $('#ai-msg');
-          if (msg) msg.textContent = `Auto-saved ${saved} ended AI match record${saved === 1 ? '' : 's'}.`;
-        }
-      } catch {
-        // silent
-      }
-    }
+    const records = await getAiRecords();
+    const countText = `${records.length} AI room${records.length === 1 ? '' : 's'}`;
+    setTextIfChanged($('#ai-count'), countText);
+    const rowKey = records.map((r) => `${r.gamePath}/${r.roomCode}:${r.status}`).join('|');
+    if (aiPageState?.rowKey === rowKey && $('#ai-body')?.children.length) return;
+    if (aiPageState) aiPageState.rowKey = rowKey;
 
-    const [liveRecords, historyRecords] = await Promise.all([
-      getAiRecords(),
-      getAiMatchHistory(),
-    ]);
+    const statusBadge = (s) => {
+      if (s === 'ended') return '<span class="badge badge-muted">Ended</span>';
+      if (s === 'in_match') return '<span class="badge badge-warn">In match</span>';
+      return '<span class="badge badge-info">Waiting</span>';
+    };
 
-    const liveCountEl = $('#ai-count');
-    const historyCountEl = $('#ai-history-count');
-    if (liveCountEl) setTextIfChanged(liveCountEl, `${liveRecords.length} live room${liveRecords.length === 1 ? '' : 's'}`);
-    if (historyCountEl) setTextIfChanged(historyCountEl, `${historyRecords.length} saved record${historyRecords.length === 1 ? '' : 's'}`);
-
-    const liveBody = $('#ai-body');
-    if (liveBody) {
-      const liveKey = liveRecords.map((r) => `${r.gamePath}/${r.roomCode}:${r.status}`).join('|');
-      if (aiPageState?.liveKey !== liveKey || !liveBody.children.length) {
-        if (aiPageState) aiPageState.liveKey = liveKey;
-        const statusBadge = (s) => {
-          if (s === 'ended') return '<span class="badge badge-muted">Ended</span>';
-          if (s === 'in_match') return '<span class="badge badge-warn">In match</span>';
-          return '<span class="badge badge-info">Waiting</span>';
-        };
-        liveBody.innerHTML =
-          liveRecords.length === 0
-            ? '<tr><td colspan="9" class="empty">No live AI rooms</td></tr>'
-            : liveRecords
-                .map(
-                  (r) => `<tr data-path="${esc(r.gamePath)}" data-code="${esc(r.roomCode)}">
-                <td>${esc(r.gameType)}</td>
-                <td>${esc(r.roomCode)}</td>
-                <td>${esc(r.aiName)}</td>
-                <td>${esc(r.hostName)}</td>
-                <td>${statusBadge(r.status)}</td>
-                <td class="text-right">${r.betAmount}</td>
-                <td>${fmtDate(r.joinedAt)}</td>
-                <td><button type="button" class="btn btn-outline btn-sm btn-save-ai">💾 Save</button></td>
-                <td><button type="button" class="btn btn-danger btn-sm btn-del-ai">Delete</button></td>
-              </tr>`,
-                )
-                .join('');
-      }
-    }
-
-    const historyBody = $('#ai-history-body');
-    if (historyBody) {
-      const histKey = historyRecords.map((r) => `${r.id}:${r.savedAt}`).join('|');
-      if (aiPageState?.histKey !== histKey || !historyBody.children.length) {
-        if (aiPageState) aiPageState.histKey = histKey;
-        historyBody.innerHTML =
-          historyRecords.length === 0
-            ? '<tr><td colspan="9" class="empty">No saved AI match history</td></tr>'
-            : historyRecords
-                .map(
-                  (r) => `<tr data-record-id="${esc(r.id)}">
-                <td>${esc(r.gameType)}</td>
-                <td>${esc(r.roomCode)}</td>
-                <td>${esc(r.aiName)}</td>
-                <td>${esc(r.hostName)}</td>
-                <td class="text-right">${r.hostScore} - ${r.guestScore}</td>
-                <td>${winnerBadgeHtml({ label: r.winner || 'Draw', kind: r.winnerKind || 'draw' })}</td>
-                <td class="text-right">${r.betAmount}</td>
-                <td>${fmtDate(r.endedAt || r.savedAt)}</td>
-                <td><button type="button" class="btn btn-danger btn-sm btn-del-ai-history">Delete</button></td>
-              </tr>`,
-                )
-                .join('');
-      }
-    }
+    $('#ai-body').innerHTML =
+      records.length === 0
+        ? '<tr><td colspan="8" class="empty">No AI rooms</td></tr>'
+        : records
+            .map(
+              (r) => `<tr data-path="${esc(r.gamePath)}" data-code="${esc(r.roomCode)}">
+            <td>${esc(r.gameType)}</td>
+            <td>${esc(r.roomCode)}</td>
+            <td>${esc(r.aiName)}</td>
+            <td>${esc(r.hostName)}</td>
+            <td>${statusBadge(r.status)}</td>
+            <td class="text-right">${r.betAmount}</td>
+            <td>${fmtDate(r.joinedAt)}</td>
+            <td><button type="button" class="btn btn-danger btn-sm btn-del-ai">Delete</button></td>
+          </tr>`,
+            )
+            .join('');
 
     document.querySelectorAll('.btn-del-ai').forEach((btn) => {
       btn.onclick = async (e) => {
@@ -3125,7 +2962,6 @@ async function renderAi(_param, options = {}) {
         btn.disabled = true;
         try {
           await deleteRtdbRoom(row.dataset.path, row.dataset.code);
-          aiPageState.liveKey = '';
           await load();
         } catch (err) {
           alert(err.message || 'Delete failed');
@@ -3133,76 +2969,6 @@ async function renderAi(_param, options = {}) {
         }
       };
     });
-
-    document.querySelectorAll('.btn-save-ai').forEach((btn) => {
-      btn.onclick = async (e) => {
-        e.stopPropagation();
-        const row = btn.closest('tr');
-        if (!row) return;
-        const record = liveRecords.find(
-          (r) => r.gamePath === row.dataset.path && r.roomCode === row.dataset.code,
-        );
-        if (!record) return;
-        btn.disabled = true;
-        btn.textContent = 'Saving…';
-        try {
-          await saveAiMatchRecord(record);
-          btn.textContent = '✅ Saved';
-          aiPageState.histKey = '';
-          const historyRecords2 = await getAiMatchHistory();
-          const historyBody2 = $('#ai-history-body');
-          if (historyBody2) {
-            const histKey2 = historyRecords2.map((r) => `${r.id}:${r.savedAt}`).join('|');
-            aiPageState.histKey = histKey2;
-            historyBody2.innerHTML =
-              historyRecords2.length === 0
-                ? '<tr><td colspan="9" class="empty">No saved AI match history</td></tr>'
-                : historyRecords2
-                    .map(
-                      (r) => `<tr data-record-id="${esc(r.id)}">
-                    <td>${esc(r.gameType)}</td>
-                    <td>${esc(r.roomCode)}</td>
-                    <td>${esc(r.aiName)}</td>
-                    <td>${esc(r.hostName)}</td>
-                    <td class="text-right">${r.hostScore} - ${r.guestScore}</td>
-                    <td>${winnerBadgeHtml({ label: r.winner || 'Draw', kind: r.winnerKind || 'draw' })}</td>
-                    <td class="text-right">${r.betAmount}</td>
-                    <td>${fmtDate(r.endedAt || r.savedAt)}</td>
-                    <td><button type="button" class="btn btn-danger btn-sm btn-del-ai-history">Delete</button></td>
-                  </tr>`,
-                    )
-                    .join('');
-            bindHistoryDeleteButtons();
-          }
-          const hc = $('#ai-history-count');
-          if (hc) setTextIfChanged(hc, `${historyRecords2.length} saved record${historyRecords2.length === 1 ? '' : 's'}`);
-        } catch (err) {
-          btn.textContent = '💾 Save';
-          btn.disabled = false;
-          alert(err.message || 'Save failed');
-        }
-      };
-    });
-
-    function bindHistoryDeleteButtons() {
-      document.querySelectorAll('.btn-del-ai-history').forEach((btn) => {
-        btn.onclick = async (e) => {
-          e.stopPropagation();
-          const row = btn.closest('tr');
-          if (!row || !confirm('Delete this saved AI match record?')) return;
-          btn.disabled = true;
-          try {
-            await deleteAiMatchRecord(row.dataset.recordId);
-            aiPageState.histKey = '';
-            await load();
-          } catch (err) {
-            alert(err.message || 'Delete failed');
-            btn.disabled = false;
-          }
-        };
-      });
-    }
-    bindHistoryDeleteButtons();
   }
 
   if (soft && $('#ai-body')) {
@@ -3211,7 +2977,7 @@ async function renderAi(_param, options = {}) {
     return;
   }
 
-  aiPageState = { liveKey: '', histKey: '' };
+  aiPageState = { rowKey: '' };
 
   if (!isCurrentRoute('ai')) return;
 
@@ -3219,79 +2985,33 @@ async function renderAi(_param, options = {}) {
     <div class="page-header">
       <div>
         <h2>AI control</h2>
-        <p class="subtitle">Live AI rooms & saved match history • <span id="ai-count">0 live rooms</span> • <span id="ai-history-count">0 saved records</span></p>
+        <p class="subtitle">All AI opponent rooms in Firebase • <span id="ai-count">0 rooms</span></p>
       </div>
       <div class="page-actions">
+        <button class="btn btn-danger btn-sm" id="ai-delete-all">Delete all AI rooms</button>
         <button class="btn btn-outline btn-sm" id="ai-refresh">↻ Refresh</button>
       </div>
     </div>
     <p id="ai-msg" class="subtitle" style="margin-bottom:1rem"></p>
-
-    <div class="panel" style="margin-bottom:1.5rem">
-      <div class="page-header" style="margin-bottom:1rem">
-        <div><h3 style="margin:0">🟢 Live AI rooms</h3></div>
-        <div class="page-actions">
-          <button class="btn btn-danger btn-sm" id="ai-delete-all">Delete all live AI rooms</button>
-        </div>
-      </div>
-      <div class="table-wrap">
-        <table>
-          <thead><tr><th>Game</th><th>Room</th><th>AI name</th><th>Host</th><th>Status</th><th class="text-right">Bet</th><th>Joined</th><th></th><th></th></tr></thead>
-          <tbody id="ai-body"></tbody>
-        </table>
-      </div>
-    </div>
-
-    <div class="panel">
-      <div class="page-header" style="margin-bottom:1rem">
-        <div><h3 style="margin:0">💾 Saved AI match history (Firestore)</h3></div>
-        <div class="page-actions">
-          <button class="btn btn-outline btn-sm" id="ai-history-refresh">↻ Refresh</button>
-          <button class="btn btn-danger btn-sm" id="ai-history-delete-all">Delete all history</button>
-        </div>
-      </div>
-      <div class="table-wrap">
-        <table>
-          <thead><tr><th>Game</th><th>Room</th><th>AI name</th><th>Host</th><th class="text-right">Score</th><th>Winner</th><th class="text-right">Bet</th><th>Ended / Saved</th><th></th></tr></thead>
-          <tbody id="ai-history-body"></tbody>
-        </table>
-      </div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Game</th><th>Room</th><th>AI name</th><th>Host</th><th>Status</th><th class="text-right">Bet</th><th>Joined</th><th></th></tr></thead>
+        <tbody id="ai-body"></tbody>
+      </table>
     </div>`;
 
   $('#ai-refresh').onclick = () => {
     pauseAutoRefresh(1500);
-    autoSaveRan = false;
-    void load();
-  };
-  $('#ai-history-refresh').onclick = () => {
-    pauseAutoRefresh(1500);
     void load();
   };
   $('#ai-delete-all').onclick = async () => {
-    if (!confirm('Delete ALL live AI rooms from Firebase? This removes waiting, in-match, and ended AI rooms.')) return;
+    if (!confirm('Delete ALL AI rooms from Firebase? This removes waiting, in-match, and ended AI rooms.')) return;
     const btn = $('#ai-delete-all');
     btn.disabled = true;
-    $('#ai-msg').textContent = 'Deleting live AI rooms…';
+    $('#ai-msg').textContent = 'Deleting from Firebase…';
     try {
       const count = await deleteAllAiRooms();
-      $('#ai-msg').textContent = `Deleted ${count} live AI room${count === 1 ? '' : 's'}.`;
-      aiPageState.liveKey = '';
-      await load();
-    } catch (e) {
-      $('#ai-msg').textContent = e.message || 'Delete failed.';
-    } finally {
-      btn.disabled = false;
-    }
-  };
-  $('#ai-history-delete-all').onclick = async () => {
-    if (!confirm('Delete ALL saved AI match history from Firestore? This cannot be undone.')) return;
-    const btn = $('#ai-history-delete-all');
-    btn.disabled = true;
-    $('#ai-msg').textContent = 'Deleting saved history…';
-    try {
-      const count = await deleteAllAiMatchHistory();
-      $('#ai-msg').textContent = `Deleted ${count} saved AI match record${count === 1 ? '' : 's'}.`;
-      aiPageState.histKey = '';
+      $('#ai-msg').textContent = `Deleted ${count} AI room${count === 1 ? '' : 's'} from Firebase.`;
       await load();
     } catch (e) {
       $('#ai-msg').textContent = e.message || 'Delete failed.';
@@ -3599,6 +3319,7 @@ signInBtn.onclick = async () => {
   }
 };
 
+// Email/Password sign in
 $('#email-login-form').onsubmit = async (e) => {
   e.preventDefault();
   const email = $('#login-email').value.trim();
@@ -3678,6 +3399,7 @@ onAuthStateChanged(auth, async (user) => {
   if (user.photoURL) {
     $('#user-avatar').src = user.photoURL;
   } else {
+    // Create a default avatar with first letter
     const initial = (user.email?.[0] || 'A').toUpperCase();
     $('#user-avatar').src = `data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='36' height='36'%3E%3Crect width='36' height='36' fill='%233b82f6'/%3E%3Ctext x='18' y='24' font-size='16' fill='white' text-anchor='middle' font-family='sans-serif'%3E${initial}%3C/text%3E%3C/svg%3E`;
   }
